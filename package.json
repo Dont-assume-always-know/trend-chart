@@ -1,0 +1,25 @@
+{
+  "name": "chart",
+  "version": "1.0.0",
+  "description": "开奖走势图",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leeseean/trend-chart.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "Orange",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leeseean/trend-chart/issues"
+  },
+  "homepage": "https://github.com/leeseean/trend-chart#readme",
+  "dependencies": {
+    "vue": "^2.5.16"
+  }
+}
