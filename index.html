@@ -10,8 +10,18 @@
 </head>
 <body>
     <div id="vue-chart">
-        <lottery-type-select lottery-types="lotteryTypes" @receiveLotteryType="receiveLotteryType"></lottery-type-select>
-        <lottery-select lottery-types="lotteryTypes" @receiveLottery="receiveLottery"></lottery-select>
+        <div class="lottery-select-wrap">
+            选择彩种
+            <lottery-type-select :lottery-config="lotteryConfig" @receiveLotteryType="receiveLotteryType"></lottery-type-select>
+            <lottery-select :lottery-config="lotteryConfig" :lottery-type="lotteryType" @receiveLottery="receiveLottery"></lottery-select>
+        </div>
+        <div class="lottery-tab-wrap">
+            <lottery-tab :lottery-config="lotteryConfig" :lottery-type="lotteryType" @receiveTab="receiveTab"></lottery-tab>></lottery-tab>
+        </div>
+        <div class="chart-option-wrap">
+            <chart-option></chart-option>
+            <lottery-issue-count></lottery-issue-count>
+        </div>
     </div>
     <script src="./js/vender/vue.min.js"></script>
     <script src="./js/chart.js"></script>
