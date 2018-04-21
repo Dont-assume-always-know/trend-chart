@@ -1,62 +1,3 @@
-Vue.component('lottery-type-select', {
-    template: `
-        <select name="lottery-type-select" v-model="lotteryType" @change="emitLotteryType(lotteryType)">
-            <option v-for="(item, key) in lotteryConfig" :value="key">
-                {{ option.typeCnName }}
-            </option>
-        </select>
-    `,
-    props: ['lottery-config'],
-    data() {
-        return {
-            lotteryType: 'ssc', //默认时时彩类型
-        };
-    },
-    methods: {
-        emitLotteryType(lotteryType) {
-            this.$emit('receiveLotteryType', lotteryType);
-        }
-    }
-});
-Vue.component('lottery-select', {
-    template: `
-        <select name="lottery-select" v-model="lottery" @change="emitLottery(lottery)">
-            <option v-for="(item, key) in lotteryConfig[lotteryType].lotteries" :value="item.code">
-                {{ option.cnName }}
-            </option>
-        </select>
-    `,
-    props: ['lottery-config', 'lottery-type'],
-    data() {
-        return {
-            lottery: this.lotteryConfig[this.lotteryType].lotteries[0].code, //默认第一个
-        };
-    },
-    methods: {
-        emitLottery(lottery) {
-            this.$emit('receiveLottery', lottery);
-        }
-    }
-});
-Vue.component('lottery-tab', {
-    template: `
-        <ul>
-            <li :class="{on: tab.en === tabCode}" v-for="(tab, index) in lotteryConfig[lotteryType].tabs" @click="switchTab(tab.en)">{{tab.cn}}</li>
-        </ul>
-    `,
-    props: ['lottery-config', 'lottery-type'],
-    data() {
-        return {
-            tabCode: this.lotteryConfig[this.lotteryType].tabs[0].en, //默认第一个
-        };
-    },
-    methods: {
-        switchTab(tabCode) {
-            this.tabCode = tabCode;
-            this.$emit('receiveTab', tabCode);
-        }
-    }
-});
 new Vue({
     el: '#vue-chart',
     data: {
@@ -111,7 +52,7 @@ new Vue({
             },
             '11y': {
                 typeCnName: '11选5系列',
-                lotterys: [{
+                lotteries: [{
                         'code': 'GD11Y',
                         'cnName': '广东11选5'
                     },
@@ -125,22 +66,94 @@ new Vue({
                     cn: '三星'
                 }]
             },
-        }
+        }, 
+        checkedConfig: [
+            {
+                id: 'miss',
+                value: 'miss',
+                model: [],
+                text: '遗漏'
+            },
+            {
+                id: 'miss-bar',
+                value: 'missBar',
+                model: [],
+                text: '遗漏条'
+            },
+            {
+                id: 'trend-line',
+                value: 'trendLine',
+                model: [],
+                text: '走势图折线'
+            },
+            {
+                id: 'cold-hot-number',
+                value: 'coldHotNumber',
+                model: [],
+                text: '冷热号'
+            },
+        ],
+        issuePeriodConfig: [
+            {
+                en: 30,
+                cn: '近30期'
+            },
+            {
+                en: 50,
+                cn: '近50期'
+            },
+            {
+                en: 100,
+                cn: '近100期'
+            },
+            {
+                day: 1,
+                cn: '今日数据'
+            },
+            {
+                day: 2,
+                cn: '近2天'
+            }
+        ],
+        issuePeriod: ''
     },
     methods: {
-        receiveLottery(data) {
-            this.lottery = data;
-            console.log(data);
+        receiveLottery(msg) {
+            this.lottery = msg;
+            console.log(msg);
         },
-        receiveLotteryType(data) {
-            this.lotteryType = data;
+        receiveLotteryType(msg) {
+            this.lotteryType = msg;
         },
-        receiveTab(data) {
-            this.tabCode = data;
+        receiveTab(msg) {
+            this.tabCode = msg;
+        },
+        receiveCheckOption(msg) {
+            this.checkedConfig = msg;
+        },
+        receivePeriod(msg) {
+            this.issuePeriod = msg;
+        },
+        renderCheckOption(checkedConfig) {
+
         }
     },
     computed: {},
-    watch: {},
+    watch: {
+        checkedConfig: {
+            deep: true,
+            handler(newVal, oldVal) {
+                for (let item of newVal) {
+                    if (item.model[0]) {
+                        console.log(item.model[0])
+                    } else {
+                        console.log(item.model[0])
+                    }
+                }
+            }
+        }
+        
+    },
     beforeCreate() {},
     created() {},
     beforeMount() {},

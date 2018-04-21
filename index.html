@@ -12,18 +12,23 @@
     <div id="vue-chart">
         <div class="lottery-select-wrap">
             选择彩种
-            <lottery-type-select :lottery-config="lotteryConfig" @receiveLotteryType="receiveLotteryType"></lottery-type-select>
-            <lottery-select :lottery-config="lotteryConfig" :lottery-type="lotteryType" @receiveLottery="receiveLottery"></lottery-select>
+            <lottery-type-select :lottery-config="lotteryConfig" @receivelotterytype="receiveLotteryType"></lottery-type-select>
+            <lottery-select :lottery-config="lotteryConfig" :lottery-type="lotteryType" @receivelottery="receiveLottery"></lottery-select>
         </div>
         <div class="lottery-tab-wrap">
-            <lottery-tab :lottery-config="lotteryConfig" :lottery-type="lotteryType" @receiveTab="receiveTab"></lottery-tab>></lottery-tab>
+            <lottery-tab :lottery-config="lotteryConfig" :lottery-type="lotteryType" @receivetab="receiveTab"></lottery-tab>
         </div>
-        <div class="chart-option-wrap">
-            <chart-option></chart-option>
-            <lottery-issue-count></lottery-issue-count>
+        <div class="chart-option-wrap clearfix">
+            <chart-option :checked-config="checkedConfig" @receivecheckoption="receiveCheckOption"></chart-option>
+            <lottery-issue-period :issue-period-config="issuePeriodConfig" @receiveperiod="receivePeriod"></lottery-issue-period>
         </div>
     </div>
     <script src="./js/vender/vue.min.js"></script>
+    <script src="./js/component/chart-option.js"></script>
+    <script src="./js/component/lottery-issue-period.js"></script>
+    <script src="./js/component/lottery-select.js"></script>
+    <script src="./js/component/lottery-type-select.js"></script>
+    <script src="./js/component/lottery-tab.js"></script>
     <script src="./js/chart.js"></script>
 </body>
 </html>
