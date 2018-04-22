@@ -115,12 +115,15 @@ new Vue({
                 cn: '近2天'
             }
         ],
-        issuePeriod: ''
+        issuePeriod: '',
+        selectNumObj: {
+            'ssc': [0,1,2,3,4,5,6,7,8,9],
+            '11y': [1,2,3,4,5,6,7,8,9,10,11]
+        }
     },
     methods: {
         receiveLottery(msg) {
             this.lottery = msg;
-            console.log(msg);
         },
         receiveLotteryType(msg) {
             this.lotteryType = msg;
@@ -145,9 +148,9 @@ new Vue({
             handler(newVal, oldVal) {
                 for (let item of newVal) {
                     if (item.model[0]) {
-                        console.log(item.model[0])
+                        console.log(item.model[0]);
                     } else {
-                        console.log(item.model[0])
+                        console.log(item.model[0]);
                     }
                 }
             }
@@ -155,7 +158,13 @@ new Vue({
         
     },
     beforeCreate() {},
-    created() {},
+    created() {
+        /* axios.get('./data.json').then(res=>{
+            console.log(res);
+        }).catch(error=>{
+            console.log(error);
+        }); */
+    },
     beforeMount() {},
     mounted() {}
 });

@@ -1,0 +1,21 @@
+td {
+    border: 1px solid saddlebrown;
+    text-align: center;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.distribution-num {
+    color: green;
+}
+
+.distribution-num.more-than-1 {
+    color: palevioletred;
+}
+
+.selected-num {
+    color: saddlebrown;
+}

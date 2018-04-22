@@ -22,13 +22,18 @@
             <chart-option :checked-config="checkedConfig" @receivecheckoption="receiveCheckOption"></chart-option>
             <lottery-issue-period :issue-period-config="issuePeriodConfig" @receiveperiod="receivePeriod"></lottery-issue-period>
         </div>
+        <div class="chart-table-wrap">
+            <chart-table></chart-table>
+        </div>
     </div>
+    <script src="./js/vender/axios.min.js"></script>
     <script src="./js/vender/vue.min.js"></script>
     <script src="./js/component/chart-option.js"></script>
     <script src="./js/component/lottery-issue-period.js"></script>
     <script src="./js/component/lottery-select.js"></script>
     <script src="./js/component/lottery-type-select.js"></script>
     <script src="./js/component/lottery-tab.js"></script>
+    <script src="./js/component/chart-table.js"></script>
     <script src="./js/chart.js"></script>
 </body>
 </html>

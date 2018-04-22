@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/leeseean/trend-chart#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "vue": "^2.5.16"
   }
 }
