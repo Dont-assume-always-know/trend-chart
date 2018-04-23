@@ -131,9 +131,6 @@ new Vue({
         receiveTab(msg) {
             this.tabCode = msg;
         },
-        receiveCheckOption(msg) {
-            this.checkedConfig = msg;
-        },
         receivePeriod(msg) {
             this.issuePeriod = msg;
         },
