@@ -20,7 +20,7 @@ Vue.component('chart-table', {
                     <td>{{item.issue}}</td>
                     <td v-for="n in item.code.split(',')">{{n}}</td>
                     <template v-for="(pos, posIndex) in posArr">
-                        <td v-for="(selectNum, selectNumIndex) in selectNumArr" v-html="renderSelectNum(item.code, selectNum, selectNumIndex, posIndex, index)"></td>
+                        <td v-for="(selectNum, selectNumIndex) in selectNumArr"  v-html="renderSelectNum(item.code, selectNum, selectNumIndex, posIndex, index)"></td>
                     </template>    
                     <td v-for="(selectNum, selectNumIndex) in selectNumArr" v-html="renderDistribution(item.code, selectNum, selectNumIndex, index)"></td> 
                 </tr>
@@ -79,13 +79,8 @@ Vue.component('chart-table', {
             posArr: ['万位', '千位', '百位', '十位', '个位'],
             openCode: [1, 2, 3, 4, 5], //开奖号码
             selectNumArr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-            selectedIndexArr: [
-                [],
-                [],
-                [],
-                [],
-                []
-            ], //遗漏值计数从上到下1开始，碰到开奖号就重新从1开始计数
+            selectedIndexObj: {}, //遗漏值计数从上到下1开始，碰到开奖号就重新从1开始计数
+            missAndContinuousObj: {}, //底部计算平均遗漏值，最大遗漏值，最大连出值用到，结构missAndContinuousObj.posIndex.selectIndex = [index1,index2,...]
             distributionIndexArr: [],
             "data": [{
                 "code": "6,7,7,6,3",
@@ -245,30 +240,42 @@ Vue.component('chart-table', {
             return calcEachTotal(this.posArr, this.selectNumArr, this.openDataArr);
         },
         averageMissArrs() {
-            return [];
+            return this.totalArrs.map(totalArr => {
+                return totalArr.map(total => {
+                    if (total === 0) {
+                        return this.openDataArr.length + 1;
+                    }
+                    return Math.round(this.openDataArr.length / total);
+                });
+            });
         },
         maxMissArrs() {
-            return [];
+            return getMissAndContinuousObj(this.posArr, this.selectNumArr, this.openDataArr).missArr;
         },
         maxContinuousArrs() {
-            return [];
+            return getMissAndContinuousObj(this.posArr, this.selectNumArr, this.openDataArr).continuousArr;
         },
         distributionTotalArr() {
             return caclDistributionTotalArr(this.selectNumArr, this.openDataArr);
         },
         distributionAverageMissArr() {
-            return [];
+            return this.distributionTotalArr.map(total => {
+                if (total === 0) {
+                    return this.openDataArr.length + 1;
+                }
+                return Math.round(this.openDataArr.length / total);
+            });
         },
         distributionMaxMissArr() {
-            return [];
+            return getDistributionMissAndContinuousObj(this.selectNumArr, this.openDataArr).missArr;
         },
         distributionMaxContinuousArr() {
-            return [];
+            return getDistributionMissAndContinuousObj(this.selectNumArr, this.openDataArr).continuousArr;
         },
         openDataArr() {
             return this.data.map(item => {
                 return item.code.split(',').map(v => Number(v));
-            })
+            });
         }
     },
     methods: {
@@ -286,13 +293,14 @@ Vue.component('chart-table', {
         },
         renderSelectNum(code, selectNum, selectNumIndex, posIndex, index) {
             const arr = code.split(',').map(v => Number(v));
+            this.selectedIndexObj[posIndex] = this.selectedIndexObj[posIndex] || [];
             if (arr[posIndex] === selectNum) {
-                this.selectedIndexArr[posIndex][selectNumIndex] = index + 1;
+                this.selectedIndexObj[posIndex][selectNumIndex] = index + 1;
                 return `<i class="selected-num">${selectNum}</i>`;
             } else {
-                return `<i>${index + 1 - (this.selectedIndexArr[posIndex][selectNumIndex] || 0)}</i>`;
+                return `<i>${index + 1 - (this.selectedIndexObj[posIndex][selectNumIndex] || 0)}</i>`;
             }
-        }
+        },
     }
 });
 
@@ -334,4 +342,153 @@ function caclDistributionTotalArr(selectNumArr, openDataArr) {
         resultArr.push(count);
     });
     return resultArr;
+}
+
+/**
+ * 号码分布最大遗漏
+ */
+function getDistributionMissAndContinuousObj(selectNumArr, openDataArr) {
+    const resultArr = [];
+    selectNumArr.forEach(selectNum => {
+        const arr = [];
+        openDataArr.forEach((itemArr, index) => {
+            if (itemArr.indexOf(selectNum) !== -1) {
+                arr.push(index + 1);
+            }
+        });
+        resultArr.push(arr);
+    });
+    const openDataArrLength = openDataArr.length;
+    const missArr = resultArr.map(arr => {
+        arr.sort();
+        if (arr.length === 0) {
+            return openDataArrLength;
+        }
+        if (arr.length === 1) {
+            return Math.max(...[openDataArrLength - arr[0], arr[0] - 1]);
+        }
+        if (arr.length === 2) {
+            return Math.max(...[openDataArrLength - arr[1], arr[1] - arr[0], arr[0] - 1]);
+        }
+        const result = [];
+        const min = Math.min(...arr);
+        const max = Math.max(...arr);
+        result.push(min - 1);
+        result.push(openDataArrLength - max);
+        for (let i = 0; i < arr.length - 2; i++) {
+            result.push(arr[i + 1] - arr[i] - 1);
+        }
+        return Math.max(...result);
+    });
+    const continuousArr = resultArr.map(arr => {
+        arr.sort();
+        if (arr.length === 0) {
+            return 0;
+        }
+        if (filterShunziArr(arr).length > 0) {
+            return filterShunziArr(arr).sort((a, b) => b.length - a.length)[0].length;
+        } else {
+            return 1;
+        }
+    });
+    return {
+        missArr,
+        continuousArr
+    };
+}
+
+/**
+ * 获取最大遗漏值和连出值对象
+ */
+function getMissAndContinuousObj(posArr, selectNumArr, openDataArr) {
+    const missAndContinuousArr = posArr.map((posItem, posIndex) => {
+        const resultArr = [];
+        selectNumArr.forEach(selectNum => {
+            const arr = [];
+            openDataArr.forEach((itemArr, index) => {
+                if (itemArr[posIndex] === selectNum) {
+                    arr.push(index + 1);
+                }
+            });
+            resultArr.push(arr);
+        });
+        return resultArr;
+    });
+    //最大遗漏值
+    const missArr = missAndContinuousArr.map(posItem => {
+        const openDataArrLength = openDataArr.length;
+        return posItem.map(itemArr => {
+            itemArr.sort();
+            if (itemArr.length === 0) {
+                return openDataArr.length;
+            }
+            if (itemArr.length === 1) {
+                return Math.max(...[openDataArrLength - itemArr[0], itemArr[0] - 1]);
+            }
+            if (itemArr.length === 2) {
+                return Math.max(...[openDataArrLength - itemArr[1], itemArr[1] - itemArr[0], itemArr[0] - 1]);
+            }
+            const result = [];
+            const min = Math.min(...itemArr);
+            const max = Math.max(...itemArr);
+            result.push(min - 1);
+            result.push(openDataArrLength - max);
+            for (let i = 0; i < itemArr.length - 2; i++) {
+                result.push(itemArr[i + 1] - itemArr[i] - 1);
+            }
+            return Math.max(...result);
+        });
+    });
+    //最大连出值
+    const continuousArr = missAndContinuousArr.map(posItem => {
+        return posItem.map(itemArr => {
+            itemArr.sort();
+            if (itemArr.length === 0) {
+                return 0;
+            }
+            if (filterShunziArr(itemArr).length > 0) {
+                return filterShunziArr(itemArr).sort((a, b) => b.length - a.length)[0].length;
+            } else {
+                return 1;
+            }
+        });
+    });
+    return {
+        missArr,
+        continuousArr
+    };
+}
+
+/**
+ * 从一组数字中取出顺子
+ * 如[1,2,3,6,7,8] => [[1,2,3],[6,7,8]]
+ * @param {数组} arr 
+ * @returns 二维数组
+ */
+function filterShunziArr(arr) {
+    var len = arr.length,
+        before = arr[0],
+        i = 1,
+        res = [],
+        result = [],
+        current;
+    for (; i < len; i++) {
+        current = arr[i];
+        if (current - before === 1) {
+            if (res.length === 0) {
+                res.push(before);
+            }
+            res.push(current);
+        } else {
+            if (res.length) {
+                result.push(res);
+            }
+            res = [];
+        }
+        before = current;
+    }
+    if (res.length) {
+        result.push(res);
+    }
+    return result;
 }
