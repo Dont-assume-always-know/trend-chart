@@ -7,12 +7,19 @@ Vue.component('chart-table', {
                     <td rowspan="2" :colspan="openCode.length">开奖号码</td>
                     <td :colspan="selectNumArr.length" v-for="pos in posArr">{{pos}}</td>
                     <td :colspan="selectNumArr.length">号码分布</td>
+                    <template v-if="tabCode === 'ssc-3x'">
+                        <td rowspan="2">组三</td>
+                        <td rowspan="2">组六</td>
+                        <td rowspan="2">豹子</td>
+                        <td rowspan="2">和值</td>
+                        <td rowspan="2">跨度</td>
+                    </template>
                 </tr>
                 <tr>
                     <template v-for="pos in posArr">
-                        <td v-for="n in selectNumArr.length">{{n-1}}</td>
+                        <td v-for="n in selectNumArr">{{n}}</td>
                     </template>    
-                    <td v-for="n in selectNumArr.length">{{n-1}}</td>                    
+                    <td v-for="n in selectNumArr">{{n}}</td>                    
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +30,13 @@ Vue.component('chart-table', {
                         <td v-for="(selectNum, selectNumIndex) in selectNumArr"  v-html="renderSelectNum(item.code, selectNum, selectNumIndex, posIndex, index)"></td>
                     </template>    
                     <td v-for="(selectNum, selectNumIndex) in selectNumArr" v-html="renderDistribution(item.code, selectNum, selectNumIndex, index)"></td> 
+                    <template v-if="tabCode === 'ssc-3x'">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
             </tbody>
             <tfoot>
@@ -33,6 +47,13 @@ Vue.component('chart-table', {
                         <td v-for="item in totalArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionTotalArr">{{item}}</td>
+                    <template v-if="tabCode === 'ssc-3x'">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
                 <tr>
                     <td>平均遗漏值</td>
@@ -41,6 +62,13 @@ Vue.component('chart-table', {
                         <td v-for="item in averageMissArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionAverageMissArr">{{item}}</td>
+                    <template v-if="tabCode === 'ssc-3x'">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
                 <tr>
                     <td>最大遗漏值</td>
@@ -49,6 +77,13 @@ Vue.component('chart-table', {
                         <td v-for="item in maxMissArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionMaxMissArr">{{item}}</td>
+                    <template v-if="tabCode === 'ssc-3x'">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
                 <tr>
                     <td>最大连出值</td>
@@ -57,12 +92,26 @@ Vue.component('chart-table', {
                         <td v-for="item in maxContinuousArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionMaxContinuousArr">{{item}}</td>
+                    <template v-if="tabCode === 'ssc-3x'">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
                 <tr>
                     <td rowspan="2">奖期</td>
                     <td rowspan="2" :colspan="openCode.length">开奖号码</td>
                     <td :colspan="selectNumArr.length" v-for="pos in posArr">{{pos}}</td>
                     <td :colspan="selectNumArr.length">号码分布</td>
+                    <template v-if="tabCode === 'ssc-3x'">
+                        <td rowspan="2">组三</td>
+                        <td rowspan="2">组六</td>
+                        <td rowspan="2">豹子</td>
+                        <td rowspan="2">和值</td>
+                        <td rowspan="2">跨度</td>
+                    </template>
                 </tr>
                 <tr>
                     <template v-for="pos in posArr">
@@ -73,12 +122,11 @@ Vue.component('chart-table', {
             </tfoot>
         </table>
     `,
-    props: ['lottery-config', 'lottery-type'],
+    props: ['lottery-config', 'lottery-type', 'tab-code', 'select-num-obj'],
     data() {
         return {
             posArr: ['万位', '千位', '百位', '十位', '个位'],
             openCode: [1, 2, 3, 4, 5], //开奖号码
-            selectNumArr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             selectedIndexObj: {}, //遗漏值计数从上到下1开始，碰到开奖号就重新从1开始计数
             missAndContinuousObj: {}, //底部计算平均遗漏值，最大遗漏值，最大连出值用到，结构missAndContinuousObj.posIndex.selectIndex = [index1,index2,...]
             distributionIndexArr: [],
@@ -236,6 +284,9 @@ Vue.component('chart-table', {
         };
     },
     computed: {
+        selectNumArr() {
+            return this.selectNumObj.lotteryType;
+        },
         totalArrs() {
             return calcEachTotal(this.posArr, this.selectNumArr, this.openDataArr);
         },
@@ -280,7 +331,7 @@ Vue.component('chart-table', {
     },
     methods: {
         renderDistribution(code, selectNum, selectNumIndex, index) {
-            const arr = code.split(',').filter(v => Number(v) === selectNum);
+            const arr = code.split(',').filter(v => Number(v) === Number(selectNum));
             if (arr.length > 0) {
                 this.distributionIndexArr[selectNumIndex] = index + 1;
                 if (arr.length > 1) {
@@ -294,7 +345,7 @@ Vue.component('chart-table', {
         renderSelectNum(code, selectNum, selectNumIndex, posIndex, index) {
             const arr = code.split(',').map(v => Number(v));
             this.selectedIndexObj[posIndex] = this.selectedIndexObj[posIndex] || [];
-            if (arr[posIndex] === selectNum) {
+            if (arr[posIndex] === Number(selectNum)) {
                 this.selectedIndexObj[posIndex][selectNumIndex] = index + 1;
                 return `<i class="selected-num">${selectNum}</i>`;
             } else {
@@ -317,7 +368,7 @@ function calcEachTotal(posArr, selectNumArr, openDataArr) {
         selectNumArr.forEach(selectNum => {
             let count = 0;
             openDataArr.forEach(itemArr => {
-                if (itemArr[posIndex] === selectNum) {
+                if (itemArr[posIndex] === Number(selectNum)) {
                     count += 1;
                 }
             });
@@ -336,7 +387,7 @@ function caclDistributionTotalArr(selectNumArr, openDataArr) {
         let count = 0;
         openDataArr.forEach(itemArr => {
             count += itemArr.filter(item => {
-                return item === selectNum;
+                return item === Number(selectNum);
             }).length;
         });
         resultArr.push(count);
@@ -352,7 +403,7 @@ function getDistributionMissAndContinuousObj(selectNumArr, openDataArr) {
     selectNumArr.forEach(selectNum => {
         const arr = [];
         openDataArr.forEach((itemArr, index) => {
-            if (itemArr.indexOf(selectNum) !== -1) {
+            if (itemArr.indexOf(Number(selectNum)) !== -1) {
                 arr.push(index + 1);
             }
         });
@@ -406,7 +457,7 @@ function getMissAndContinuousObj(posArr, selectNumArr, openDataArr) {
         selectNumArr.forEach(selectNum => {
             const arr = [];
             openDataArr.forEach((itemArr, index) => {
-                if (itemArr[posIndex] === selectNum) {
+                if (itemArr[posIndex] === Number(selectNum)) {
                     arr.push(index + 1);
                 }
             });
