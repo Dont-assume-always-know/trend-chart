@@ -19,10 +19,10 @@ Vue.component('lottery-tab', {
     },
     watch: {
         lotteryType(newVal, oldVal) {
-            let unwatch;
-            if (this.lotteryType === 'other') {
+            let unWatch;
+            if (newVal === 'other') {
                 this._tabCode = 'kl12-all';
-                unwatch = this.$watch('lottery', (newLt, oldLt) => {
+                unWatch = this.$watch('lottery', (newLt, oldLt) => {
                     switch (newLt) {
                         case 'HNKY481':
                             this._tabCode = 'ky481-4x';
@@ -30,14 +30,12 @@ Vue.component('lottery-tab', {
                         case 'SCKL12':
                             this._tabCode = 'kl12-all';
                             break;
-                        default:
-                            this._tabCode = 'kl12-all';
                     }
                     this.$forceUpdate();
                 });
             } else {
-                typeof unwatch === 'function' && unwatch();
-                this._tabCode = this.tabDefaultObj[this.lotteryType];
+                typeof unWatch === 'function' && unWatch();
+                this._tabCode = this.tabDefaultObj[newVal];
             }
             this.$emit('receivetab', this._tabCode);
         }

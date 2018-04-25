@@ -252,13 +252,16 @@ new Vue({
                         'cnName': '河南快赢481'
                     }
                 ],
-                tabs: [{
-                    en: 'kl12-all',
-                    cn: '所有位置'
-                }, {
-                    en: 'ky481-4x',
-                    cn: '四星'
-                }]
+                tabs: {
+                    kl12: [{
+                        en: 'kl12-all',
+                        cn: '所有位置'
+                    }],
+                    ky481: [{
+                        en: 'ky481-4x',
+                        cn: '四星'
+                    }]
+                }
             }
         },
         //彩种选择框默认第一个显示彩种
@@ -365,13 +368,13 @@ new Vue({
             if (this.lotteryType === 'other') {
                 switch (this.lottery) {
                     case 'HNKY481':
-                        return result.filter(item => item.en === 'ky481-4x');
+                        return result['ky481'];
                         break;
                     case 'SCKL12':
-                        return result.filter(item => item.en === 'kl12-all');
+                        return result['kl12'];
                         break;
-                    default: 
-                        return result.filter(item => item.en === 'kl12-all');
+                    default:
+                        return result['kl12'];
                 }
             }
             return result;
