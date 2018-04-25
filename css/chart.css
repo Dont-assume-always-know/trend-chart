@@ -19,3 +19,7 @@ td {
 .selected-num {
     color: saddlebrown;
 }
+
+.lottery-tab-item.on {
+    color: tomato;
+}

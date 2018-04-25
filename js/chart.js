@@ -164,7 +164,7 @@ new Vue({
                 tabs: [{
                     en: 'pk10-q5',
                     cn: '前五名'
-                },{
+                }, {
                     en: 'pk10-h5',
                     cn: '后五名'
                 }]
@@ -225,9 +225,64 @@ new Vue({
                     cn: '三星'
                 }]
             },
-        }, 
-        checkedConfig: [
-            {
+            'lhc': {
+                typeCnName: '六合彩系列',
+                lotteries: [{
+                        'code': 'XGLHC',
+                        'cnName': '香港六合彩'
+                    },
+                    {
+                        'code': 'JSLHC',
+                        'cnName': '极速六合彩'
+                    }
+                ],
+                tabs: [{
+                    en: 'lhc-tm',
+                    cn: '特码'
+                }]
+            },
+            'other': {
+                typeCnName: '其他彩种',
+                lotteries: [{
+                        'code': 'SCKL12',
+                        'cnName': '四川快乐12'
+                    },
+                    {
+                        'code': 'HNKY481',
+                        'cnName': '河南快赢481'
+                    }
+                ],
+                tabs: [{
+                    en: 'kl12-all',
+                    cn: '所有位置'
+                }, {
+                    en: 'ky481-4x',
+                    cn: '四星'
+                }]
+            }
+        },
+        //彩种选择框默认第一个显示彩种
+        lotteryDefaultType: 'ssc',
+        lotteryDefaultObj: {
+            'ssc': 'CQSSC',
+            '11y': 'GD11Y',
+            'pk10': 'BJPK10',
+            'k3': 'JSK3',
+            '3d': 'FC3D',
+            'lhc': 'XGLHC',
+            'other': 'SCKL12'
+        },
+        //默认tab
+        tabDefaultObj: {
+            'ssc': 'ssc-5x',
+            '11y': '11y-3x',
+            'pk10': 'pk10-q5',
+            'k3': 'k3-3x',
+            '3d': '3d-3x',
+            'lhc': 'lhc-tm',
+            'other': 'kl12-all'
+        },
+        checkedConfig: [{
                 id: 'miss',
                 value: 'miss',
                 model: [],
@@ -252,8 +307,7 @@ new Vue({
                 text: '冷热号'
             },
         ],
-        issuePeriodConfig: [
-            {
+        issuePeriodConfig: [{
                 en: 30,
                 cn: '近30期'
             },
@@ -276,13 +330,14 @@ new Vue({
         ],
         issuePeriod: '',
         selectNumObj: {
-            'ssc': [0,1,2,3,4,5,6,7,8,9],
-            '11y': [1,2,3,4,5,6,7,8,9,10,11],
-            'pk10': [01,02,03,04,05,06,07,08,09,10],
-            'k3': [1,2,3,4,5,6],
-            '3d': [0,1,2,3,4,5,6,7,8,9],
-            'kl12': [1,2,3,4,5,6,7,8,9,10,11,12],
-            'ky481': [1,2,3,4,5,6,7,8]
+            'ssc': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            '11y': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            'pk10': [01, 02, 03, 04, 05, 06, 07, 08, 09, 10],
+            'k3': [1, 2, 3, 4, 5, 6],
+            '3d': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            'kl12': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            'ky481': [1, 2, 3, 4, 5, 6, 7, 8],
+            'lhc': Array(49).fill(0).map((v, i) => `0${i+1}`.slice(-2)) //[01-49]
         },
         posObj: {
             'ssc-5x': ['万位', '千位', '百位', '十位', '个位'],
@@ -299,6 +354,27 @@ new Vue({
             '3d-3x': ['百位', '十位', '个位'],
             'kl12-all': ['万位', '千位', '百位', '十位', '个位'],
             'ky481-all': ['自由泳', '仰泳', '蛙泳', '蝶泳'],
+        }
+    },
+    computed: {
+        lotteryArrs() {
+            return this.lotteryConfig[this.lotteryType].lotteries;
+        },
+        tabsArr() {
+            const result = this.lotteryConfig[this.lotteryType].tabs;
+            if (this.lotteryType === 'other') {
+                switch (this.lottery) {
+                    case 'HNKY481':
+                        return result.filter(item => item.en === 'ky481-4x');
+                        break;
+                    case 'SCKL12':
+                        return result.filter(item => item.en === 'kl12-all');
+                        break;
+                    default: 
+                        return result.filter(item => item.en === 'kl12-all');
+                }
+            }
+            return result;
         }
     },
     methods: {
@@ -318,7 +394,6 @@ new Vue({
 
         }
     },
-    computed: {},
     watch: {
         checkedConfig: {
             deep: true,
@@ -332,7 +407,7 @@ new Vue({
                 }
             }
         }
-        
+
     },
     beforeCreate() {},
     created() {

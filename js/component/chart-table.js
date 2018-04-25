@@ -285,7 +285,7 @@ Vue.component('chart-table', {
     },
     computed: {
         selectNumArr() {
-            return this.selectNumObj.lotteryType;
+            return this.selectNumObj[this.lotteryType];
         },
         totalArrs() {
             return calcEachTotal(this.posArr, this.selectNumArr, this.openDataArr);

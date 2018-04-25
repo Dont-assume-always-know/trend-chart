@@ -1,28 +1,33 @@
 Vue.component('lottery-select', {
     template: `
-        <select name="lottery-select" v-model="lotteryObj[lotteryType]" @change="emitLottery(lotteryObj[lotteryType] )">
-            <option v-for="(item, key) in lotteryConfig[lotteryType].lotteries" :value="item.code">
+        <select name="lottery-select" v-model="lottery" @change="emitLottery(lottery)">
+            <option v-for="(item, index) in lotteryArrs" :value="item.code">
                 {{ item.cnName }}
             </option>
         </select>
     `,
-    props: ['lottery-config', 'lottery-type'],
+    props: ['lottery-arrs', 'lottery-type', 'lottery-default-obj'],
     data() {
         return {
-            lotteryObj: {
-                'ssc': 'CQSSC',
-                '11y': 'GD11Y'
-            }, //默认第一个
+            lottery: '',
         };
     },
-    computed: {
-        lottery() {
-            return this.lotteryConfig[this.lotteryType].lotteries[0].code;
+    computed: {},
+    watch: {
+        lotteryType(newVal, oldVal) {
+            if (newVal) {
+                this.lottery = this.lotteryDefaultObj[this.lotteryType];
+                this.$emit('receivelottery', this.lottery);
+            }
         }
     },
     methods: {
         emitLottery(lottery) {
             this.$emit('receivelottery', lottery);
         }
+    },
+    created() {
+        this.lottery = this.lotteryDefaultObj[this.lotteryType];
+        this.$emit('receivelottery', this.lottery);
     }
 });
