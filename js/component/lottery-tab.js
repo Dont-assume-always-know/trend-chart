@@ -21,6 +21,7 @@ Vue.component('lottery-tab', {
         lotteryType(newVal, oldVal) {
             let unwatch;
             if (this.lotteryType === 'other') {
+                this._tabCode = 'kl12-all';
                 unwatch = this.$watch('lottery', (newLt, oldLt) => {
                     switch (newLt) {
                         case 'HNKY481':
