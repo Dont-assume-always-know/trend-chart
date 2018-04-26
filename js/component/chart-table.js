@@ -14,6 +14,11 @@ Vue.component('chart-table', {
                         <td rowspan="2">和值</td>
                         <td rowspan="2">跨度</td>
                     </template>
+                    <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
+                        <td rowspan="2">对子</td>
+                        <td rowspan="2">和值</td>
+                        <td rowspan="2">跨度</td>
+                    </template>
                 </tr>
                 <tr>
                     <template v-for="pos in posObj">
@@ -37,6 +42,11 @@ Vue.component('chart-table', {
                         <td v-html="renderHezhi(item.code)"></td>
                         <td v-html="renderKuadu(item.code)"></td>
                     </template>
+                    <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
+                        <td v-html="render2xDuizi(item.code, index)"></td>
+                        <td v-html="renderHezhi(item.code)"></td>
+                        <td v-html="renderKuadu(item.code)"></td>
+                    </template>
                 </tr>
             </tbody>
             <tfoot>
@@ -49,6 +59,11 @@ Vue.component('chart-table', {
                     <td v-for="item in distributionTotalArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td v-for="v in z3ZutaiTotalArr">{{v}}</td>
+                        <td></td>
+                        <td></td>
+                    </template>
+                    <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
+                        <td v-for="v in z2ZutaiTotalArr">{{v}}</td>
                         <td></td>
                         <td></td>
                     </template>
@@ -65,6 +80,11 @@ Vue.component('chart-table', {
                         <td></td>
                         <td></td>
                     </template>
+                    <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
+                        <td v-for="v in z2ZutaiAverageMissArr">{{v}}</td>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
                 <tr>
                     <td>最大遗漏值</td>
@@ -75,6 +95,11 @@ Vue.component('chart-table', {
                     <td v-for="item in distributionMaxMissArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td v-for="v in z3ZutaiMaxMissArr">{{v}}</td>
+                        <td></td>
+                        <td></td>
+                    </template>
+                    <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
+                        <td v-for="v in z2ZutaiMaxMissArr">{{v}}</td>
                         <td></td>
                         <td></td>
                     </template>
@@ -91,6 +116,11 @@ Vue.component('chart-table', {
                         <td></td>
                         <td></td>
                     </template>
+                    <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
+                        <td v-for="v in z2ZutaiContinuousArr">{{v}}</td>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
                 <tr>
                     <td rowspan="2">奖期</td>
@@ -101,6 +131,11 @@ Vue.component('chart-table', {
                         <td rowspan="2">组三</td>
                         <td rowspan="2">组六</td>
                         <td rowspan="2">豹子</td>
+                        <td rowspan="2">和值</td>
+                        <td rowspan="2">跨度</td>
+                    </template>
+                    <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
+                        <td rowspan="2">对子</td>
                         <td rowspan="2">和值</td>
                         <td rowspan="2">跨度</td>
                     </template>
@@ -122,6 +157,8 @@ Vue.component('chart-table', {
             distributionIndexArr: [], //计算竖排的1234序号用的
             z3ZutaiObj: {}, //计算竖排的1234序号用的
             z3ZutaiTotalObj: {}, //计算3星组态底部总次数，最大遗漏值，连出值用到
+            z2ZutaiObj: {},
+            z2ZutaiTotalObj: {},
             "data": [{
                 "code": "6,7,7,6,3",
                 "issue": "20180419-118"
@@ -363,6 +400,39 @@ Vue.component('chart-table', {
             }
             return [result['z3'], result['z6'], result['baozi']];
         },
+        z2ZutaiTotalArr() {
+            const z2Total = this.z2ZutaiTotalObj['duizi'].length;
+            return [z2Total];
+        },
+        z2ZutaiAverageMissArr() {
+            return this.z2ZutaiTotalArr.map(total => {
+                if (total === 0) {
+                    return this.openDataArr.length + 1;
+                }
+                return Math.round(this.openDataArr.length / total);
+            });
+        },
+        z2ZutaiMaxMissArr() {
+            const openDataArrLength = this.openDataArr.length;
+            const z2Miss = calcMaxMiss(this.z2ZutaiTotalObj['duizi'], openDataArrLength);
+            return [z2Miss];
+        },
+        z2ZutaiContinuousArr() {
+            const result = {};
+            for (let key in this.z2ZutaiTotalObj) {
+                const arr = this.z2ZutaiTotalObj[key];
+                arr.sort();
+                if (arr.length === 0) {
+                    result[key] = 0;
+                }
+                if (filterShunziArr(arr).length > 0) {
+                    result[key] = filterShunziArr(arr).sort((a, b) => b.length - a.length)[0].length;
+                } else {
+                    result[key] = 1;
+                }
+            }
+            return [result['duizi']];
+        },
     },
     watch: {
         tabCode(newVal, oldVal) {
@@ -372,6 +442,8 @@ Vue.component('chart-table', {
             this.distributionIndexArr = [];
             this.z3ZutaiObj = {};
             this.z3ZutaiTotalObj = {};
+            this.z2ZutaiObj = {};
+            this.z2ZutaiTotalObj = {};
         }
     },
     methods: {
@@ -473,6 +545,18 @@ Vue.component('chart-table', {
             let codeArr = code.split(',').map(v => Number(v));
             codeArr = this.getCodeArr(codeArr);
             return calcKuadu(codeArr);
+        },
+        render2xDuizi(code, index) {
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            this.z2ZutaiTotalObj['duizi'] = this.z2ZutaiTotalObj['duizi'] || [];
+            if (calc2xDuizi(codeArr)) {
+                this.z2ZutaiObj['duizi'] = index + 1;
+                this.z2ZutaiTotalObj['duizi'].push(index + 1);
+                return 'yes';
+            } else {
+                return index + 1 - (this.z2ZutaiObj['duizi'] || 0);
+            }
         }
     }
 });
@@ -710,4 +794,23 @@ function calcHezhi(arr) {
     }
     arr = arr.map(v => Number(v));
     return arr.reduce((a, b) => a + b);
+}
+
+/**
+ * 计算二星对子
+ * 
+ * @param {Array} arr 
+ * @returns Boolean
+ */
+function calc2xDuizi(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error('所传参数必须是数组');
+    }
+    if (arr.length !== 2) {
+        throw new Error('数组只能含2个数字');
+    }
+    arr = arr.map(v => Number(v));
+    const length = [...new Set(arr)].length;
+    if (length === 1) return true;
+    return false;
 }
