@@ -15,10 +15,8 @@ Vue.component('lottery-select', {
     computed: {},
     watch: {
         lotteryType(newVal, oldVal) {
-            if (newVal) {
-                this.lottery = this.lotteryDefaultObj[this.lotteryType];
-                this.$emit('receivelottery', this.lottery);
-            }
+            this.lottery = this.lotteryDefaultObj[this.lotteryType];
+            this.$emit('receivelottery', this.lottery);
         }
     },
     methods: {

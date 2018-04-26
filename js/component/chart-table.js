@@ -4,10 +4,10 @@ Vue.component('chart-table', {
             <thead>
                 <tr>
                     <td rowspan="2">奖期</td>
-                    <td rowspan="2" :colspan="openCode.length">开奖号码</td>
-                    <td :colspan="selectNumArr.length" v-for="pos in posArr">{{pos}}</td>
+                    <td rowspan="2" :colspan="openCodeLength">开奖号码</td>
+                    <td :colspan="selectNumArr.length" v-for="pos in posObj">{{pos}}</td>
                     <td :colspan="selectNumArr.length">号码分布</td>
-                    <template v-if="tabCode === 'ssc-3x'">
+                    <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td rowspan="2">组三</td>
                         <td rowspan="2">组六</td>
                         <td rowspan="2">豹子</td>
@@ -16,7 +16,7 @@ Vue.component('chart-table', {
                     </template>
                 </tr>
                 <tr>
-                    <template v-for="pos in posArr">
+                    <template v-for="pos in posObj">
                         <td v-for="n in selectNumArr">{{n}}</td>
                     </template>    
                     <td v-for="n in selectNumArr">{{n}}</td>                    
@@ -26,11 +26,11 @@ Vue.component('chart-table', {
                 <tr v-for="(item, index) in data">
                     <td>{{item.issue}}</td>
                     <td v-for="n in item.code.split(',')">{{n}}</td>
-                    <template v-for="(pos, posIndex) in posArr">
+                    <template v-for="(pos, posIndex) in posObj">
                         <td v-for="(selectNum, selectNumIndex) in selectNumArr"  v-html="renderSelectNum(item.code, selectNum, selectNumIndex, posIndex, index)"></td>
                     </template>    
                     <td v-for="(selectNum, selectNumIndex) in selectNumArr" v-html="renderDistribution(item.code, selectNum, selectNumIndex, index)"></td> 
-                    <template v-if="tabCode === 'ssc-3x'">
+                    <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -42,12 +42,12 @@ Vue.component('chart-table', {
             <tfoot>
                 <tr>
                     <td>出现总次数</td>
-                    <td :colspan="openCode.length"></td>
+                    <td :colspan="openCodeLength"></td>
                     <template v-for="totalArr in totalArrs">
                         <td v-for="item in totalArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionTotalArr">{{item}}</td>
-                    <template v-if="tabCode === 'ssc-3x'">
+                    <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -57,12 +57,12 @@ Vue.component('chart-table', {
                 </tr>
                 <tr>
                     <td>平均遗漏值</td>
-                    <td :colspan="openCode.length"></td>
+                    <td :colspan="openCodeLength"></td>
                     <template v-for="averageMissArr in averageMissArrs">
                         <td v-for="item in averageMissArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionAverageMissArr">{{item}}</td>
-                    <template v-if="tabCode === 'ssc-3x'">
+                    <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -72,12 +72,12 @@ Vue.component('chart-table', {
                 </tr>
                 <tr>
                     <td>最大遗漏值</td>
-                    <td :colspan="openCode.length"></td>
+                    <td :colspan="openCodeLength"></td>
                     <template v-for="maxMissArr in maxMissArrs">
                         <td v-for="item in maxMissArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionMaxMissArr">{{item}}</td>
-                    <template v-if="tabCode === 'ssc-3x'">
+                    <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -87,12 +87,12 @@ Vue.component('chart-table', {
                 </tr>
                 <tr>
                     <td>最大连出值</td>
-                    <td :colspan="openCode.length"></td>
+                    <td :colspan="openCodeLength"></td>
                     <template v-for="maxContinuousArr in maxContinuousArrs">
                         <td v-for="item in maxContinuousArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionMaxContinuousArr">{{item}}</td>
-                    <template v-if="tabCode === 'ssc-3x'">
+                    <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -102,10 +102,10 @@ Vue.component('chart-table', {
                 </tr>
                 <tr>
                     <td rowspan="2">奖期</td>
-                    <td rowspan="2" :colspan="openCode.length">开奖号码</td>
-                    <td :colspan="selectNumArr.length" v-for="pos in posArr">{{pos}}</td>
+                    <td rowspan="2" :colspan="openCodeLength">开奖号码</td>
+                    <td :colspan="selectNumArr.length" v-for="pos in posObj">{{pos}}</td>
                     <td :colspan="selectNumArr.length">号码分布</td>
-                    <template v-if="tabCode === 'ssc-3x'">
+                    <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td rowspan="2">组三</td>
                         <td rowspan="2">组六</td>
                         <td rowspan="2">豹子</td>
@@ -114,7 +114,7 @@ Vue.component('chart-table', {
                     </template>
                 </tr>
                 <tr>
-                    <template v-for="pos in posArr">
+                    <template v-for="pos in posObj">
                         <td v-for="n in selectNumArr.length">{{n-1}}</td>
                     </template>    
                     <td v-for="n in selectNumArr.length">{{n-1}}</td>                    
@@ -122,11 +122,9 @@ Vue.component('chart-table', {
             </tfoot>
         </table>
     `,
-    props: ['lottery-config', 'lottery-type', 'tab-code', 'select-num-obj'],
+    props: ['lottery-config', 'lottery-type', 'pos-config', 'tab-code', 'select-num-obj'],
     data() {
         return {
-            posArr: ['万位', '千位', '百位', '十位', '个位'],
-            openCode: [1, 2, 3, 4, 5], //开奖号码
             selectedIndexObj: {}, //遗漏值计数从上到下1开始，碰到开奖号就重新从1开始计数
             missAndContinuousObj: {}, //底部计算平均遗漏值，最大遗漏值，最大连出值用到，结构missAndContinuousObj.posIndex.selectIndex = [index1,index2,...]
             distributionIndexArr: [],
@@ -284,11 +282,17 @@ Vue.component('chart-table', {
         };
     },
     computed: {
+        posObj() {
+            return this.posConfig[this.tabCode];
+        },
+        openCodeLength() {//计算开奖号码一共有几位
+            return this.openDataArr[0].length;
+        },
         selectNumArr() {
             return this.selectNumObj[this.lotteryType];
         },
         totalArrs() {
-            return calcEachTotal(this.posArr, this.selectNumArr, this.openDataArr);
+            return calcEachTotal(this.posObj, this.selectNumArr, this.openDataArr);
         },
         averageMissArrs() {
             return this.totalArrs.map(totalArr => {
@@ -301,10 +305,10 @@ Vue.component('chart-table', {
             });
         },
         maxMissArrs() {
-            return getMissAndContinuousObj(this.posArr, this.selectNumArr, this.openDataArr).missArr;
+            return getMissAndContinuousObj(this.posObj, this.selectNumArr, this.openDataArr).missArr;
         },
         maxContinuousArrs() {
-            return getMissAndContinuousObj(this.posArr, this.selectNumArr, this.openDataArr).continuousArr;
+            return getMissAndContinuousObj(this.posObj, this.selectNumArr, this.openDataArr).continuousArr;
         },
         distributionTotalArr() {
             return caclDistributionTotalArr(this.selectNumArr, this.openDataArr);
@@ -327,6 +331,14 @@ Vue.component('chart-table', {
             return this.data.map(item => {
                 return item.code.split(',').map(v => Number(v));
             });
+        }
+    },
+    watch: {
+        tabCode(newVal, oldVal) {
+            //重置
+            this.selectedIndexObj = {};
+            this.missAndContinuousObj = {};
+            this.distributionIndexArr = [];
         }
     },
     methods: {
@@ -357,13 +369,14 @@ Vue.component('chart-table', {
 
 /**
  * 计算出现总次数
- * posArr ['万位', '千位', '百位', '十位', '个位']
+ * posObj ['万位', '千位', '百位', '十位', '个位']
  * selectNumArr => 如时时彩[0,1,2,3,4,5,6,7,8,9]
  * openDataArr 开奖号码数组
  * return [[2,3,3,4,4,3,5,6,7],[2,3,3,4,4,3,5,6,7],[2,3,3,4,4,3,5,6,7],[2,3,3,4,4,3,5,6,7],[2,3,3,4,4,3,5,6,7]] 返回每个位置统计值集合
  */
-function calcEachTotal(posArr, selectNumArr, openDataArr) {
-    return posArr.map((posItem, posIndex) => {
+function calcEachTotal(posObj, selectNumArr, openDataArr) {
+    const totalArr = [];
+    for (let posIndex in posObj) {
         const resultArr = [];
         selectNumArr.forEach(selectNum => {
             let count = 0;
@@ -374,8 +387,9 @@ function calcEachTotal(posArr, selectNumArr, openDataArr) {
             });
             resultArr.push(count);
         });
-        return resultArr;
-    });
+        totalArr.push(resultArr);
+    }
+    return totalArr;
 }
 
 /**
@@ -451,8 +465,9 @@ function getDistributionMissAndContinuousObj(selectNumArr, openDataArr) {
 /**
  * 获取最大遗漏值和连出值对象
  */
-function getMissAndContinuousObj(posArr, selectNumArr, openDataArr) {
-    const missAndContinuousArr = posArr.map((posItem, posIndex) => {
+function getMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
+    const missAndContinuousArr = [];
+    for (let posIndex in posObj) {
         const resultArr = [];
         selectNumArr.forEach(selectNum => {
             const arr = [];
@@ -463,8 +478,8 @@ function getMissAndContinuousObj(posArr, selectNumArr, openDataArr) {
             });
             resultArr.push(arr);
         });
-        return resultArr;
-    });
+        missAndContinuousArr.push(resultArr);
+    }
     //最大遗漏值
     const missArr = missAndContinuousArr.map(posItem => {
         const openDataArrLength = openDataArr.length;
