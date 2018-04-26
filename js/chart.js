@@ -225,7 +225,7 @@ new Vue({
                     cn: '三星'
                 }]
             },
-            'lhc': {
+            /*  'lhc': {
                 typeCnName: '六合彩系列',
                 lotteries: [{
                         'code': 'XGLHC',
@@ -240,7 +240,7 @@ new Vue({
                     en: 'lhc-tm',
                     cn: '特码'
                 }]
-            },
+            }, */
             'other': {
                 typeCnName: '其他彩种',
                 lotteries: [{
@@ -282,7 +282,7 @@ new Vue({
             'pk10': 'pk10-q5',
             'k3': 'k3-3x',
             '3d': '3d-3x',
-            'lhc': 'lhc-tm',
+            // 'lhc': 'lhc-tm',
             'other': 'kl12-all'
         },
         checkedConfig: [{
@@ -340,7 +340,7 @@ new Vue({
             '3d': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             'kl12': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             'ky481': [1, 2, 3, 4, 5, 6, 7, 8],
-            'lhc': Array(49).fill(0).map((v, i) => `0${i+1}`.slice(-2)) //[01-49]
+            // 'lhc': Array(49).fill(0).map((v, i) => `0${i+1}`.slice(-2)) //[01-49]
         },
         posConfig: {
             'ssc-5x': {

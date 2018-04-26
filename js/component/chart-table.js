@@ -31,11 +31,11 @@ Vue.component('chart-table', {
                     </template>    
                     <td v-for="(selectNum, selectNumIndex) in selectNumArr" v-html="renderDistribution(item.code, selectNum, selectNumIndex, index)"></td> 
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td v-html="render3xZutaiZ3(item.code, index)"></td>
+                        <td v-html="render3xZutaiZ6(item.code, index)"></td>
+                        <td v-html="render3xZutaiBaozi(item.code, index)"></td>
+                        <td v-html="renderHezhi(item.code)"></td>
+                        <td v-html="renderKuadu(item.code)"></td>
                     </template>
                 </tr>
             </tbody>
@@ -127,7 +127,10 @@ Vue.component('chart-table', {
         return {
             selectedIndexObj: {}, //遗漏值计数从上到下1开始，碰到开奖号就重新从1开始计数
             missAndContinuousObj: {}, //底部计算平均遗漏值，最大遗漏值，最大连出值用到，结构missAndContinuousObj.posIndex.selectIndex = [index1,index2,...]
-            distributionIndexArr: [],
+            distributionIndexArr: [], //计算竖排的1234序号用的
+            z3ZutaiObj: {}, //计算竖排的1234序号用的
+            // z6ZutaiIndex: 0, //计算竖排的1234序号用的
+            // baoziZutaiIndex: 0, //计算竖排的1234序号用的
             "data": [{
                 "code": "6,7,7,6,3",
                 "issue": "20180419-118"
@@ -285,7 +288,7 @@ Vue.component('chart-table', {
         posObj() {
             return this.posConfig[this.tabCode];
         },
-        openCodeLength() {//计算开奖号码一共有几位
+        openCodeLength() { //计算开奖号码一共有几位
             return this.openDataArr[0].length;
         },
         selectNumArr() {
@@ -339,11 +342,46 @@ Vue.component('chart-table', {
             this.selectedIndexObj = {};
             this.missAndContinuousObj = {};
             this.distributionIndexArr = [];
+            this.z3ZutaiObj = {};
+            // this.z3ZutaiIndex = 0; //计算竖排的1234序号用的
+            // this.z6ZutaiIndex = 0; //计算竖排的1234序号用的
+            // this.baoziZutaiIndex = 0; //计算竖排的1234序号用的
         }
     },
     methods: {
+        getCodeArr(codeArr) { //统计前三等玩法的时候[1,2,3,4,5]只计算[1,2,3]的数据，所有要分割下
+            switch (this.tabCode) {
+                case 'ssc-5x':
+                case '11y-3x':
+                case 'k3-3x':
+                case '3d-3x':
+                case 'kl12-all':
+                case 'ky481-all':
+                    return codeArr;
+                case 'ssc-4x':
+                    return codeArr.slice(1, 5);
+                case 'ssc-q3':
+                    return codeArr.slice(0, 3);
+                case 'ssc-z3':
+                    return codeArr.slice(1, 4);
+                case 'ssc-h3':
+                    return codeArr.slice(2, 5);
+                case 'ssc-q2':
+                    return codeArr.slice(0, 2);
+                case 'ssc-h2':
+                    return codeArr.slice(3, 5);
+                case 'pk10-q5':
+                    return codeArr.slice(0, 5);
+                case 'pk10-h5':
+                    return codeArr.slice(5, 10);
+                default:
+                    return codeArr;
+            }
+        },
         renderDistribution(code, selectNum, selectNumIndex, index) {
-            const arr = code.split(',').filter(v => Number(v) === Number(selectNum));
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            const arr = codeArr.filter(v => Number(v) === Number(selectNum));
             if (arr.length > 0) {
                 this.distributionIndexArr[selectNumIndex] = index + 1;
                 if (arr.length > 1) {
@@ -364,6 +402,46 @@ Vue.component('chart-table', {
                 return `<i>${index + 1 - (this.selectedIndexObj[posIndex][selectNumIndex] || 0)}</i>`;
             }
         },
+        render3xZutaiZ3(code, index) {
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            if (cacl3xZutai(codeArr) === '组三') {
+                this.z3ZutaiObj['z3'] = index + 1;
+                return 'yes';
+            } else {
+                return index + 1 - (this.z3ZutaiObj['z3'] || 0);
+            }
+        },
+        render3xZutaiZ6(code, index) {
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            if (cacl3xZutai(codeArr) === '组六') {
+                this.z3ZutaiObj['z6'] = index + 1;
+                return 'yes';
+            } else {
+                return index + 1 - (this.z3ZutaiObj['z6'] || 0);
+            }
+        },
+        render3xZutaiBaozi(code, index) {
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            if (cacl3xZutai(codeArr) === '豹子') {
+                this.z3ZutaiObj['baozi'] = index + 1;
+                return 'yes';
+            } else {
+                return index + 1 - (this.z3ZutaiObj['baozi'] || 0);
+            }
+        },
+        renderHezhi(code) {
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            return calcHezhi(codeArr);
+        },
+        renderKuadu(code) {
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            return calcKuadu(codeArr);
+        }
     }
 });
 
@@ -557,4 +635,54 @@ function filterShunziArr(arr) {
         result.push(res);
     }
     return result;
+}
+
+/**
+ * 计算3星组态
+ * 规则：3个号码中有两个相同为“组三”，3个都不相同为“组六”,3个相同为“豹子”
+ * @param {数组} arr [1,2,3],只能是3个元素
+ */
+function cacl3xZutai(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error('所传参数必须是数组');
+    }
+    if (arr.length !== 3) {
+        throw new Error('数组只能含3个数字');
+    }
+    arr = arr.map(v => Number(v));
+    const obj = {
+        1: '豹子',
+        2: '组三',
+        3: '组六'
+    };
+    const deduplicationArr = [...new Set(arr)]; //去重
+    return obj[deduplicationArr.length];
+}
+
+/**
+ * 计算跨度
+ * 规则：计算数组元素中最大值和最小值的差值
+ * @param {数组} arr 
+ */
+function calcKuadu(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error('所传参数必须是数组');
+    }
+    arr = arr.map(v => Number(v));
+    const max = Math.max(...arr);
+    const min = Math.min(...arr);
+    return max - min;
+}
+
+/**
+ * 计算和值
+ * 规则：计算数组元素中所有值的和值
+ * @param {数组} arr 
+ */
+function calcHezhi(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error('所传参数必须是数组');
+    }
+    arr = arr.map(v => Number(v));
+    return arr.reduce((a, b) => a + b);
 }
