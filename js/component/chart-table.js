@@ -48,9 +48,7 @@ Vue.component('chart-table', {
                     </template>
                     <td v-for="item in distributionTotalArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td v-for="v in z3ZutaiTotalArr">{{v}}</td>
                         <td></td>
                         <td></td>
                     </template>
@@ -63,9 +61,7 @@ Vue.component('chart-table', {
                     </template>
                     <td v-for="item in distributionAverageMissArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td v-for="v in z3ZutaiAverageMissArr">{{v}}</td>
                         <td></td>
                         <td></td>
                     </template>
@@ -78,9 +74,7 @@ Vue.component('chart-table', {
                     </template>
                     <td v-for="item in distributionMaxMissArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td v-for="v in z3ZutaiMaxMissArr">{{v}}</td>
                         <td></td>
                         <td></td>
                     </template>
@@ -93,9 +87,7 @@ Vue.component('chart-table', {
                     </template>
                     <td v-for="item in distributionMaxContinuousArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td v-for="v in z3ZutaiContinuousArr">{{v}}</td>
                         <td></td>
                         <td></td>
                     </template>
@@ -129,8 +121,7 @@ Vue.component('chart-table', {
             missAndContinuousObj: {}, //底部计算平均遗漏值，最大遗漏值，最大连出值用到，结构missAndContinuousObj.posIndex.selectIndex = [index1,index2,...]
             distributionIndexArr: [], //计算竖排的1234序号用的
             z3ZutaiObj: {}, //计算竖排的1234序号用的
-            // z6ZutaiIndex: 0, //计算竖排的1234序号用的
-            // baoziZutaiIndex: 0, //计算竖排的1234序号用的
+            z3ZutaiTotalObj: {}, //计算3星组态底部总次数，最大遗漏值，连出值用到
             "data": [{
                 "code": "6,7,7,6,3",
                 "issue": "20180419-118"
@@ -285,6 +276,11 @@ Vue.component('chart-table', {
         };
     },
     computed: {
+        openDataArr() {
+            return this.data.map(item => {
+                return item.code.split(',').map(v => Number(v));
+            });
+        },
         posObj() {
             return this.posConfig[this.tabCode];
         },
@@ -330,11 +326,43 @@ Vue.component('chart-table', {
         distributionMaxContinuousArr() {
             return getDistributionMissAndContinuousObj(this.selectNumArr, this.openDataArr).continuousArr;
         },
-        openDataArr() {
-            return this.data.map(item => {
-                return item.code.split(',').map(v => Number(v));
+        z3ZutaiTotalArr() {
+            const z3Total = this.z3ZutaiTotalObj['z3'].length;
+            const z6Total = this.z3ZutaiTotalObj['z6'].length;
+            const baoziTotal = this.z3ZutaiTotalObj['baozi'].length;
+            return [z3Total, z6Total, baoziTotal];
+        },
+        z3ZutaiAverageMissArr() {
+            return this.z3ZutaiTotalArr.map(total => {
+                if (total === 0) {
+                    return this.openDataArr.length + 1;
+                }
+                return Math.round(this.openDataArr.length / total);
             });
-        }
+        },
+        z3ZutaiMaxMissArr() {
+            const openDataArrLength = this.openDataArr.length;
+            const z3Miss = calcMaxMiss(this.z3ZutaiTotalObj['z3'], openDataArrLength);
+            const z6Miss = calcMaxMiss(this.z3ZutaiTotalObj['z6'], openDataArrLength);
+            const baoziMiss = calcMaxMiss(this.z3ZutaiTotalObj['baozi'], openDataArrLength);
+            return [z3Miss, z6Miss, baoziMiss];
+        },
+        z3ZutaiContinuousArr() {
+            const result = {};
+            for (let key in this.z3ZutaiTotalObj) {
+                const arr = this.z3ZutaiTotalObj[key];
+                arr.sort();
+                if (arr.length === 0) {
+                    result[key] = 0;
+                }
+                if (filterShunziArr(arr).length > 0) {
+                    result[key] = filterShunziArr(arr).sort((a, b) => b.length - a.length)[0].length;
+                } else {
+                    result[key] = 1;
+                }
+            }
+            return [result['z3'], result['z6'], result['baozi']];
+        },
     },
     watch: {
         tabCode(newVal, oldVal) {
@@ -343,9 +371,7 @@ Vue.component('chart-table', {
             this.missAndContinuousObj = {};
             this.distributionIndexArr = [];
             this.z3ZutaiObj = {};
-            // this.z3ZutaiIndex = 0; //计算竖排的1234序号用的
-            // this.z6ZutaiIndex = 0; //计算竖排的1234序号用的
-            // this.baoziZutaiIndex = 0; //计算竖排的1234序号用的
+            this.z3ZutaiTotalObj = {};
         }
     },
     methods: {
@@ -405,8 +431,10 @@ Vue.component('chart-table', {
         render3xZutaiZ3(code, index) {
             let codeArr = code.split(',').map(v => Number(v));
             codeArr = this.getCodeArr(codeArr);
+            this.z3ZutaiTotalObj['z3'] = this.z3ZutaiTotalObj['z3'] || [];
             if (cacl3xZutai(codeArr) === '组三') {
                 this.z3ZutaiObj['z3'] = index + 1;
+                this.z3ZutaiTotalObj['z3'].push(index + 1)
                 return 'yes';
             } else {
                 return index + 1 - (this.z3ZutaiObj['z3'] || 0);
@@ -415,8 +443,10 @@ Vue.component('chart-table', {
         render3xZutaiZ6(code, index) {
             let codeArr = code.split(',').map(v => Number(v));
             codeArr = this.getCodeArr(codeArr);
+            this.z3ZutaiTotalObj['z6'] = this.z3ZutaiTotalObj['z6'] || [];
             if (cacl3xZutai(codeArr) === '组六') {
                 this.z3ZutaiObj['z6'] = index + 1;
+                this.z3ZutaiTotalObj['z6'].push(index + 1);
                 return 'yes';
             } else {
                 return index + 1 - (this.z3ZutaiObj['z6'] || 0);
@@ -425,8 +455,10 @@ Vue.component('chart-table', {
         render3xZutaiBaozi(code, index) {
             let codeArr = code.split(',').map(v => Number(v));
             codeArr = this.getCodeArr(codeArr);
+            this.z3ZutaiTotalObj['baozi'] = this.z3ZutaiTotalObj['baozi'] || [];
             if (cacl3xZutai(codeArr) === '豹子') {
                 this.z3ZutaiObj['baozi'] = index + 1;
+                this.z3ZutaiTotalObj['baozi'].push(index + 1);
                 return 'yes';
             } else {
                 return index + 1 - (this.z3ZutaiObj['baozi'] || 0);
@@ -503,25 +535,7 @@ function getDistributionMissAndContinuousObj(selectNumArr, openDataArr) {
     });
     const openDataArrLength = openDataArr.length;
     const missArr = resultArr.map(arr => {
-        arr.sort();
-        if (arr.length === 0) {
-            return openDataArrLength;
-        }
-        if (arr.length === 1) {
-            return Math.max(...[openDataArrLength - arr[0], arr[0] - 1]);
-        }
-        if (arr.length === 2) {
-            return Math.max(...[openDataArrLength - arr[1], arr[1] - arr[0], arr[0] - 1]);
-        }
-        const result = [];
-        const min = Math.min(...arr);
-        const max = Math.max(...arr);
-        result.push(min - 1);
-        result.push(openDataArrLength - max);
-        for (let i = 0; i < arr.length - 2; i++) {
-            result.push(arr[i + 1] - arr[i] - 1);
-        }
-        return Math.max(...result);
+        return calcMaxMiss(arr, openDataArrLength);
     });
     const continuousArr = resultArr.map(arr => {
         arr.sort();
@@ -562,25 +576,7 @@ function getMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
     const missArr = missAndContinuousArr.map(posItem => {
         const openDataArrLength = openDataArr.length;
         return posItem.map(itemArr => {
-            itemArr.sort();
-            if (itemArr.length === 0) {
-                return openDataArr.length;
-            }
-            if (itemArr.length === 1) {
-                return Math.max(...[openDataArrLength - itemArr[0], itemArr[0] - 1]);
-            }
-            if (itemArr.length === 2) {
-                return Math.max(...[openDataArrLength - itemArr[1], itemArr[1] - itemArr[0], itemArr[0] - 1]);
-            }
-            const result = [];
-            const min = Math.min(...itemArr);
-            const max = Math.max(...itemArr);
-            result.push(min - 1);
-            result.push(openDataArrLength - max);
-            for (let i = 0; i < itemArr.length - 2; i++) {
-                result.push(itemArr[i + 1] - itemArr[i] - 1);
-            }
-            return Math.max(...result);
+            return calcMaxMiss(itemArr, openDataArrLength);
         });
     });
     //最大连出值
@@ -601,6 +597,35 @@ function getMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
         missArr,
         continuousArr
     };
+}
+
+/**
+ * 计算最大遗漏值
+ * 
+ * @param {Array} arr 选中的序号集合
+ * @param {Number} openDataArrLength 列表的数量
+ * @returns Number
+ */
+function calcMaxMiss(arr, openDataArrLength) {
+    arr.sort();
+    if (arr.length === 0) {
+        return openDataArrLength;
+    }
+    if (arr.length === 1) {
+        return Math.max(...[openDataArrLength - arr[0], arr[0] - 1]);
+    }
+    if (arr.length === 2) {
+        return Math.max(...[openDataArrLength - arr[1], arr[1] - arr[0], arr[0] - 1]);
+    }
+    const result = [];
+    const min = Math.min(...arr);
+    const max = Math.max(...arr);
+    result.push(min - 1);
+    result.push(openDataArrLength - max);
+    for (let i = 0; i < arr.length - 2; i++) {
+        result.push(arr[i + 1] - arr[i] - 1);
+    }
+    return Math.max(...result);
 }
 
 /**
