@@ -23,7 +23,8 @@
             <lottery-issue-period :issue-period-config="issuePeriodConfig" @receiveperiod="receivePeriod"></lottery-issue-period>
         </div>
         <div class="chart-table-wrap">
-            <chart-table :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></chart-table>
+            <chart-table v-if="tabCode !== ssc-qw&nn" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></chart-table>
+            <normal-table v-if="tabCode === ssc-qw&nn" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></normal-table>
         </div>
     </div>
     <script src="./js/vender/axios.min.js"></script>
