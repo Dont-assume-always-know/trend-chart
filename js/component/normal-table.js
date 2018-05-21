@@ -15,7 +15,7 @@ Vue.component('normal-table', {
                     <td>牛牛</td>  
                 </tr>
                 <tr>
-                    <td v-for="v in lhhPosArr">{{v}}</td>     
+                    <td v-for="pos in lhhPosArr">{{pos.cn}}</td>     
                     <td v-for="v in niuniuXtArr">{{v}}</td>     
                 </tr>
             </thead>
@@ -23,13 +23,13 @@ Vue.component('normal-table', {
                 <tr v-for="(item, index) in data">
                     <td>{{item.issue}}</td>
                     <td v-for="n in item.code.split(',')">{{n}}</td>
-                    <td v-for="lhhXt in getLhhXtArr(item.code)" v-html="renderLhhXt(lhhXt)"></td>
+                    <td v-for="pos in lhhPosArr" v-html="renderLhhXt(pos, item.code.split(','))"></td>
                     <td v-html="renderBjl(item.code)"></td>
                     <td v-html="render5xXt(item.code)"></td>
                     <td v-html="renderq3Xt(item.code)"></td>
                     <td v-html="renderz3Xt(item.code)"></td>
                     <td v-html="renderh3Xt(item.code)"></td>
-                    <td v-for="niuniuXt in getNiuniuXtArr(item.code)" v-html="renderNiuniuXt(niuniuXt)"></td>
+                    <td v-for="niuniuXt in niuniuXtArr" v-html="renderNiuniuXt(niuniuXt, item.code.split(','))"></td>
                 </tr>
             </tbody>
             <tfoot>
@@ -54,7 +54,37 @@ Vue.component('normal-table', {
     props: ['lottery-config', 'lottery-type', 'pos-config', 'tab-code', 'select-num-obj'],
     data() {
         return {
-            lhhPosArr: ['万千', '万百', '万十', '万个', '千百', '千十', '千个', '百十', '百个', '十个'],
+            lhhPosArr: [{
+                en: '01',
+                cn: '万千'
+            }, {
+                en: '02',
+                cn: '万百'
+            },{
+                en: '03',
+                cn: '万十'
+            },{
+                en: '04',
+                cn: '万个'
+            },{
+                en: '12',
+                cn: '千百'
+            },{
+                en: '13',
+                cn: '千十'
+            },{
+                en: '14',
+                cn: '千个'
+            },{
+                en: '23',
+                cn: '百十'
+            },{
+                en: '24',
+                cn: '百个'
+            },{
+                en: '34',
+                cn: '十个'
+            }],
             niuniuXtArr: ['牛牛', '大小', '单双'],
             "data": [{
                 "code": "6,7,7,6,3",
@@ -344,6 +374,28 @@ Vue.component('normal-table', {
                 return 'yes';
             } else {
                 return index + 1 - (this.z2ZutaiObj['duizi'] || 0);
+            }
+        },
+        renderLhhXt(pos, arr) {
+            const en = pos.en;//01 
+            const a = arr[en[0]];
+            const b = arr[en[1]];
+            return calcLhh(a, b);
+        },
+        renderNiuniuXt(xtTitle, arr) {
+            switch (xtTitle) {
+                case '牛牛':
+                    return calcNiuniu(arr).nn;
+                    break;
+                case '大小':
+                    return calcNiuniu(arr).dx;
+                    break;
+                case '单双':
+                    return calcNiuniu(arr).ds;
+                    break;
+                default:
+                    return '---';
+                    break;
             }
         }
     }

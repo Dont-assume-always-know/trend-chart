@@ -1,4 +1,3 @@
-
 /**
  * 计算出现总次数
  * posObj ['万位', '千位', '百位', '十位', '个位']
@@ -251,4 +250,82 @@ function calc2xDuizi(arr) {
     const length = [...new Set(arr)].length;
     if (length === 1) return true;
     return false;
+}
+//计算龙湖和
+function calcLhh(a, b) {
+    if (a > b) {
+        return '龙';
+    }
+    if (a < b) {
+        return '虎';
+    }
+    return '和';
+}
+/* 
+牛牛：
+根据开奖第一球~第五球开出的球号数字为基础，
+任意组合三个号码成0或10的倍数，
+取剩余两个号码之和为点数（大于10时减去10后的数字作为兑奖基数，如：00026为牛8,02818为牛9，68628、23500皆为牛牛，
+26378、15286因任意三个号码都无法组合成0或10的倍数，
+称为无牛，注：当五个号码相同时，只有00000视为牛牛，其它11111,66666等皆为无牛）。
+大小：牛大（牛6、牛7、牛8、牛9、牛牛），
+牛小（牛1、牛2、牛3、牛4、牛5），
+若开出斗牛结果为无牛，则投注牛大牛小皆为不中奖。
+单双：牛单（牛1、牛3、牛5、牛7、牛9），牛双（牛2、牛4、牛6、牛8、牛牛），
+若开出斗牛结果为无牛，
+则投注牛单牛双皆为不中奖。
+*/
+function calcNiuniu(arr) {
+    const HZ = arr.reduce((a, b) => a + b);
+    const YU = HZ % 10;
+    const combinationArr = choose(arr, 3);
+    // 是否有 任意组合三个号码成0或10的倍数，
+    const has10X = combinationArr.findIndex(a => a.reduce((m, n) => m + n) === 10) !== -1;
+    let niuniuXt;
+    let dxXt;
+    let dsXt;
+    if (!has10X) {
+        niuniuXt = '无牛';
+        dxXt = '---';
+        dsXt = '---';
+    } else {
+        niuniuXt = YU === 0 ? '牛牛' : `牛${YU}`;
+        dxXt = [6, 7, 8, 9, 0].indexOf(YU) !== -1 ? '牛大' : '牛小';
+        dsXt = YU % 2 === 0 ? '牛双' : '牛单';
+    }
+    return {
+        nn: niuniuXt,
+        dx: dxXt,
+        ds: dsXt
+    };
+}
+//求数组组合的所有组合方式[1,2,3]->[1,2],[1,3],[2,3]
+function choose(arr, size) {
+    var allResult = [];
+
+    function _choose(arr, size, result) {
+        var arrLen = arr.length;
+        if (size > arrLen) {
+            return;
+        }
+        if (size == arrLen) {
+            allResult.push([].concat(result, arr))
+        } else {
+            for (var i = 0; i < arrLen; i++) {
+                var newResult = [].concat(result);
+                newResult.push(arr[i]);
+
+                if (size == 1) {
+                    allResult.push(newResult);
+                } else {
+                    var newArr = [].concat(arr);
+                    newArr.splice(0, i + 　1);
+                    _choose(newArr, size - 1, newResult);
+                }
+            }
+        }
+    }
+    _choose(arr, size, []);
+
+    return allResult;
 }
