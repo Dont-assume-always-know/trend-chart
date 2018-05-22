@@ -10,21 +10,22 @@
 </head>
 <body>
     <div id="vue-chart">
-        <div class="lottery-select-wrap">
-            选择彩种
-            <lottery-type-select :lottery-config="lotteryConfig" :lottery-default-type="lotteryDefaultType" :lottery-type="lotteryType" @receivelotterytype="receiveLotteryType"></lottery-type-select>
-            <lottery-select :lottery-arrs="lotteryArrs" :lottery-default-obj="lotteryDefaultObj" :lottery-type="lotteryType" @receivelottery="receiveLottery"></lottery-select>
-        </div>
-        <div class="lottery-tab-wrap">
-            <lottery-tab :tab-default-obj="tabDefaultObj" :tabs-arr="tabsArr" :lottery-type="lotteryType" :lottery="lottery" @receivetab="receiveTab"></lottery-tab>
-        </div>
-        <div class="chart-option-wrap clearfix">
-            <chart-option :checked-config="checkedConfig"></chart-option>
-            <lottery-issue-period :issue-period-config="issuePeriodConfig" @receiveperiod="receivePeriod"></lottery-issue-period>
+        <div class="lottery-top-wrap">
+            <div class="lottery-select-wrap">
+                <lottery-type-select :lottery-config="lotteryConfig" :lottery-default-type="lotteryDefaultType" :lottery-type="lotteryType" @receivelotterytype="receiveLotteryType"></lottery-type-select>
+                <lottery-select :lottery-arrs="lotteryArrs" :lottery-default-obj="lotteryDefaultObj" :lottery-type="lotteryType" @receivelottery="receiveLottery"></lottery-select>
+            </div>
+            <div class="lottery-tab-wrap">
+                <lottery-tab :tab-default-obj="tabDefaultObj" :tabs-arr="tabsArr" :lottery-type="lotteryType" :lottery="lottery" @receivetab="receiveTab"></lottery-tab>
+            </div>
+            <div class="chart-option-wrap clearfix">
+                <chart-option :checked-config="checkedConfig"></chart-option>
+                <lottery-issue-period :issue-period-config="issuePeriodConfig" @receiveperiod="receivePeriod"></lottery-issue-period>
+            </div>
         </div>
         <div class="chart-table-wrap">
-            <chart-table v-if="tabCode !== 'ssc-qw&nn'" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></chart-table>
-            <normal-table v-if="tabCode === 'ssc-qw&nn'" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></normal-table>
+            <chart-table v-if="tabCode !== 'ssc-qw&nn'" :trend-data="trendData" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></chart-table>
+            <normal-table v-if="tabCode === 'ssc-qw&nn'" :trend-data="trendData" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></normal-table>
         </div>
     </div>
     <script src="./js/vender/axios.min.js"></script>

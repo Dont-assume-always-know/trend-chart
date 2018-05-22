@@ -20,6 +20,252 @@ td {
     color: saddlebrown;
 }
 
+.santiao {
+    color: #FF7C4E;
+}
+
+.sitiao {
+    color: #EE7C4E;
+}
+
+.hulu {
+    color: #1FA1EE;
+}
+
+.baozi {
+    color: #1FA1DD;
+}
+
+.shunzi {
+    color: #F99C22;
+}
+
+.duizi,
+.yidui {
+    color: #F92252;
+}
+
+.banshun {
+    color: #AF3EE8;
+}
+
+.liangdui {
+    color: #AD3EE8;
+}
+
+.za6,
+.danpai {
+    color: #35C5DF;
+}
+
+.long,
+.zhuang,
+.s6 {
+    background: #F92252;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+}
+
+.hu,
+.xian {
+    background: #6998FF;
+    ;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+}
+
+.he,
+.dui {
+    background: #108D7D;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.zhuangdui {
+    color: #F92252;
+    position: absolute;
+    bottom: 10px;
+    width: 25px;
+}
+
+.xiandui {
+    color: #6998FF;
+    position: absolute;
+    bottom: -10px;
+    width: 25px;
+}
+
+.da {
+    color: #1FA1DD;
+}
+
+.dan {
+    color: #1FA1DD;
+}
+
+.xiao {
+    color: #F99C22;
+}
+
+.shuang {
+    color: #F99C22;
+}
+
+.niuda {
+    color: #1FA1DD;
+}
+
+.niudan {
+    color: #1FA1DD;
+}
+
+.niuxiao {
+    color: #F99C22;
+}
+
+.niushuang {
+    color: #F99C22;
+}
+
+.niuniu {
+    display: inline-block;
+    text-align: center;
+    background: #1FA1DD;
+    color: #FFFFFF;
+    border-radius: 4px;
+    width: 32px;
+    height: 18px;
+    line-height: 18px;
+}
+
+/* --ie清除--*/
+
+select::-ms-expand {
+    display: none;
+}
+
+/* --火狐、谷歌清除--*/
+
+select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("../images/down-hook.svg") no-repeat scroll right center transparent;
+    padding-left: 10px;
+}
+
+/* --箭头就用自己设计的箭头，padding 空出箭头的位置--*/
+
+.lottery-select,
+.lottery-type-select {
+    background-color: rgba(0, 0, 0, 0.40);
+    background-position: 134px center;
+    border: 2px solid rgba(255, 255, 255, 0.40);
+    width: 154px;
+    height: 28px;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.60);
+    text-align: left;
+    cursor: pointer;
+}
+
+.lottery-select {
+    margin-left: 50px;
+}
+
+.lottery-tab-wrap {
+    padding-top: 20px;
+    padding-bottom: 15px;
+    padding-left: 24px;
+}
+
+.lottery-tab-item {
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    color: #FFFFFF;
+    padding: 4px 9px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
 .lottery-tab-item.on {
-    color: tomato;
+    background: #C93232;
+}
+
+.lottery-top-wrap {
+    background: #252525;
+}
+
+.lottery-select-wrap,
+.lottery-tab-wrap,
+.chart-option-wrap {
+    width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.chart-table-wrap>table {
+    margin: 0 auto;
+}
+
+.chart-option-item {
+    opacity: 0.5;
+    font-family: MicrosoftYaHei;
+    font-size: 12px;
+    color: #FFFFFF;
+    height: 34px;
+    line-height: 34px;
+    margin-right: 20px;
+}
+
+.chart-option-item>input,
+.chart-option-item>label {
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.chart-option-item>input {
+    margin-top: 6px;
+}
+
+.issue-period-item {
+    font-family: MicrosoftYaHei;
+    font-size: 12px;
+    color: #FFFFFF;
+    padding: 0 7px;
+    height: 34px;
+    line-height: 34px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.issue-period-item.on {
+    background: #FFFFFF;
+    color: #666666;
+}
+
+.chart-option-wrap {
+    padding-bottom: 7px;
+}
+
+.chart-option-list {
+    margin-right: 30px;
 }

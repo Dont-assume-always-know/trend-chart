@@ -4,6 +4,7 @@ new Vue({
         lotteryType: 'ssc',
         lottery: 'CQSSC',
         tabCode: 'ssc-5x',
+        trendData: [],
         lotteryConfig: {
             'ssc': {
                 typeCnName: '时时彩系列',
@@ -462,11 +463,11 @@ new Vue({
     },
     beforeCreate() {},
     created() {
-        /* axios.get('./data.json').then(res=>{
-            console.log(res);
+        axios.get('./json/data.json').then(res=>{
+            this.trendData = res.data.result.data;
         }).catch(error=>{
             console.log(error);
-        }); */
+        });
     },
     beforeMount() {},
     mounted() {}

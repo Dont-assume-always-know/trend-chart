@@ -1,6 +1,6 @@
 Vue.component('lottery-select', {
     template: `
-        <select name="lottery-select" v-model="lottery" @change="emitLottery(lottery)">
+        <select class="lottery-select" name="lottery-select" v-model="lottery" @change="emitLottery(lottery)">
             <option v-for="(item, index) in lotteryArrs" :value="item.code">
                 {{ item.cnName }}
             </option>

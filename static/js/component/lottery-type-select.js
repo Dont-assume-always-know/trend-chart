@@ -1,6 +1,6 @@
 Vue.component('lottery-type-select', {
     template: `
-        <select name="lottery-type-select" v-model="_lotteryType" @change="emitLotteryType(_lotteryType)">
+        <select class="lottery-type-select" name="lottery-type-select" v-model="_lotteryType" @change="emitLotteryType(_lotteryType)">
             <option v-for="(item, key) in lotteryConfig" :value="key">
                 {{ item.typeCnName }}
             </option>

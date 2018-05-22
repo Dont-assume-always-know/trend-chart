@@ -329,3 +329,95 @@ function choose(arr, size) {
 
     return allResult;
 }
+/* 
+(万位+千位)的和值，取其个位数为庄；
+(十位+个位)的和值，取其个位数为闲。
+庄大于闲，即押"庄"赢；
+庄小于闲，即押"闲"赢；
+庄=闲，即押"和"赢；
+若万位与千位号码相同，即押"庄对"赢；
+若十位与个位号码相同，即押"闲对"赢；
+若庄为6，闲小于6，即押"Super6"赢。
+*/
+function calcBjl(arr) {
+    const wan = arr[0];
+    const qian = arr[1];
+    const shi = arr[2];
+    const ge = arr[3];
+    const zhuang = (wan + qian) % 10;
+    const xian = (shi + ge) % 10;
+    let bjlXtPlus = '';
+    if (zhuang > xian) {
+        if (wan === qian) {
+            bjlXtPlus = '<em class="zhuangdui">庄对</em>';
+        }
+        if (zhuang === 6 && xian < 6) {
+            return `<i><em class="s6">S6${bjlXtPlus}</em>`;
+        }
+        return `<i><em class="zhuang">庄${bjlXtPlus}</em>`;
+    }
+    if (zhuang < xian) {
+        if (shi === shi) {
+            bjlXtPlus = '<em class="xiandui">闲对</em>';
+        }
+        return `<i><em class="xian">闲${bjlXtPlus}</em>`;
+    }
+    return `<i><em class="he">和</em></i>`;
+}
+/* 
+    数组转成计算每个值重复的个数 的对象
+    [1,3,4,5,1] => {
+        1:2,
+        3:1,
+        4:1,
+        5:1
+    }
+*/
+function arrToCountItemObj(arr) {
+    const obj = Object.create(null);
+    for (let item of arr) {
+        if (obj[item]) {
+            obj[item]++;
+        } else {
+            obj[item] = 1;
+        }
+    }
+    return obj;
+}
+//计算顺子 参数，数组范围最小值，范围最大值
+function calcShunzi(arr, min = 0, max = 9) {
+    arr.sort((a, b) => a - b);
+    //如果数组最大值超过设定的最大值max，返回错误提醒
+    if (arr[arr.length - 1] > max) {
+        throw Error("数组元素最大值超过预期，错误");
+        return false;
+    }
+    const flag = arr.every((m, n) => n == 0 ? true : m - arr[n - 1] == 1 ? true : false);
+    if (flag) return true; //如果传进来的数组本身是[2,3,4]这样的连续递增的数据，返回true
+    //走到这里，索命传进来的数据不是连续的，那么可以判断没有的数据是不是连续的
+    //把1-5这几个元素看成一个圆环，取环上一段连续的数据，那么剩下的数据也必然是连续的
+    const arrRest = [];
+    //从[1,2,3,4,5]中检测[1,5,2]少了哪些数据
+    for (let i = min; i < max + 1; i++) {
+        arr.indexOf(i) === -1 && arrRest.push(i);
+    }
+    //arrRest得到[3,4],然后检测arrRest是不是连续的
+    return arrRest.every((t, i) => i == 0 ? true : t - arrRest[i - 1] == 1 ? true : false);
+}
+//计算杂六
+function calcBanshunzi(arr, min = 0, max = 9) {
+    if (calcShunzi(arr, min, max)) {
+        return false;
+    }
+    if (arr.indexOf(min) !== -1 && arr.indexOf(max) !== -1) {
+        return true;
+    }
+    arr.sort((a, b) => a - b);
+    const reduceArr = [];
+    let start = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        reduceArr.push(arr[i] - start);
+        start = arr[i];
+    }
+    return reduceArr.indexOf(1) !== -1;
+}
