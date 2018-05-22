@@ -3,10 +3,10 @@ Vue.component('chart-table', {
         <table>
             <thead>
                 <tr>
-                    <td rowspan="2">奖期</td>
-                    <td rowspan="2" :colspan="openCodeLength">开奖号码</td>
-                    <td :colspan="selectNumArr.length" v-for="pos in posObj">{{pos}}</td>
-                    <td :colspan="selectNumArr.length">号码分布</td>
+                    <td class="chart-issue-title" rowspan="2">奖期</td>
+                    <td class="chart-open-code-title" rowspan="2" :colspan="openCodeLength">开奖号码</td>
+                    <td class="chart-pos-title" :colspan="selectNumArr.length" v-for="pos in posObj">{{pos}}</td>
+                    <td class="chart-distribution-title" :colspan="selectNumArr.length">号码分布</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td rowspan="2">组三</td>
                         <td rowspan="2">组六</td>
@@ -22,19 +22,21 @@ Vue.component('chart-table', {
                 </tr>
                 <tr>
                     <template v-for="pos in posObj">
-                        <td v-for="n in selectNumArr">{{n}}</td>
+                        <td class="pos-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>
                     </template>    
-                    <td v-for="n in selectNumArr">{{n}}</td>                    
+                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>                    
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(item, index) in trendData">
-                    <td>{{item.issue}}</td>
-                    <td v-for="n in item.code.split(',')">{{n}}</td>
+                    <td class="chart-issue">{{item.issue}}</td>
+                    <td class="chart-open-code" :colspan="openCodeLength">
+                        <i v-for="n in item.code.split(',')">{{n}}</i>
+                    </td>
                     <template v-for="(pos, posIndex) in posObj">
-                        <td v-for="(selectNum, selectNumIndex) in selectNumArr"  v-html="renderSelectNum(item.code, selectNum, selectNumIndex, posIndex, index)"></td>
+                        <td class="select-num" :index="selectNumIndex" v-for="(selectNum, selectNumIndex) in selectNumArr"  v-html="renderSelectNum(item.code, selectNum, selectNumIndex, posIndex, index)"></td>
                     </template>    
-                    <td v-for="(selectNum, selectNumIndex) in selectNumArr" v-html="renderDistribution(item.code, selectNum, selectNumIndex, index)"></td> 
+                    <td class="distribution-num" v-for="(selectNum, selectNumIndex) in selectNumArr" v-html="renderDistribution(item.code, selectNum, selectNumIndex, index)"></td> 
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td v-html="render3xZutaiZ3(item.code, index)"></td>
                         <td v-html="render3xZutaiZ6(item.code, index)"></td>
@@ -50,11 +52,11 @@ Vue.component('chart-table', {
                 </tr>
             </tbody>
             <tfoot>
-                <tr>
-                    <td>出现总次数</td>
-                    <td :colspan="openCodeLength"></td>
+                <tr class="total-appear-row">
+                    <td class="total-appear-title">出现总次数</td>
+                    <td class="chart-open-code" :colspan="openCodeLength"></td>
                     <template v-for="totalArr in totalArrs">
-                        <td v-for="item in totalArr">{{item}}</td>
+                        <td class="total-appear-num" :index="index" v-for="(item,index) in totalArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionTotalArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
@@ -68,11 +70,11 @@ Vue.component('chart-table', {
                         <td></td>
                     </template>
                 </tr>
-                <tr>
-                    <td>平均遗漏值</td>
-                    <td :colspan="openCodeLength"></td>
+                <tr class="average-miss-row">
+                    <td class="average-miss-title">平均遗漏值</td>
+                    <td class="chart-open-code" :colspan="openCodeLength"></td>
                     <template v-for="averageMissArr in averageMissArrs">
-                        <td v-for="item in averageMissArr">{{item}}</td>
+                        <td class="average-miss-num" :index="index" v-for="(item,index) in averageMissArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionAverageMissArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
@@ -86,11 +88,11 @@ Vue.component('chart-table', {
                         <td></td>
                     </template>
                 </tr>
-                <tr>
-                    <td>最大遗漏值</td>
-                    <td :colspan="openCodeLength"></td>
+                <tr class="max-miss-row">
+                    <td class="max-miss-title">最大遗漏值</td>
+                    <td class="chart-open-code" :colspan="openCodeLength"></td>
                     <template v-for="maxMissArr in maxMissArrs">
-                        <td v-for="item in maxMissArr">{{item}}</td>
+                        <td class="max-miss-num" :index="index" v-for="(item,index) in maxMissArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionMaxMissArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
@@ -105,10 +107,10 @@ Vue.component('chart-table', {
                     </template>
                 </tr>
                 <tr>
-                    <td>最大连出值</td>
-                    <td :colspan="openCodeLength"></td>
+                    <td class="max-continuous-title">最大连出值</td>
+                    <td class="chart-open-code" :colspan="openCodeLength"></td>
                     <template v-for="maxContinuousArr in maxContinuousArrs">
-                        <td v-for="item in maxContinuousArr">{{item}}</td>
+                        <td class="max-continuous-num" :index="index" v-for="(item,index) in maxContinuousArr">{{item}}</td>
                     </template>
                     <td v-for="item in distributionMaxContinuousArr">{{item}}</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
@@ -123,10 +125,10 @@ Vue.component('chart-table', {
                     </template>
                 </tr>
                 <tr>
-                    <td rowspan="2">奖期</td>
-                    <td rowspan="2" :colspan="openCodeLength">开奖号码</td>
-                    <td :colspan="selectNumArr.length" v-for="pos in posObj">{{pos}}</td>
-                    <td :colspan="selectNumArr.length">号码分布</td>
+                    <td class="chart-issue-title" rowspan="2">奖期</td>
+                    <td class="chart-open-code-title" rowspan="2" :colspan="openCodeLength">开奖号码</td>
+                    <td class="chart-pos-title" :colspan="selectNumArr.length" v-for="pos in posObj">{{pos}}</td>
+                    <td class="chart-distribution-title" :colspan="selectNumArr.length">号码分布</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
                         <td rowspan="2">组三</td>
                         <td rowspan="2">组六</td>
@@ -142,9 +144,9 @@ Vue.component('chart-table', {
                 </tr>
                 <tr>
                     <template v-for="pos in posObj">
-                        <td v-for="n in selectNumArr.length">{{n-1}}</td>
+                        <td class="pos-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>
                     </template>    
-                    <td v-for="n in selectNumArr.length">{{n-1}}</td>                    
+                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>                    
                 </tr>
             </tfoot>
         </table>
@@ -332,9 +334,9 @@ Vue.component('chart-table', {
             if (arr.length > 0) {
                 this.distributionIndexArr[selectNumIndex] = index + 1;
                 if (arr.length > 1) {
-                    return `<i class="distribution-num more-than-1">${selectNum}</i>`;
+                    return `<i class="distributioned-num more-than-1">${selectNum}</i>`;
                 }
-                return `<i class="distribution-num">${selectNum}</i>`;
+                return `<i class="distributioned-num">${selectNum}</i>`;
             } else {
                 return `<i>${index + 1 - (this.distributionIndexArr[selectNumIndex] || 0)}</i>`;
             }

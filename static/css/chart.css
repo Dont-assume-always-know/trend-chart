@@ -9,16 +9,42 @@ td {
     color: #666666;
 }
 
-.normal-issue-title {
+.normal-issue-title,
+.chart-issue-title {
     width: 90px;
     height: 60px;
     border: 1px solid #E0E0E0;    
 }
 
-.normal-open-code-title {
+.normal-open-code-title,
+.chart-open-code-title {
     width: 65px;
     height: 60px;
     border: 1px solid #E0E0E0;  
+}
+
+.chart-pos-title,
+.chart-distribution-title {
+    width: 210px;
+    height: 30px;
+    border: 1px solid #E0E0E0;      
+}
+
+.pos-title-num,
+.distribution-title-num {
+    width: 21px;
+    height: 30px;
+    border-bottom: 1px solid #E0E0E0; 
+}
+
+.select-num[index="9"],
+.pos-title-num[index="9"],
+.distribution-title-num[index="9"],
+.max-continuous-num[index="9"],
+.max-miss-num[index="9"],
+.average-miss-num[index="9"],
+.total-appear-num[index="9"] {
+    border-right: 1px solid #E0E0E0;
 }
 
 .normal-lhh-title {
@@ -31,6 +57,20 @@ td {
     width: 58px;
     height: 60px;
     border: 1px solid #E0E0E0;          
+}
+
+.total-appear-title,
+.average-miss-title,
+.max-miss-title,
+.max-continuous-title {
+    height: 23px;
+    border-right: 1px solid #E0E0E0;
+}
+
+.max-miss-row,
+.average-miss-row,
+.total-appear-row {
+    border-bottom: 1px solid #E0E0E0;                  
 }
 
 .normal-lhh-pos {
@@ -55,16 +95,30 @@ td {
     border-right: 1px solid #E0E0E0;              
 }
 
-.distribution-num {
-    color: green;
+.distributioned-num {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    background: #B847B7;
 }
 
-.distribution-num.more-than-1 {
-    color: palevioletred;
+.distributioned-num.more-than-1 {
+    background: #365A8F;
 }
 
 .selected-num {
-    color: saddlebrown;
+    background: #C84C59;
+    color: #FFFFFF;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50%;
 }
 
 .santiao {
@@ -269,7 +323,7 @@ select {
     box-sizing: border-box;
 }
 
-.chart-table-wrap>table {
+.table-inner-wrap>table {
     border: 1px solid #E0E0E0;
 }
 
@@ -326,14 +380,20 @@ tbody>tr:nth-child(5n) {
     border-bottom: 1px solid #E0E0E0;
 }
 
-.normal-issue {
-    border: 1px solid #E0E0E0;
+.normal-issue,
+.chart-issue {
+    border-right: 1px solid #E0E0E0;
     height: 35px;
 }
 
-.normal-open-code {
-    border: 1px solid #E0E0E0;
+.normal-open-code,
+.chart-open-code {
+    border-right: 1px solid #E0E0E0;
     color: #F26432;    
+}
+
+.select-num {
+    height: 35px;
 }
 
 tr>.normal-lhh[index="9"] {
@@ -346,4 +406,12 @@ tr>.normal-xt[pos="234"] {
 
 tr>.normal-niuniu[index="2"] {
     border-right: 1px solid #E0E0E0;            
+}
+
+.table-inner-wrap tfoot {
+    background: #252525;
+}
+
+.table-inner-wrap tfoot td {
+    color: #FFFFFF;
 }
