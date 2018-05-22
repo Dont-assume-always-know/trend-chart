@@ -254,12 +254,12 @@ function calc2xDuizi(arr) {
 //计算龙湖和
 function calcLhh(a, b) {
     if (a > b) {
-        return '龙';
+        return '<em class="long">龙</em>';
     }
     if (a < b) {
-        return '虎';
+        return '<em class="hu">虎</em>';
     }
-    return '和';
+    return '<em class="he">和</em>';
 }
 /* 
 牛牛：
@@ -285,13 +285,13 @@ function calcNiuniu(arr) {
     let dxXt;
     let dsXt;
     if (!has10X) {
-        niuniuXt = '无牛';
+        niuniuXt = '<em class="niuniu">无牛</em>';
         dxXt = '---';
         dsXt = '---';
     } else {
-        niuniuXt = YU === 0 ? '牛牛' : `牛${YU}`;
-        dxXt = [6, 7, 8, 9, 0].indexOf(YU) !== -1 ? '牛大' : '牛小';
-        dsXt = YU % 2 === 0 ? '牛双' : '牛单';
+        niuniuXt = YU === 0 ? '<em class="niuniu">牛牛</em>' : `<em class="niuniu">牛${YU}</em>`;
+        dxXt = [6, 7, 8, 9, 0].indexOf(YU) !== -1 ? '<em class="niuda">牛大</em>' : '<em class="niuxiao">牛小</em>';
+        dsXt = YU % 2 === 0 ? '<em class="niushuang">牛双</em>' : '<em class="niudan">牛单</em>';
     }
     return {
         nn: niuniuXt,

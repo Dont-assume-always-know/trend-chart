@@ -1,11 +1,58 @@
 td {
-    border: 1px solid saddlebrown;
     text-align: center;
     vertical-align: middle;
     width: 20px;
     height: 20px;
+    font-size: 12px;
     box-sizing: border-box;
     white-space: nowrap;
+    color: #666666;
+}
+
+.normal-issue-title {
+    width: 90px;
+    height: 60px;
+    border: 1px solid #E0E0E0;    
+}
+
+.normal-open-code-title {
+    width: 65px;
+    height: 60px;
+    border: 1px solid #E0E0E0;  
+}
+
+.normal-lhh-title {
+    height: 30px;
+    border: 1px solid #E0E0E0;      
+}
+
+.normal-bjl-title,
+.normal-xt-title {
+    width: 58px;
+    height: 60px;
+    border: 1px solid #E0E0E0;          
+}
+
+.normal-lhh-pos {
+    height: 30px;
+    width: 35px;
+    border-bottom: 1px solid #E0E0E0;              
+}
+
+.normal-niuniu-xt {
+    height: 30px;
+    width: 84px;
+    border-bottom: 1px solid #E0E0E0;                  
+}
+
+.normal-niuniu-title {
+    width: 252px;
+    height: 30px;
+    border: 1px solid #E0E0E0;              
+}
+
+.normal-niuniu-xt:last-child {
+    border-right: 1px solid #E0E0E0;              
 }
 
 .distribution-num {
@@ -223,7 +270,12 @@ select {
 }
 
 .chart-table-wrap>table {
+    border: 1px solid #E0E0E0;
+}
+
+.table-inner-wrap {
     margin: 0 auto;
+    width: 1200px;
 }
 
 .chart-option-item {
@@ -268,4 +320,30 @@ select {
 
 .chart-option-list {
     margin-right: 30px;
+}
+
+tbody>tr:nth-child(5n) {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.normal-issue {
+    border: 1px solid #E0E0E0;
+    height: 35px;
+}
+
+.normal-open-code {
+    border: 1px solid #E0E0E0;
+    color: #F26432;    
+}
+
+tr>.normal-lhh[index="9"] {
+    border-right: 1px solid #E0E0E0;    
+}
+
+tr>.normal-xt[pos="234"] {
+    border-right: 1px solid #E0E0E0;        
+}
+
+tr>.normal-niuniu[index="2"] {
+    border-right: 1px solid #E0E0E0;            
 }

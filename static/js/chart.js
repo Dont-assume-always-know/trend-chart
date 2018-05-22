@@ -272,25 +272,25 @@ new Vue({
         checkedConfig: [{
                 id: 'miss',
                 value: 'miss',
-                model: [],
+                model: 'no',
                 text: '遗漏'
             },
             {
                 id: 'miss-bar',
                 value: 'missBar',
-                model: [],
+                model: 'no',
                 text: '遗漏条'
             },
             {
                 id: 'trend-line',
                 value: 'trendLine',
-                model: [],
+                model: 'no',
                 text: '走势图折线'
             },
             {
                 id: 'cold-hot-number',
                 value: 'coldHotNumber',
-                model: [],
+                model: 'no',
                 text: '冷热号'
             },
         ],

@@ -4,49 +4,51 @@ Vue.component('normal-table', {
         <table>
             <thead>
                 <tr>
-                    <td rowspan="2">奖期</td>
-                    <td rowspan="2" :colspan="openCodeLength">开奖号码</td>
-                    <td :colspan="lhhPosArr.length">龙虎和</td>
-                    <td rowspan="2">百家乐</td>
-                    <td rowspan="2">五星形态</td>                   
-                    <td rowspan="2">前三形态</td>  
-                    <td rowspan="2">中三形态</td>  
-                    <td rowspan="2">后三形态</td>  
-                    <td :colspan="niuniuXtArr.length">牛牛</td>  
+                    <td rowspan="2" class="normal-issue-title">奖期</td>
+                    <td rowspan="2" :colspan="openCodeLength" class="normal-open-code-title">开奖号码</td>
+                    <td :colspan="lhhPosArr.length" class="normal-lhh-title">龙虎和</td>
+                    <td rowspan="2" class="normal-bjl-title">百家乐</td>
+                    <td rowspan="2" class="normal-xt-title">五星形态</td>                   
+                    <td rowspan="2" class="normal-xt-title">前三形态</td>  
+                    <td rowspan="2" class="normal-xt-title">中三形态</td>  
+                    <td rowspan="2" class="normal-xt-title">后三形态</td>  
+                    <td :colspan="niuniuXtArr.length" class="normal-niuniu-title">牛牛</td>  
                 </tr>
                 <tr>
-                    <td v-for="pos in lhhPosArr">{{pos.cn}}</td>     
-                    <td v-for="v in niuniuXtArr">{{v}}</td>     
+                    <td v-for="pos in lhhPosArr" class="normal-lhh-pos">{{pos.cn}}</td>     
+                    <td v-for="v in niuniuXtArr" class="normal-niuniu-xt">{{v}}</td>     
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(item, index) in trendData">
-                    <td>{{item.issue}}</td>
-                    <td v-for="n in item.code.split(',')">{{n}}</td>
-                    <td v-for="pos in lhhPosArr" v-html="renderLhhXt(pos, item.code.split(','))"></td>
-                    <td v-html="renderBjl(item.code.split(','))"></td>
-                    <td v-html="render5xXt(item.code.split(','))"></td>
-                    <td v-html="render3xXt(item.code.split(','),'012')"></td>
-                    <td v-html="render3xXt(item.code.split(','),'123')"></td>
-                    <td v-html="render3xXt(item.code.split(','),'234')"></td>
-                    <td v-for="niuniuXt in niuniuXtArr" v-html="renderNiuniuXt(niuniuXt, item.code.split(','))"></td>
+                    <td class="normal-issue">{{item.issue}}</td>
+                    <td :colspan="openCodeLength" class="normal-open-code">
+                        <i v-for="n in item.code.split(',')">{{n}}</i>
+                    </td>
+                    <td class="normal-lhh" :index="index" :key="index" v-for="(pos,index) in lhhPosArr" v-html="renderLhhXt(pos, item.code.split(','))"></td>
+                    <td class="normal-xt" v-html="renderBjl(item.code.split(','))"></td>
+                    <td class="normal-xt" v-html="render5xXt(item.code.split(','))"></td>
+                    <td class="normal-xt" v-html="render3xXt(item.code.split(','),'012')"></td>
+                    <td class="normal-xt" v-html="render3xXt(item.code.split(','),'123')"></td>
+                    <td class="normal-xt" pos="234" v-html="render3xXt(item.code.split(','),'234')"></td>
+                    <td class="normal-niuniu" :index="index" :key="index" v-for="(niuniuXt,index) in niuniuXtArr" v-html="renderNiuniuXt(niuniuXt, item.code.split(','))"></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td rowspan="2">奖期</td>
-                    <td rowspan="2" :colspan="openCodeLength">开奖号码</td>
-                    <td :colspan="lhhPosArr.length">龙虎和</td>
-                    <td rowspan="2">百家乐</td>
-                    <td rowspan="2">五星形态</td>                   
-                    <td rowspan="2">前三形态</td>  
-                    <td rowspan="2">中三形态</td>  
-                    <td rowspan="2">后三形态</td>  
-                    <td :colspan="niuniuXtArr.length">牛牛</td>  
+                    <td rowspan="2" class="normal-issue-title">奖期</td>
+                    <td rowspan="2" :colspan="openCodeLength" class="normal-open-code-title">开奖号码</td>
+                    <td :colspan="lhhPosArr.length" class="normal-lhh-title">龙虎和</td>
+                    <td rowspan="2" class="normal-bjl-title">百家乐</td>
+                    <td rowspan="2" class="normal-xt-title">五星形态</td>                   
+                    <td rowspan="2" class="normal-xt-title">前三形态</td>  
+                    <td rowspan="2" class="normal-xt-title">中三形态</td>  
+                    <td rowspan="2" class="normal-xt-title">后三形态</td>  
+                    <td :colspan="niuniuXtArr.length" class="normal-niuniu-title">牛牛</td>  
                 </tr>
                 <tr>
-                    <td v-for="pos in lhhPosArr">{{pos.cn}}</td>     
-                    <td v-for="v in niuniuXtArr">{{v}}</td>     
+                    <td v-for="pos in lhhPosArr" class="normal-lhh-pos">{{pos.cn}}</td>     
+                    <td v-for="v in niuniuXtArr" class="normal-niuniu-xt">{{v}}</td>     
                 </tr>
             </tfoot>
         </table>

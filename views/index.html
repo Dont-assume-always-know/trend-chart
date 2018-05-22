@@ -24,8 +24,10 @@
             </div>
         </div>
         <div class="chart-table-wrap">
-            <chart-table v-if="tabCode !== 'ssc-qw&nn'" :trend-data="trendData" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></chart-table>
-            <normal-table v-if="tabCode === 'ssc-qw&nn'" :trend-data="trendData" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></normal-table>
+            <div class="table-inner-wrap">
+                <chart-table v-if="tabCode !== 'ssc-qw&nn'" :trend-data="trendData" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></chart-table>
+                <normal-table v-if="tabCode === 'ssc-qw&nn'" :trend-data="trendData" :pos-config="posConfig" :tab-code="tabCode" :select-num-obj="selectNumObj" :lottery-type="lotteryType"></normal-table>
+            </div>
         </div>
     </div>
     <script src="./js/vender/axios.min.js"></script>
