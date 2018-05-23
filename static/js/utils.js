@@ -39,7 +39,7 @@ function caclDistributionTotalArr(selectNumArr, openDataArr) {
     });
     return resultArr;
 }
-
+ 
 /**
  * 号码分布最大遗漏
  */
