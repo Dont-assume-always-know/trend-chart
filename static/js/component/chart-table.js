@@ -19,6 +19,15 @@ Vue.component('chart-table', {
                         <td class="title-2m-xt" rowspan="2">和值</td>
                         <td class="title-2m-xt" rowspan="2">跨度</td>
                     </template>
+                    <template v-if="lotteryType === 'k3'">
+                        <td class="title-k3-xt" rowspan="2">和值</td>
+                        <td class="title-k3-xt" rowspan="2">和值大小</td>
+                        <td class="title-k3-xt" rowspan="2">和值单双</td>
+                        <td class="title-k3-xt" rowspan="2">三同号</td>
+                        <td class="title-k3-xt" rowspan="2">三不同号</td>
+                        <td class="title-k3-xt" rowspan="2">三连号</td>
+                        <td class="title-k3-xt" rowspan="2">二同号</td>                        
+                    </template>
                 </tr>
                 <tr>
                     <template v-for="pos in posObj">
@@ -49,6 +58,15 @@ Vue.component('chart-table', {
                         <td class="num-2m-xt" v-html="renderHezhi(item.code)"></td>
                         <td class="num-2m-xt" v-html="renderKuadu(item.code)"></td>
                     </template>
+                    <template v-if="lotteryType === 'k3'">
+                        <td class="num-k3-xt"></td>
+                        <td class="num-k3-xt"></td>
+                        <td class="num-k3-xt"></td>
+                        <td class="num-k3-xt"></td>
+                        <td class="num-k3-xt"></td>
+                        <td class="num-k3-xt"></td>
+                        <td class="num-k3-xt"></td>                        
+                    </template>
                 </tr>
             </tbody>
             <tfoot>
@@ -69,6 +87,15 @@ Vue.component('chart-table', {
                         <td class="num-2m-xt"></td>
                         <td class="num-2m-xt"></td>
                     </template>
+                    <template v-if="lotteryType === 'k3'">
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>                        
+                    </template>
                 </tr>
                 <tr class="average-miss-row">
                     <td class="average-miss-title">平均遗漏值</td>
@@ -86,6 +113,15 @@ Vue.component('chart-table', {
                         <td class="num-2m-xt" v-for="v in z2ZutaiAverageMissArr">{{v}}</td>
                         <td class="num-2m-xt"></td>
                         <td class="num-2m-xt"></td>
+                    </template>
+                    <template v-if="lotteryType === 'k3'">
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>                        
                     </template>
                 </tr>
                 <tr class="max-miss-row">
@@ -105,6 +141,15 @@ Vue.component('chart-table', {
                         <td class="num-2m-xt"></td>
                         <td class="num-2m-xt"></td>
                     </template>
+                    <template v-if="lotteryType === 'k3'">
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>                        
+                    </template>
                 </tr>
                 <tr>
                     <td class="max-continuous-title">最大连出值</td>
@@ -123,6 +168,15 @@ Vue.component('chart-table', {
                         <td class="num-2m-xt"></td>
                         <td class="num-2m-xt"></td>
                     </template>
+                    <template v-if="lotteryType === 'k3'">
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>
+                        <td class="num-k3-xt" rowspan="2"></td>                        
+                    </template>
                 </tr>
                 <tr>
                     <td class="chart-issue-title" rowspan="2">奖期</td>
@@ -140,6 +194,15 @@ Vue.component('chart-table', {
                         <td class="title-2m-xt" rowspan="2">对子</td>
                         <td class="title-2m-xt" rowspan="2">和值</td>
                         <td class="title-2m-xt" rowspan="2">跨度</td>
+                    </template>
+                    <template v-if="lotteryType === 'k3'">
+                        <td class="title-k3-xt" rowspan="2">和值</td>
+                        <td class="title-k3-xt" rowspan="2">和值大小</td>
+                        <td class="title-k3-xt" rowspan="2">和值单双</td>
+                        <td class="title-k3-xt" rowspan="2">三同号</td>
+                        <td class="title-k3-xt" rowspan="2">三不同号</td>
+                        <td class="title-k3-xt" rowspan="2">三连号</td>
+                        <td class="title-k3-xt" rowspan="2">二同号</td>                        
                     </template>
                 </tr>
                 <tr>

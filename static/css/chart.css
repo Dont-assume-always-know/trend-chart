@@ -9,6 +9,11 @@ td {
     color: #666666;
 }
 
+thead td,
+tfoot td {
+    white-space: wrap;
+}
+
 .normal-issue-title,
 .chart-issue-title {
     width: 90px;
@@ -67,6 +72,17 @@ table[lottery-type="pk10"] .max-continuous-num[index="9"],
 table[lottery-type="pk10"] .max-miss-num[index="9"],
 table[lottery-type="pk10"] .average-miss-num[index="9"],
 table[lottery-type="pk10"] .total-appear-num[index="9"] {
+    border-right: 1px solid #E0E0E0;
+}
+
+table[lottery-type="k3"] .distribution-num[index="5"],
+table[lottery-type="k3"] .select-num[index="5"],
+table[lottery-type="k3"] .pos-title-num[index="5"],
+table[lottery-type="k3"] .distribution-title-num[index="5"],
+table[lottery-type="k3"] .max-continuous-num[index="5"],
+table[lottery-type="k3"] .max-miss-num[index="5"],
+table[lottery-type="k3"] .average-miss-num[index="5"],
+table[lottery-type="k3"] .total-appear-num[index="5"] {
     border-right: 1px solid #E0E0E0;
 }
 
@@ -440,19 +456,22 @@ tr>.normal-niuniu[index="2"] {
 }
 
 .title-3m-xt,
-.title-2m-xt {
+.title-2m-xt,
+.title-k3-xt {
     width: 27px;
     border-right: 1px solid #E0E0E0;            
     border-bottom: 1px solid #E0E0E0;                
 }
 
 tfoot .title-3m-xt ,
-tfoot .title-2m-xt {
+tfoot .title-2m-xt,
+tfoot .title-k3-xt {
     border-top: 1px solid #E0E0E0;                    
 }
 
 .num-3m-xt,
-.num-2m-xt {
+.num-2m-xt,
+.num-k3-xt {
     border-right: 1px solid #E0E0E0;                
 }
 
