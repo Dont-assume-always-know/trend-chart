@@ -1,6 +1,6 @@
 Vue.component('chart-table', {
     template: `
-        <table>
+        <table :lottery-type="lotteryType">
             <thead>
                 <tr>
                     <td class="chart-issue-title" rowspan="2">奖期</td>

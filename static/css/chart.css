@@ -37,14 +37,14 @@ td {
     border-bottom: 1px solid #E0E0E0; 
 }
 
-.distribution-num[index="9"],
-.select-num[index="9"],
-.pos-title-num[index="9"],
-.distribution-title-num[index="9"],
-.max-continuous-num[index="9"],
-.max-miss-num[index="9"],
-.average-miss-num[index="9"],
-.total-appear-num[index="9"] {
+table[lottery-type="ssc"] .distribution-num[index="9"],
+table[lottery-type="ssc"] .select-num[index="9"],
+table[lottery-type="ssc"] .pos-title-num[index="9"],
+table[lottery-type="ssc"] .distribution-title-num[index="9"],
+table[lottery-type="ssc"] .max-continuous-num[index="9"],
+table[lottery-type="ssc"] .max-miss-num[index="9"],
+table[lottery-type="ssc"] .average-miss-num[index="9"],
+table[lottery-type="ssc"] .total-appear-num[index="9"] {
     border-right: 1px solid #E0E0E0;
 }
 
