@@ -37,6 +37,7 @@ td {
     border-bottom: 1px solid #E0E0E0; 
 }
 
+.distribution-num[index="9"],
 .select-num[index="9"],
 .pos-title-num[index="9"],
 .distribution-title-num[index="9"],
@@ -414,4 +415,25 @@ tr>.normal-niuniu[index="2"] {
 
 .table-inner-wrap tfoot td {
     color: #FFFFFF;
+}
+
+.title-3m-xt,
+.title-2m-xt {
+    width: 27px;
+    border-right: 1px solid #E0E0E0;            
+    border-bottom: 1px solid #E0E0E0;                
+}
+
+tfoot .title-3m-xt ,
+tfoot .title-2m-xt {
+    border-top: 1px solid #E0E0E0;                    
+}
+
+.num-3m-xt,
+.num-2m-xt {
+    border-right: 1px solid #E0E0E0;                
+}
+
+.yes {
+    color: #B84759;
 }
