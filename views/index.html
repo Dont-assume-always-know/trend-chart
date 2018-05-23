@@ -12,11 +12,11 @@
     <div id="vue-chart">
         <div class="lottery-top-wrap">
             <div class="lottery-select-wrap">
-                <lottery-type-select :lottery-config="lotteryConfig" :lottery-default-type="lotteryDefaultType" :lottery-type="lotteryType" @receivelotterytype="receiveLotteryType"></lottery-type-select>
-                <lottery-select :lottery-arrs="lotteryArrs" :lottery-default-obj="lotteryDefaultObj" :lottery-type="lotteryType" @receivelottery="receiveLottery"></lottery-select>
+                <lottery-type-select :lottery-config="lotteryConfig" :lottery-default-type="lotteryDefaultType" :lottery-type="lotteryType" @receive-lottery-type="receiveLotteryType"></lottery-type-select>
+                <lottery-select :lottery-arrs="lotteryArrs" :lottery-default-obj="lotteryDefaultObj" :lottery-type="lotteryType" @receive-lottery="receiveLottery"></lottery-select>
             </div>
             <div class="lottery-tab-wrap">
-                <lottery-tab :tab-default-obj="tabDefaultObj" :tabs-arr="tabsArr" :lottery-type="lotteryType" :lottery="lottery" @receivetab="receiveTab"></lottery-tab>
+                <lottery-tab :tab-default-obj="tabDefaultObj" :tabs-arr="tabsArr" :lottery-type="lotteryType" :lottery="lottery" @receive-tab="receiveTab"></lottery-tab>
             </div>
             <div class="chart-option-wrap clearfix">
                 <chart-option :checked-config="checkedConfig"></chart-option>

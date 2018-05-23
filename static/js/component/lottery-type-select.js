@@ -14,7 +14,7 @@ Vue.component('lottery-type-select', {
     },
     methods: {
         emitLotteryType(lotteryType) {
-            this.$emit('receivelotterytype', lotteryType);
+            this.$emit('receive-lottery-type', lotteryType);
         }
     },
     created() {

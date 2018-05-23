@@ -48,6 +48,28 @@ table[lottery-type="ssc"] .total-appear-num[index="9"] {
     border-right: 1px solid #E0E0E0;
 }
 
+table[lottery-type="11y"] .distribution-num[index="10"],
+table[lottery-type="11y"] .select-num[index="10"],
+table[lottery-type="11y"] .pos-title-num[index="10"],
+table[lottery-type="11y"] .distribution-title-num[index="10"],
+table[lottery-type="11y"] .max-continuous-num[index="10"],
+table[lottery-type="11y"] .max-miss-num[index="10"],
+table[lottery-type="11y"] .average-miss-num[index="10"],
+table[lottery-type="11y"] .total-appear-num[index="10"] {
+    border-right: 1px solid #E0E0E0;
+}
+
+table[lottery-type="pk10"] .distribution-num[index="9"],
+table[lottery-type="pk10"] .select-num[index="9"],
+table[lottery-type="pk10"] .pos-title-num[index="9"],
+table[lottery-type="pk10"] .distribution-title-num[index="9"],
+table[lottery-type="pk10"] .max-continuous-num[index="9"],
+table[lottery-type="pk10"] .max-miss-num[index="9"],
+table[lottery-type="pk10"] .average-miss-num[index="9"],
+table[lottery-type="pk10"] .total-appear-num[index="9"] {
+    border-right: 1px solid #E0E0E0;
+}
+
 .normal-lhh-title {
     height: 30px;
     border: 1px solid #E0E0E0;      
@@ -319,7 +341,7 @@ select {
 .lottery-select-wrap,
 .lottery-tab-wrap,
 .chart-option-wrap {
-    width: 1200px;
+    width: 1280px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -330,7 +352,7 @@ select {
 
 .table-inner-wrap {
     margin: 0 auto;
-    width: 1200px;
+    width: 1280px;
 }
 
 .chart-option-item {

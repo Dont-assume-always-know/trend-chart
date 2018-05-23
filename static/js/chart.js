@@ -226,27 +226,27 @@ new Vue({
                     cn: '三星'
                 }]
             },
-            'other': {
-                typeCnName: '其他彩种',
+            'kl12': {
+                typeCnName: '快乐12',
                 lotteries: [{
-                        'code': 'SCKL12',
-                        'cnName': '四川快乐12'
-                    },
-                    {
-                        'code': 'HNKY481',
-                        'cnName': '河南快赢481'
-                    }
-                ],
-                tabs: {
-                    kl12: [{
-                        en: 'kl12-all',
-                        cn: '所有位置'
-                    }],
-                    ky481: [{
-                        en: 'ky481-4x',
-                        cn: '四星'
-                    }]
-                }
+                    'code': 'SCKL12',
+                    'cnName': '四川快乐12'
+                }],
+                tabs: [{
+                    en: 'kl12-all',
+                    cn: '所有位置'
+                }]
+            },
+            'ky481': {
+                typeCnName: '河南快赢481',
+                lotteries: [{
+                    'code': 'HNKY481',
+                    'cnName': '河南快赢481'
+                }],
+                tabs: [{
+                    en: 'ky481-4x',
+                    cn: '四星'
+                }]
             }
         },
         //彩种选择框默认第一个显示彩种
@@ -258,7 +258,8 @@ new Vue({
             'k3': 'JSK3',
             '3d': 'FC3D',
             'lhc': 'XGLHC',
-            'other': 'SCKL12'
+            'kl12': 'SCKL12',
+            'ky481': 'HNKY481'            
         },
         //默认tab
         tabDefaultObj: {
@@ -267,7 +268,8 @@ new Vue({
             'pk10': 'pk10-q5',
             'k3': 'k3-3x',
             '3d': '3d-3x',
-            'other': 'kl12-all'
+            'kl12': 'kl12-all',
+            'ky481': 'ky481-all'            
         },
         checkedConfig: [{
                 id: 'miss',
@@ -318,11 +320,11 @@ new Vue({
         issuePeriod: '',
         selectNumObj: {
             'ssc': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-            '11y': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-            'pk10': [01, 02, 03, 04, 05, 06, 07, 08, 09, 10],
+            '11y': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'],
+            'pk10': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'],
             'k3': [1, 2, 3, 4, 5, 6],
             '3d': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-            'kl12': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            'kl12': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
             'ky481': [1, 2, 3, 4, 5, 6, 7, 8],
         },
         posConfig: {
@@ -414,22 +416,17 @@ new Vue({
         },
         tabsArr() {
             const result = this.lotteryConfig[this.lotteryType].tabs;
-            if (this.lotteryType === 'other') {
-                switch (this.lottery) {
-                    case 'HNKY481':
-                        return result['ky481'];
-                        break;
-                    case 'SCKL12':
-                        return result['kl12'];
-                        break;
-                    default:
-                        return result['kl12'];
-                }
-            }
             return result;
         }
     },
     methods: {
+        ajaxTrendData() {
+            axios.get(`./json/${this.lotteryType}.json`).then(res => {
+                this.trendData = res.data.result.data;
+            }).catch(error => {
+                console.log(error);
+            });
+        },
         receiveLottery(msg) {
             this.lottery = msg;
         },
@@ -458,16 +455,15 @@ new Vue({
                     }
                 }
             }
+        },
+        lotteryType(newVal, oldVal) {
+            this.ajaxTrendData();
         }
 
     },
     beforeCreate() {},
     created() {
-        axios.get('./json/data.json').then(res=>{
-            this.trendData = res.data.result.data;
-        }).catch(error=>{
-            console.log(error);
-        });
+        this.ajaxTrendData();
     },
     beforeMount() {},
     mounted() {}

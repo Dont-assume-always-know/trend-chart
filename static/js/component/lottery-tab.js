@@ -14,34 +14,17 @@ Vue.component('lottery-tab', {
         switchTab(tabCode) {
             this._tabCode = tabCode;
             this.$forceUpdate();
-            this.$emit('receivetab', tabCode);
+            this.$emit('receive-tab', tabCode);
         }
     },
     watch: {
         lotteryType(newVal, oldVal) {
-            let unWatch;
-            if (newVal === 'other') {
-                this._tabCode = 'kl12-all';
-                unWatch = this.$watch('lottery', (newLt, oldLt) => {
-                    switch (newLt) {
-                        case 'HNKY481':
-                            this._tabCode = 'ky481-4x';
-                            break;
-                        case 'SCKL12':
-                            this._tabCode = 'kl12-all';
-                            break;
-                    }
-                    this.$forceUpdate();
-                });
-            } else {
-                typeof unWatch === 'function' && unWatch();
-                this._tabCode = this.tabDefaultObj[newVal];
-            }
-            this.$emit('receivetab', this._tabCode);
+            this._tabCode = this.tabDefaultObj[newVal];
+            this.$emit('receive-tab', this._tabCode);
         }
     },
     created() {
         this._tabCode = this.tabDefaultObj[this.lotteryType]; //默认第一个
-        this.$emit('receivetab', this._tabCode);
+        this.$emit('receive-tab', this._tabCode);
     }
 });

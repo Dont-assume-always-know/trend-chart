@@ -31,7 +31,7 @@ Vue.component('chart-table', {
                 <tr v-for="(item, index) in trendData">
                     <td class="chart-issue">{{item.issue}}</td>
                     <td class="chart-open-code" :colspan="openCodeLength">
-                        <i v-for="n in item.code.split(',')">{{n}}</i>
+                        <i v-for="n in getEachOpenCodeArr(item.code.split(','))">{{n}}</i>
                     </td>
                     <template v-for="(pos, posIndex) in posObj">
                         <td class="select-num" :index="selectNumIndex" v-for="(selectNum, selectNumIndex) in selectNumArr"  v-html="renderSelectNum(item.code, selectNum, selectNumIndex, posIndex, index)"></td>
@@ -166,13 +166,16 @@ Vue.component('chart-table', {
     computed: {
         openDataArr() {
             return this.trendData.map(item => {
-                return item.code.split(',').map(v => Number(v));
+                return item.code.split(',');
             });
         },
         posObj() {
             return this.posConfig[this.tabCode];
         },
         openCodeLength() { //计算开奖号码一共有几位
+            if (this.lotteryType === 'pk10') {
+                return this.openDataArr[0] && this.openDataArr[0].length / 2;
+            }
             return this.openDataArr[0] && this.openDataArr[0].length;
         },
         selectNumArr() {
@@ -287,7 +290,14 @@ Vue.component('chart-table', {
     },
     watch: {
         tabCode(newVal, oldVal) {
-            //重置
+            this.reset();
+        },
+        trendData(newVal, oldVal) {
+            this.reset();
+        }
+    },
+    methods: {
+        reset() {//重置
             this.selectedIndexObj = {};
             this.missAndContinuousObj = {};
             this.distributionIndexArr = [];
@@ -295,9 +305,18 @@ Vue.component('chart-table', {
             this.z3ZutaiTotalObj = {};
             this.z2ZutaiObj = {};
             this.z2ZutaiTotalObj = {};
-        }
-    },
-    methods: {
+        },
+        getEachOpenCodeArr(arr) {
+            if (this.lotteryType === 'pk10') {
+                switch (this.tabCode) {
+                    case 'pk10-q5':
+                        return arr.slice(0, 5);
+                    case 'pk10-h5':
+                        return arr.slice(5, 10);
+                }
+            }
+            return arr;
+        },
         getCodeArr(codeArr) { //统计前三等玩法的时候[1,2,3,4,5]只计算[1,2,3]的数据，所有要分割下
             switch (this.tabCode) {
                 case 'ssc-5x':
