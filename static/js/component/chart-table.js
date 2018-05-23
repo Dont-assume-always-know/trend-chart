@@ -28,12 +28,25 @@ Vue.component('chart-table', {
                         <td class="title-k3-xt" rowspan="2">三连号</td>
                         <td class="title-k3-xt" rowspan="2">二同号</td>                        
                     </template>
+                    <template v-if="lotteryType === '3d'">
+                        <td class="title-3d-xt" rowspan="2">组三</td>
+                        <td class="title-3d-xt" rowspan="2">组六</td>
+                        <td class="title-3d-xt" rowspan="2">豹子</td>
+                        <td class="title-3d-xt" rowspan="2">和值</td>
+                        <td class="title-3d-xt" rowspan="2">跨度</td>
+                        <td class="title-3d-lhh" colspan="3">龙虎和</td>
+                    </template>
                 </tr>
                 <tr>
                     <template v-for="pos in posObj">
                         <td class="pos-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>
                     </template>    
-                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>                    
+                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td> 
+                    <template v-if="lotteryType === '3d'">
+                        <td class="title-3d-lhh-pos">龙</td>   
+                        <td class="title-3d-lhh-pos">虎</td>                        
+                        <td class="title-3d-lhh-pos">和</td>                                                                     
+                    </template>                   
                 </tr>
             </thead>
             <tbody>
@@ -67,6 +80,16 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt"></td>
                         <td class="num-k3-xt"></td>                        
                     </template>
+                    <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-lhh-pos"></td>   
+                        <td class="num-3d-lhh-pos"></td>                        
+                        <td class="num-3d-lhh-pos"></td>                                                                     
+                    </template>
                 </tr>
             </tbody>
             <tfoot>
@@ -96,6 +119,16 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" rowspan="2"></td>
                         <td class="num-k3-xt" rowspan="2"></td>                        
                     </template>
+                    <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-lhh-pos"></td>   
+                        <td class="num-3d-lhh-pos"></td>                        
+                        <td class="num-3d-lhh-pos"></td>                                                                     
+                    </template>
                 </tr>
                 <tr class="average-miss-row">
                     <td class="average-miss-title">平均遗漏值</td>
@@ -122,6 +155,16 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" rowspan="2"></td>
                         <td class="num-k3-xt" rowspan="2"></td>
                         <td class="num-k3-xt" rowspan="2"></td>                        
+                    </template>
+                    <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-lhh-pos"></td>   
+                        <td class="num-3d-lhh-pos"></td>                        
+                        <td class="num-3d-lhh-pos"></td>                                                                     
                     </template>
                 </tr>
                 <tr class="max-miss-row">
@@ -150,6 +193,16 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" rowspan="2"></td>
                         <td class="num-k3-xt" rowspan="2"></td>                        
                     </template>
+                    <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-lhh-pos"></td>   
+                        <td class="num-3d-lhh-pos"></td>                        
+                        <td class="num-3d-lhh-pos"></td>                                                                     
+                    </template>
                 </tr>
                 <tr>
                     <td class="max-continuous-title">最大连出值</td>
@@ -176,6 +229,16 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" rowspan="2"></td>
                         <td class="num-k3-xt" rowspan="2"></td>
                         <td class="num-k3-xt" rowspan="2"></td>                        
+                    </template>
+                    <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-xt"></td>
+                        <td class="num-3d-lhh-pos"></td>   
+                        <td class="num-3d-lhh-pos"></td>                        
+                        <td class="num-3d-lhh-pos"></td>                                                                     
                     </template>
                 </tr>
                 <tr>
@@ -204,12 +267,25 @@ Vue.component('chart-table', {
                         <td class="title-k3-xt" rowspan="2">三连号</td>
                         <td class="title-k3-xt" rowspan="2">二同号</td>                        
                     </template>
+                    <template v-if="lotteryType === '3d'">
+                        <td class="title-3d-xt" rowspan="2">组三</td>
+                        <td class="title-3d-xt" rowspan="2">组六</td>
+                        <td class="title-3d-xt" rowspan="2">豹子</td>
+                        <td class="title-3d-xt" rowspan="2">和值</td>
+                        <td class="title-3d-xt" rowspan="2">跨度</td>
+                        <td class="title-3d-lhh" colspan="3">龙虎和</td>
+                    </template>
                 </tr>
                 <tr>
                     <template v-for="pos in posObj">
                         <td class="pos-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>
                     </template>    
-                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>                    
+                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>  
+                    <template v-if="lotteryType === '3d'">
+                        <td class="title-3d-lhh-pos">龙</td>   
+                        <td class="title-3d-lhh-pos">虎</td>                        
+                        <td class="title-3d-lhh-pos">和</td>                                                                     
+                    </template>                    
                 </tr>
             </tfoot>
         </table>

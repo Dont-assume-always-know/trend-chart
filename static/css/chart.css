@@ -52,6 +52,39 @@ table[lottery-type="ssc"] .total-appear-num[index="9"] {
     border-right: 1px solid #E0E0E0;
 }
 
+table[lottery-type="ky481"] .distribution-num[index="7"],
+table[lottery-type="ky481"] .select-num[index="7"],
+table[lottery-type="ky481"] .pos-title-num[index="7"],
+table[lottery-type="ky481"] .distribution-title-num[index="7"],
+table[lottery-type="ky481"] .max-continuous-num[index="7"],
+table[lottery-type="ky481"] .max-miss-num[index="7"],
+table[lottery-type="ky481"] .average-miss-num[index="7"],
+table[lottery-type="ky481"] .total-appear-num[index="7"] {
+    border-right: 1px solid #E0E0E0;
+}
+
+table[lottery-type="kl12"] .distribution-num[index="11"],
+table[lottery-type="kl12"] .select-num[index="11"],
+table[lottery-type="kl12"] .pos-title-num[index="11"],
+table[lottery-type="kl12"] .distribution-title-num[index="11"],
+table[lottery-type="kl12"] .max-continuous-num[index="11"],
+table[lottery-type="kl12"] .max-miss-num[index="11"],
+table[lottery-type="kl12"] .average-miss-num[index="11"],
+table[lottery-type="kl12"] .total-appear-num[index="11"] {
+    border-right: 1px solid #E0E0E0;
+}
+
+table[lottery-type="3d"] .distribution-num[index="9"],
+table[lottery-type="3d"] .select-num[index="9"],
+table[lottery-type="3d"] .pos-title-num[index="9"],
+table[lottery-type="3d"] .distribution-title-num[index="9"],
+table[lottery-type="3d"] .max-continuous-num[index="9"],
+table[lottery-type="3d"] .max-miss-num[index="9"],
+table[lottery-type="3d"] .average-miss-num[index="9"],
+table[lottery-type="3d"] .total-appear-num[index="9"] {
+    border-right: 1px solid #E0E0E0;
+}
+
 table[lottery-type="11y"] .distribution-num[index="10"],
 table[lottery-type="11y"] .select-num[index="10"],
 table[lottery-type="11y"] .pos-title-num[index="10"],
@@ -456,6 +489,9 @@ tr>.normal-niuniu[index="2"] {
 
 .title-3m-xt,
 .title-2m-xt,
+.title-3d-xt,
+.title-3d-lhh,
+.title-3d-lhh-pos,
 .title-k3-xt {
     width: 27px;
     border-right: 1px solid #E0E0E0;            
@@ -464,12 +500,16 @@ tr>.normal-niuniu[index="2"] {
 
 tfoot .title-3m-xt ,
 tfoot .title-2m-xt,
+tfoot .title-3d-xt,
+tfoot .title-3d-lhh-pos,
+tfoot .title-3d-lhh,
 tfoot .title-k3-xt {
     border-top: 1px solid #E0E0E0;                    
 }
 
 .num-3m-xt,
 .num-2m-xt,
+.num-3d-xt,
 .num-k3-xt {
     border-right: 1px solid #E0E0E0;                
 }

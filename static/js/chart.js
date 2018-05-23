@@ -238,7 +238,7 @@ new Vue({
                 }]
             },
             'ky481': {
-                typeCnName: '河南快赢481',
+                typeCnName: '快赢481',
                 lotteries: [{
                     'code': 'HNKY481',
                     'cnName': '河南快赢481'

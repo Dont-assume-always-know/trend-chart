@@ -12,7 +12,7 @@ function calcEachTotal(posObj, selectNumArr, openDataArr) {
         selectNumArr.forEach(selectNum => {
             let count = 0;
             openDataArr.forEach(itemArr => {
-                if (itemArr[posIndex] === Number(selectNum)) {
+                if (Number(itemArr[posIndex]) === Number(selectNum)) {
                     count += 1;
                 }
             });
@@ -32,7 +32,7 @@ function caclDistributionTotalArr(selectNumArr, openDataArr) {
         let count = 0;
         openDataArr.forEach(itemArr => {
             count += itemArr.filter(item => {
-                return item === Number(selectNum);
+                return Number(item) === Number(selectNum);
             }).length;
         });
         resultArr.push(count);
@@ -48,7 +48,8 @@ function getDistributionMissAndContinuousObj(selectNumArr, openDataArr) {
     selectNumArr.forEach(selectNum => {
         const arr = [];
         openDataArr.forEach((itemArr, index) => {
-            if (itemArr.indexOf(Number(selectNum)) !== -1) {
+            const numItemArr = itemArr.map(v => Number(v));
+            if (numItemArr.indexOf(Number(selectNum)) !== -1) {
                 arr.push(index + 1);
             }
         });
@@ -85,7 +86,7 @@ function getMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
         selectNumArr.forEach(selectNum => {
             const arr = [];
             openDataArr.forEach((itemArr, index) => {
-                if (itemArr[posIndex] === Number(selectNum)) {
+                if (Number(itemArr[posIndex]) === Number(selectNum)) {
                     arr.push(index + 1);
                 }
             });
@@ -129,22 +130,23 @@ function getMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
  */
 function calcMaxMiss(arr, openDataArrLength) {
     arr.sort();
-    if (arr.length === 0) {
+    const _arr = arr.map(v => Number(v));
+    if (_arr.length === 0) {
         return openDataArrLength;
     }
-    if (arr.length === 1) {
-        return Math.max(...[openDataArrLength - arr[0], arr[0] - 1]);
+    if (_arr.length === 1) {
+        return Math.max(...[openDataArrLength - _arr[0], _arr[0] - 1]);
     }
-    if (arr.length === 2) {
-        return Math.max(...[openDataArrLength - arr[1], arr[1] - arr[0], arr[0] - 1]);
+    if (_arr.length === 2) {
+        return Math.max(...[openDataArrLength - _arr[1], _arr[1] - _arr[0], _arr[0] - 1]);
     }
     const result = [];
-    const min = Math.min(...arr);
-    const max = Math.max(...arr);
+    const min = Math.min(..._arr);
+    const max = Math.max(..._arr);
     result.push(min - 1);
     result.push(openDataArrLength - max);
-    for (let i = 0; i < arr.length - 2; i++) {
-        result.push(arr[i + 1] - arr[i] - 1);
+    for (let i = 0; i < _arr.length - 2; i++) {
+        result.push(_arr[i + 1] - _arr[i] - 1);
     }
     return Math.max(...result);
 }
@@ -276,6 +278,7 @@ function calcLhh(a, b) {
 则投注牛单牛双皆为不中奖。
 */
 function calcNiuniu(arr) {
+    arr = arr.map(v => Number(v));
     const HZ = arr.reduce((a, b) => a + b);
     const YU = HZ % 10;
     const combinationArr = choose(arr, 3);
@@ -340,6 +343,7 @@ function choose(arr, size) {
 若庄为6，闲小于6，即押"Super6"赢。
 */
 function calcBjl(arr) {
+    arr = arr.map(v => Number(v));
     const wan = arr[0];
     const qian = arr[1];
     const shi = arr[2];
@@ -386,6 +390,7 @@ function arrToCountItemObj(arr) {
 }
 //计算顺子 参数，数组范围最小值，范围最大值
 function calcShunzi(arr, min = 0, max = 9) {
+    arr = arr.map(v => Number(v));
     arr.sort((a, b) => a - b);
     //如果数组最大值超过设定的最大值max，返回错误提醒
     if (arr[arr.length - 1] > max) {
@@ -406,6 +411,7 @@ function calcShunzi(arr, min = 0, max = 9) {
 }
 //计算杂六
 function calcBanshunzi(arr, min = 0, max = 9) {
+    arr = arr.map(v => Number(v));
     if (calcShunzi(arr, min, max)) {
         return false;
     }
