@@ -1,6 +1,6 @@
 Vue.component('chart-table', {
     template: `
-        <table :lottery-type="lotteryType">
+        <table :lottery-type="lotteryType" v-if="trendData.length>0">
             <thead>
                 <tr>
                     <td class="chart-issue-title" rowspan="2">奖期</td>
@@ -448,8 +448,11 @@ Vue.component('chart-table', {
         tabCode(newVal, oldVal) {
             this.reset();
         },
-        trendData(newVal, oldVal) {
+        /* trendData(newVal, oldVal) {
             this.reset();
+        } */
+        lotteryType(newVal, oldVal) {
+            this.trendData = [];
         }
     },
     methods: {
