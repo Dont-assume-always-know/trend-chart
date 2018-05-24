@@ -1,26 +1,98 @@
 td {
     text-align: center;
     vertical-align: middle;
-    width: 20px;
-    height: 20px;
     font-size: 12px;
     box-sizing: border-box;
     white-space: wrap;
     color: #666666;
 }
 
+table[lottery-type="ssc"] .pos-title-num>i,
+table[lottery-type="ssc"] .distribution-title-num>i {
+    display: inline-block;
+    width: 18px;
+}
+
+table[lottery-type="ssc"] .title-3m-xt>i,
+table[lottery-type="ssc"] .title-2m-xt>i {
+    display: inline-block;
+    width: 27px;
+}
+
+table[lottery-type="ky481"] .pos-title-num>i,
+table[lottery-type="ky481"] .distribution-title-num>i {
+    display: inline-block;
+    width: 28px;
+}
+
+table[lottery-type="3d"] .pos-title-num>i,
+table[lottery-type="3d"] .distribution-title-num>i {
+    display: inline-block;
+    width: 23px;
+}
+
+table[lottery-type="3d"] .title-3d-xt>i,
+table[lottery-type="3d"] .title-3d-lhh-pos>i {
+    display: inline-block;
+    width: 27px;
+}
+
+table[lottery-type="k3"] .pos-title-num>i,
+table[lottery-type="k3"] .distribution-title-num>i {
+    display: inline-block;
+    width: 37px;
+}
+
+table[lottery-type="k3"] .title-k3-xt>i {
+    display: inline-block;
+    width: 27px;
+}
+
+table[lottery-type="pk10"] .pos-title-num>i,
+table[lottery-type="pk10"] .distribution-title-num>i {
+    display: inline-block;
+    width: 18px;
+}
+
+table[lottery-type="11y"] .pos-title-num>i,
+table[lottery-type="11y"] .distribution-title-num>i {
+    display: inline-block;
+    width: 16px;
+}
+
+.normal-table .normal-lhh-pos>i,
+.normal-table .normal-niuniu-xt>i {
+    display: inline-block;
+    width: 64px;
+}
+
+.normal-table .normal-bjl-title>i,
+.normal-table .normal-xt-title>i,
+.normal-table .normal-niuniu-title>i {
+    display: inline-block;
+    width: 58px;
+}
+
+.normal-open-code>i,
+.chart-open-code>i {
+    padding: 0 2px;
+}
+
 .normal-issue-title,
 .chart-issue-title {
-    width: 90px;
+    padding: 0 9px;
     height: 60px;
     border: 1px solid #E0E0E0;    
 }
 
 .normal-open-code-title,
 .chart-open-code-title {
-    width: 65px;
     height: 60px;
     border: 1px solid #E0E0E0;  
+}
+
+.chart-open-code-title {
+    padding: 0 9px;
 }
 
 .chart-pos-title,
@@ -31,7 +103,6 @@ td {
 
 .pos-title-num,
 .distribution-title-num {
-    width: 21px;
     height: 30px;
     border-bottom: 1px solid #E0E0E0; 
 }
@@ -120,7 +191,6 @@ table[lottery-type="k3"] .total-appear-num[index="5"] {
 
 .normal-bjl-title,
 .normal-xt-title {
-    width: 58px;
     height: 60px;
     border: 1px solid #E0E0E0;          
 }
@@ -141,18 +211,15 @@ table[lottery-type="k3"] .total-appear-num[index="5"] {
 
 .normal-lhh-pos {
     height: 30px;
-    width: 35px;
     border-bottom: 1px solid #E0E0E0;              
 }
 
 .normal-niuniu-xt {
     height: 30px;
-    width: 84px;
     border-bottom: 1px solid #E0E0E0;                  
 }
 
 .normal-niuniu-title {
-    width: 252px;
     height: 30px;
     border: 1px solid #E0E0E0;              
 }
@@ -450,6 +517,7 @@ tbody>tr:nth-child(5n) {
 .chart-issue {
     border-right: 1px solid #E0E0E0;
     height: 35px;
+    padding: 0 5px;
 }
 
 .normal-open-code,
@@ -505,7 +573,8 @@ tfoot .title-k3-xt {
 .num-3m-xt,
 .num-2m-xt,
 .num-3d-xt,
-.num-k3-xt {
+.num-k3-xt,
+.num-3d-lhh-pos {
     border-right: 1px solid #E0E0E0;                
 }
 

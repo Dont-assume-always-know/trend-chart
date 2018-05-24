@@ -244,7 +244,7 @@ new Vue({
                     'cnName': '河南快赢481'
                 }],
                 tabs: [{
-                    en: 'ky481-4x',
+                    en: 'ky481-all',
                     cn: '四星'
                 }]
             }

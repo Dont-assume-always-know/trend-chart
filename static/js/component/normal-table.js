@@ -1,22 +1,22 @@
 ///趣味玩法&牛牛 表单
 Vue.component('normal-table', {
     template: `
-        <table>
+        <table class="normal-table" :lottery-type="lotteryType" v-if="trendData.length>0">
             <thead>
                 <tr>
                     <td rowspan="2" class="normal-issue-title">奖期</td>
                     <td rowspan="2" :colspan="openCodeLength" class="normal-open-code-title">开奖号码</td>
                     <td :colspan="lhhPosArr.length" class="normal-lhh-title">龙虎和</td>
-                    <td rowspan="2" class="normal-bjl-title">百家乐</td>
-                    <td rowspan="2" class="normal-xt-title">五星形态</td>                   
-                    <td rowspan="2" class="normal-xt-title">前三形态</td>  
-                    <td rowspan="2" class="normal-xt-title">中三形态</td>  
-                    <td rowspan="2" class="normal-xt-title">后三形态</td>  
+                    <td rowspan="2" class="normal-bjl-title"><i>百家乐</i></td>
+                    <td rowspan="2" class="normal-xt-title"><i>五星形态</i></td>                   
+                    <td rowspan="2" class="normal-xt-title"><i>前三形态</i></td>  
+                    <td rowspan="2" class="normal-xt-title"><i>中三形态</i></td>  
+                    <td rowspan="2" class="normal-xt-title"><i>后三形态</i></td>  
                     <td :colspan="niuniuXtArr.length" class="normal-niuniu-title">牛牛</td>  
                 </tr>
                 <tr>
-                    <td v-for="pos in lhhPosArr" class="normal-lhh-pos">{{pos.cn}}</td>     
-                    <td v-for="v in niuniuXtArr" class="normal-niuniu-xt">{{v}}</td>     
+                    <td v-for="pos in lhhPosArr" class="normal-lhh-pos"><i>{{pos.cn}}</i></td>     
+                    <td v-for="v in niuniuXtArr" class="normal-niuniu-xt"><i>{{v}}</i></td>     
                 </tr>
             </thead>
             <tbody>

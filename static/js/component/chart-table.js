@@ -1,6 +1,6 @@
 Vue.component('chart-table', {
     template: `
-        <table :lottery-type="lotteryType" v-if="trendData.length>0">
+        <table class="chart-table" :lottery-type="lotteryType" v-if="trendData.length>0">
             <thead>
                 <tr>
                     <td class="chart-issue-title" rowspan="2">奖期</td>
@@ -8,11 +8,11 @@ Vue.component('chart-table', {
                     <td class="chart-pos-title" :colspan="selectNumArr.length" v-for="pos in posObj">{{pos}}</td>
                     <td class="chart-distribution-title" :colspan="selectNumArr.length">号码分布</td>
                     <template v-if="['ssc-q3', 'ssc-z3', 'ssc-h3'].indexOf(tabCode) !== -1">
-                        <td class="title-3m-xt" rowspan="2">组三</td>
-                        <td class="title-3m-xt" rowspan="2">组六</td>
-                        <td class="title-3m-xt" rowspan="2">豹子</td>
-                        <td class="title-3m-xt" rowspan="2">和值</td>
-                        <td class="title-3m-xt" rowspan="2">跨度</td>
+                        <td class="title-3m-xt" rowspan="2"><i>组三</i></td>
+                        <td class="title-3m-xt" rowspan="2"><i>组六</i></td>
+                        <td class="title-3m-xt" rowspan="2"><i>豹子</i></td>
+                        <td class="title-3m-xt" rowspan="2"><i>和值</i></td>
+                        <td class="title-3m-xt" rowspan="2"><i>跨度</i></td>
                     </template>
                     <template v-if="['ssc-q2', 'ssc-h2'].indexOf(tabCode) !== -1">
                         <td class="title-2m-xt" rowspan="2">对子</td>
@@ -20,32 +20,32 @@ Vue.component('chart-table', {
                         <td class="title-2m-xt" rowspan="2">跨度</td>
                     </template>
                     <template v-if="lotteryType === 'k3'">
-                        <td class="title-k3-xt" rowspan="2">和值</td>
-                        <td class="title-k3-xt" rowspan="2">和值大小</td>
-                        <td class="title-k3-xt" rowspan="2">和值单双</td>
-                        <td class="title-k3-xt" rowspan="2">三同号</td>
-                        <td class="title-k3-xt" rowspan="2">三不同号</td>
-                        <td class="title-k3-xt" rowspan="2">三连号</td>
-                        <td class="title-k3-xt" rowspan="2">二同号</td>                        
+                        <td class="title-k3-xt" rowspan="2"><i>和值</i></td>
+                        <td class="title-k3-xt" rowspan="2"><i>和值大小</i></td>
+                        <td class="title-k3-xt" rowspan="2"><i>和值单双</i></td>
+                        <td class="title-k3-xt" rowspan="2"><i>三同号</i></td>
+                        <td class="title-k3-xt" rowspan="2"><i>三不同号</i></td>
+                        <td class="title-k3-xt" rowspan="2"><i>三连号</i></td>
+                        <td class="title-k3-xt" rowspan="2"><i>二同号</i></td>                        
                     </template>
                     <template v-if="lotteryType === '3d'">
-                        <td class="title-3d-xt" rowspan="2">组三</td>
-                        <td class="title-3d-xt" rowspan="2">组六</td>
-                        <td class="title-3d-xt" rowspan="2">豹子</td>
-                        <td class="title-3d-xt" rowspan="2">和值</td>
-                        <td class="title-3d-xt" rowspan="2">跨度</td>
+                        <td class="title-3d-xt" rowspan="2"><i>组三</i></td>
+                        <td class="title-3d-xt" rowspan="2"><i>组六</i></td>
+                        <td class="title-3d-xt" rowspan="2"><i>豹子</i></td>
+                        <td class="title-3d-xt" rowspan="2"><i>和值</i></td>
+                        <td class="title-3d-xt" rowspan="2"><i>跨度</i></td>
                         <td class="title-3d-lhh" colspan="3">龙虎和</td>
                     </template>
                 </tr>
                 <tr>
                     <template v-for="pos in posObj">
-                        <td class="pos-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>
+                        <td class="pos-title-num" :index="i" v-for="(n,i) in selectNumArr"><i>{{n}}</i></td>
                     </template>    
-                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td> 
+                    <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr"><i>{{n}}</i></td> 
                     <template v-if="lotteryType === '3d'">
-                        <td class="title-3d-lhh-pos">百十</td>   
-                        <td class="title-3d-lhh-pos">百个</td>                        
-                        <td class="title-3d-lhh-pos">十个</td>                                                                     
+                        <td class="title-3d-lhh-pos"><i>百十</i></td>   
+                        <td class="title-3d-lhh-pos"><i>百个</i></td>                        
+                        <td class="title-3d-lhh-pos"><i>十个</i></td>                                                                     
                     </template>                   
                 </tr>
             </thead>
