@@ -5,13 +5,8 @@ td {
     height: 20px;
     font-size: 12px;
     box-sizing: border-box;
-    white-space: nowrap;
-    color: #666666;
-}
-
-thead td,
-tfoot td {
     white-space: wrap;
+    color: #666666;
 }
 
 .normal-issue-title,
