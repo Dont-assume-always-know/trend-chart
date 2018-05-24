@@ -43,9 +43,9 @@ Vue.component('chart-table', {
                     </template>    
                     <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td> 
                     <template v-if="lotteryType === '3d'">
-                        <td class="title-3d-lhh-pos">龙</td>   
-                        <td class="title-3d-lhh-pos">虎</td>                        
-                        <td class="title-3d-lhh-pos">和</td>                                                                     
+                        <td class="title-3d-lhh-pos">百十</td>   
+                        <td class="title-3d-lhh-pos">百个</td>                        
+                        <td class="title-3d-lhh-pos">十个</td>                                                                     
                     </template>                   
                 </tr>
             </thead>
@@ -81,14 +81,12 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" v-html="render3xZutaiZ3(item.code, index)"></td>                        
                     </template>
                     <template v-if="lotteryType === '3d'">
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-lhh-pos"></td>   
-                        <td class="num-3d-lhh-pos"></td>                        
-                        <td class="num-3d-lhh-pos"></td>                                                                     
+                        <td class="num-3d-xt" v-html="render3xZutaiZ3(item.code, index)"></td>
+                        <td class="num-3d-xt" v-html="render3xZutaiZ6(item.code, index)"></td>
+                        <td class="num-3d-xt" v-html="render3xZutaiBaozi(item.code, index)"></td>
+                        <td class="num-3d-xt" v-html="renderHezhi(item.code)"></td>
+                        <td class="num-3d-xt" v-html="renderKuadu(item.code)"></td>
+                        <td class="num-3d-lhh-pos" v-for="(v,i) in lhhPosArrOf3d" v-html="renderLhh(item.code, v.en)"></td>   
                     </template>
                 </tr>
             </tbody>
@@ -117,14 +115,10 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" v-for="v in z3ZutaiTotalArr">{{v}}</td>
                     </template>
                     <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt" v-for="v in z3ZutaiTotalArr">{{v}}</td>
                         <td class="num-3d-xt"></td>
                         <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-lhh-pos"></td>   
-                        <td class="num-3d-lhh-pos"></td>                        
-                        <td class="num-3d-lhh-pos"></td>                                                                     
+                        <td class="num-3d-lhh-pos" v-for="v in lhhPosArrOf3d"></td>                                                                   
                     </template>
                 </tr>
                 <tr class="average-miss-row">
@@ -151,14 +145,10 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" v-for="v in z3ZutaiAverageMissArr">{{v}}</td>                     
                     </template>
                     <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt"  v-for="v in z3ZutaiAverageMissArr">{{v}}</td>
                         <td class="num-3d-xt"></td>
                         <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-lhh-pos"></td>   
-                        <td class="num-3d-lhh-pos"></td>                        
-                        <td class="num-3d-lhh-pos"></td>                                                                     
+                        <td class="num-3d-lhh-pos" v-for="v in lhhPosArrOf3d"></td>   
                     </template>
                 </tr>
                 <tr class="max-miss-row">
@@ -185,14 +175,10 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" v-for="v in z3ZutaiMaxMissArr">{{v}}</td>                                            
                     </template>
                     <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt" v-for="v in z3ZutaiMaxMissArr">{{v}}</td>
                         <td class="num-3d-xt"></td>
                         <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-lhh-pos"></td>   
-                        <td class="num-3d-lhh-pos"></td>                        
-                        <td class="num-3d-lhh-pos"></td>                                                                     
+                        <td class="num-3d-lhh-pos" v-for="v in lhhPosArrOf3d"></td>                                                                  
                     </template>
                 </tr>
                 <tr>
@@ -219,14 +205,10 @@ Vue.component('chart-table', {
                         <td class="num-k3-xt" v-for="v in z3ZutaiContinuousArr">{{v}}</td>                                                               
                     </template>
                     <template v-if="lotteryType === '3d'">
+                        <td class="num-3d-xt" v-for="v in z3ZutaiContinuousArr">{{v}}</td>
                         <td class="num-3d-xt"></td>
                         <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-xt"></td>
-                        <td class="num-3d-lhh-pos"></td>   
-                        <td class="num-3d-lhh-pos"></td>                        
-                        <td class="num-3d-lhh-pos"></td>                                                                     
+                        <td class="num-3d-lhh-pos" v-for="v in lhhPosArrOf3d"></td>                                                                     
                     </template>
                 </tr>
                 <tr>
@@ -270,9 +252,7 @@ Vue.component('chart-table', {
                     </template>    
                     <td class="distribution-title-num" :index="i" v-for="(n,i) in selectNumArr">{{n}}</td>  
                     <template v-if="lotteryType === '3d'">
-                        <td class="title-3d-lhh-pos">龙</td>   
-                        <td class="title-3d-lhh-pos">虎</td>                        
-                        <td class="title-3d-lhh-pos">和</td>                                                                     
+                        <td class="title-3d-lhh-pos" v-for="v in lhhPosArrOf3d">{{v.cn}}</td>                                                                       
                     </template>                    
                 </tr>
             </tfoot>
@@ -288,7 +268,7 @@ Vue.component('chart-table', {
             z3ZutaiTotalObj: {}, //计算3星组态底部总次数，最大遗漏值，连出值用到
             z2ZutaiObj: {},
             z2ZutaiTotalObj: {},
-            hz3xdaxiaoFlagObj: {//3星和值大小config
+            hz3xdaxiaoFlagObj: {//3星和值大小临界值config
                 'k3': 10,
                 'ssc': 13,
                 '3d': 13
@@ -306,7 +286,17 @@ Vue.component('chart-table', {
                     min: 0,
                     max: 9
                 }
-            }
+            },
+            lhhPosArrOf3d: [{
+                en: '01',
+                cn: '百十'
+            }, {
+                en: '02',
+                cn: '百个'
+            }, {
+                en: '12',
+                cn: '十个'
+            }],
         };
     },
     computed: {
@@ -364,12 +354,13 @@ Vue.component('chart-table', {
             return getDistributionMissAndContinuousObj(this.selectNumArr, this.openDataArr).continuousArr;
         },
         z3ZutaiTotalArr() {
-            const z3Total = this.z3ZutaiTotalObj['z3'].length;
-            const z6Total = this.z3ZutaiTotalObj['z6'].length;
-            const baoziTotal = this.z3ZutaiTotalObj['baozi'].length;
-            const shunziTotal = this.z3ZutaiTotalObj['shunzi'].length;            
+            const z3Total = this.z3ZutaiTotalObj['z3'] ? this.z3ZutaiTotalObj['z3'].length : 0;
+            const z6Total = this.z3ZutaiTotalObj['z6'] ? this.z3ZutaiTotalObj['z6'].length : 0;
+            const baoziTotal = this.z3ZutaiTotalObj['baozi'] ? this.z3ZutaiTotalObj['baozi'].length : 0;
+            const shunziTotal = this.z3ZutaiTotalObj['shunzi'] ? this.z3ZutaiTotalObj['shunzi'].length : 0;            
             switch (this.lotteryType) {
                 case 'ssc':
+                case '3d':
                     return [z3Total, z6Total, baoziTotal];                    
                 case 'k3':
                     return [baoziTotal, z6Total, shunziTotal, z3Total];                    
@@ -385,12 +376,13 @@ Vue.component('chart-table', {
         },
         z3ZutaiMaxMissArr() {
             const openDataArrLength = this.openDataArr.length;
-            const z3Miss = calcMaxMiss(this.z3ZutaiTotalObj['z3'], openDataArrLength);
-            const z6Miss = calcMaxMiss(this.z3ZutaiTotalObj['z6'], openDataArrLength);
-            const baoziMiss = calcMaxMiss(this.z3ZutaiTotalObj['baozi'], openDataArrLength);
-            const shunziMiss = calcMaxMiss(this.z3ZutaiTotalObj['shunzi'], openDataArrLength);            
+            const z3Miss = calcMaxMiss(this.z3ZutaiTotalObj['z3'] || [], openDataArrLength);
+            const z6Miss = calcMaxMiss(this.z3ZutaiTotalObj['z6'] || [], openDataArrLength);
+            const baoziMiss = calcMaxMiss(this.z3ZutaiTotalObj['baozi'] || [], openDataArrLength);
+            const shunziMiss = calcMaxMiss(this.z3ZutaiTotalObj['shunzi'] || [], openDataArrLength);            
             switch (this.lotteryType) {
                 case 'ssc':
+                case '3d':
                     return [z3Miss, z6Miss, baoziMiss];
                 case 'k3':
                     return [baoziMiss, z6Miss, shunziMiss, z3Miss];                
@@ -412,6 +404,7 @@ Vue.component('chart-table', {
             }
             switch (this.lotteryType) {
                 case 'ssc':
+                case '3d':
                     return [result['z3'], result['z6'], result['baozi']];
                 case 'k3':
                     return [result['baozi'], result['z6'], result['shunzi'], result['z3']];
@@ -594,7 +587,7 @@ Vue.component('chart-table', {
             return calcKuadu(codeArr);
         },
         renderDaxiao(num) {
-            if (num > this.daxiaoFlagObj[this.lotteryType]) {
+            if (num > this.hz3xdaxiaoFlagObj[this.lotteryType]) {
                 return '<i class="da">大</i>';
             } else {
                 return '<i class="xiao">小</i>';
@@ -618,6 +611,11 @@ Vue.component('chart-table', {
             } else {
                 return index + 1 - (this.z2ZutaiObj['duizi'] || 0);
             }
+        },
+        renderLhh(code, pos) {
+            let codeArr = code.split(',').map(v => Number(v));
+            codeArr = this.getCodeArr(codeArr);
+            return calcLhh(codeArr[pos[0]], codeArr[pos[1]]);
         }
     }
 });
