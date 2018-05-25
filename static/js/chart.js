@@ -408,7 +408,11 @@ new Vue({
                 2: '蛙泳',
                 3: '蝶泳'
             }
-        }
+        },
+        isMiss: false,
+        isMissBar: false,
+        isLine: false,
+        isHot: false,
     },
     computed: {
         lotteryArrs() {
@@ -439,20 +443,54 @@ new Vue({
         receivePeriod(msg) {
             this.issuePeriod = msg;
         },
-        renderCheckOption(checkedConfig) {
-
-        }
+        toggleMiss(flag) {
+            if (flag) {
+                document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'inline-block');
+                return;
+            }
+            document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'none');
+        },
     },
     watch: {
         checkedConfig: {
             deep: true,
+            immediate: true,
             handler(newVal, oldVal) {
                 for (let item of newVal) {
-                    if (item.model[0]) {
-                        console.log(item.model[0]);
-                    } else {
-                        console.log(item.model[0]);
-                    }
+                    if (item.model === 'yes') {
+                        switch (item.text) {
+                            case '遗漏':
+                                this.isMiss = true;
+                                this.toggleMiss(true);
+                                break;
+                            case '遗漏条':
+                                this.isMissBar = true;
+                                break;
+                            case '走势图折线':
+                                this.isLine = true;
+                                break;
+                            case '冷热号':
+                                this.isHot = true;                    
+                                break;
+                        }
+                    } 
+                    if (item.model === 'no') {
+                        switch (item.text) {
+                            case '遗漏':
+                                this.isMiss = false;
+                                this.toggleMiss(false);                                
+                                break;
+                            case '遗漏条':
+                                this.isMissBar = false;
+                                break;
+                            case '走势图折线':
+                                this.isLine = false;
+                                break;
+                            case '冷热号':
+                                this.isHot = false;                    
+                                break;
+                        }
+                    } 
                 }
             }
         },

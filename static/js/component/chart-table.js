@@ -258,7 +258,7 @@ Vue.component('chart-table', {
             </tfoot>
         </table>
     `,
-    props: ['trend-data', 'lottery-config', 'lottery-type', 'pos-config', 'tab-code', 'select-num-obj'],
+    props: ['trend-data', 'lottery-config', 'lottery-type', 'pos-config', 'tab-code', 'select-num-obj', 'is-miss'],
     data() {
         return {
             selectedIndexObj: {}, //遗漏值计数从上到下1开始，碰到开奖号就重新从1开始计数
@@ -516,7 +516,7 @@ Vue.component('chart-table', {
                 }
                 return `<i class="distributioned-num">${selectNum}</i>`;
             } else {
-                return `<i>${index + 1 - (this.distributionIndexArr[selectNumIndex] || 0)}</i>`;
+                return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.distributionIndexArr[selectNumIndex] || 0)}</i>`;
             }
         },
         renderSelectNum(code, selectNum, selectNumIndex, posIndex, index) {
@@ -526,7 +526,7 @@ Vue.component('chart-table', {
                 this.selectedIndexObj[posIndex][selectNumIndex] = index + 1;
                 return `<i class="selected-num">${selectNum}</i>`;
             } else {
-                return `<i>${index + 1 - (this.selectedIndexObj[posIndex][selectNumIndex] || 0)}</i>`;
+                return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.selectedIndexObj[posIndex][selectNumIndex] || 0)}</i>`;
             }
         },
         render3xZutaiZ3(code, index) {
@@ -538,7 +538,7 @@ Vue.component('chart-table', {
                 this.z3ZutaiTotalObj['z3'].push(index + 1)
                 return '<em class="yes">√</em>';
             } else {
-                return index + 1 - (this.z3ZutaiObj['z3'] || 0);
+                return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.z3ZutaiObj['z3'] || 0)}</i>`;
             }
         },
         render3xZutaiZ6(code, index) {
@@ -550,7 +550,7 @@ Vue.component('chart-table', {
                 this.z3ZutaiTotalObj['z6'].push(index + 1);
                 return '<em class="yes">√</em>';
             } else {
-                return index + 1 - (this.z3ZutaiObj['z6'] || 0);
+                return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.z3ZutaiObj['z6'] || 0)}</i>`;
             }
         },
         render3xZutaiBaozi(code, index) {
@@ -562,7 +562,7 @@ Vue.component('chart-table', {
                 this.z3ZutaiTotalObj['baozi'].push(index + 1);
                 return '<em class="yes">√</em>';
             } else {
-                return index + 1 - (this.z3ZutaiObj['baozi'] || 0);
+                return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.z3ZutaiObj['baozi'] || 0)}</i>`;
             }
         },
         render3xShunzi(code, index) {
@@ -576,7 +576,7 @@ Vue.component('chart-table', {
                 this.z3ZutaiTotalObj['shunzi'].push(index + 1);
                 return '<em class="yes">√</em>';
             } else {
-                return index + 1 - (this.z3ZutaiObj['shunzi'] || 0);
+                return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.z3ZutaiObj['shunzi'] || 0)}</i>`;
             }
         },
         renderHezhi(code) {
@@ -612,7 +612,7 @@ Vue.component('chart-table', {
                 this.z2ZutaiTotalObj['duizi'].push(index + 1);
                 return '<em class="yes">√</em>';
             } else {
-                return index + 1 - (this.z2ZutaiObj['duizi'] || 0);
+                return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.z2ZutaiObj['duizi'] || 0)}</i>`;
             }
         },
         renderLhh(code, pos) {
@@ -620,5 +620,6 @@ Vue.component('chart-table', {
             codeArr = this.getCodeArr(codeArr);
             return calcLhh(codeArr[pos[0]], codeArr[pos[1]]);
         }
-    }
+    },
+    mounted() {}
 });
