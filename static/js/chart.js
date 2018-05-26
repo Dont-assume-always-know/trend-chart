@@ -450,6 +450,13 @@ new Vue({
             }
             document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'none');
         },
+        toggleMissBar(flag) {
+            if (flag) {
+                this.drawMissBar();
+                return;
+            }
+            this.clearMissBar();
+        }
     },
     watch: {
         checkedConfig: {
@@ -465,6 +472,7 @@ new Vue({
                                 break;
                             case '遗漏条':
                                 this.isMissBar = true;
+                                this.toggleMissBar(true);
                                 break;
                             case '走势图折线':
                                 this.isLine = true;
@@ -482,6 +490,7 @@ new Vue({
                                 break;
                             case '遗漏条':
                                 this.isMissBar = false;
+                                this.toggleMissBar(true);
                                 break;
                             case '走势图折线':
                                 this.isLine = false;
