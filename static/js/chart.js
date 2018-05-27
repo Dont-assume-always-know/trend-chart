@@ -537,7 +537,7 @@ new Vue({
             }
             context.clearRect(0, 0, canvas.width, canvas.height); //清空了再画                                   
             const missBarCoordinateArr = this.getMissBarCoordinateArr();
-            context.beginPath();            
+            context.beginPath();//通过清空子路径列表开始一个新路径            
             context.fillStyle = this.missBarColor;
             missBarCoordinateArr.forEach(item => {
                 const {
@@ -560,10 +560,10 @@ new Vue({
             }
             context.clearRect(0, 0, canvas.width, canvas.height); //清空了再画                       
             const missCoordinateObj = this.getMissCoordinateObj();
+            context.beginPath();//通过清空子路径列表开始一个新路径
             context.strokeStyle = this.missLineColor;
             for (let posIndex in missCoordinateObj) {
                 const arr = missCoordinateObj[posIndex];
-                context.beginPath();
                 for (let index = 0, length = arr.length; index < length - 1; index++) {
                     const xFrom = arr[index].x;
                     const yFrom = arr[index].y + selectedNumHeight;
