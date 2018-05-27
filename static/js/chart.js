@@ -274,19 +274,19 @@ new Vue({
         checkedConfig: [{
                 id: 'miss',
                 value: 'miss',
-                model: 'no',
+                model: 'yes',
                 text: '遗漏'
             },
             {
                 id: 'miss-bar',
                 value: 'missBar',
-                model: 'no',
+                model: 'yes',
                 text: '遗漏条'
             },
             {
                 id: 'trend-line',
                 value: 'trendLine',
-                model: 'no',
+                model: 'yes',
                 text: '走势图折线'
             },
             {
@@ -409,10 +409,8 @@ new Vue({
                 3: '蝶泳'
             }
         },
-        isMiss: false,
-        isMissBar: false,
-        isLine: false,
-        isHot: false,
+        missBarColor: 'green',
+        missLineColor: 'blue'
     },
     computed: {
         lotteryArrs() {
@@ -421,7 +419,19 @@ new Vue({
         tabsArr() {
             const result = this.lotteryConfig[this.lotteryType].tabs;
             return result;
-        }
+        },
+        isMiss() {
+            return this.checkedConfig.find(item => item.id === 'miss').model === 'yes';
+        },
+        isMissBar() {
+            return this.checkedConfig.find(item => item.id === 'miss-bar').model === 'yes';
+        },
+        isLine() {
+            return this.checkedConfig.find(item => item.id === 'trend-line').model === 'yes';
+        },
+        isHot() {
+            return this.checkedConfig.find(item => item.id === 'cold-hot-number').model === 'yes';
+        },
     },
     methods: {
         ajaxTrendData() {
@@ -439,6 +449,7 @@ new Vue({
         },
         receiveTab(msg) {
             this.tabCode = msg;
+
         },
         receivePeriod(msg) {
             this.issuePeriod = msg;
@@ -450,24 +461,21 @@ new Vue({
             }
             document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'none');
         },
-        toggleMissBar(flag) {
-            this.drawMissBar(flag);
-        },
-        getMissCoordinateArr() {
+        getMissCoordinateObj() {
             const selectedNumArr = document.querySelectorAll('.js-selected-num');
-            const coordinateArr = [];
+            const coordinateObj = {};
             selectedNumArr.forEach((element, index) => {
                 const posIndex = element.getAttribute('pos-index');
-                coordinateArr[posIndex] = coordinateArr[posIndex] || [];
+                coordinateObj[posIndex] = coordinateObj[posIndex] || [];
                 const elementWidth = element.offsetWidth;
                 const x = offsetDis(element).left + elementWidth / 2;
                 const y = offsetDis(element).top;
-                coordinateArr[posIndex].push({
+                coordinateObj[posIndex].push({
                     x,
                     y
                 });
             });
-            return coordinateArr;
+            return coordinateObj;
         },
         getMissBarCoordinateArr() {
             const missBarCoordinateArr = [];
@@ -524,11 +532,13 @@ new Vue({
             const canvas = this.createCanvas('js-draw-bar').canvas;
             const context = this.createCanvas('js-draw-bar').context;
             if (!flag) {
-                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.clearRect(0, 0, canvas.width, canvas.height);            
                 return;
             }
+            context.clearRect(0, 0, canvas.width, canvas.height); //清空了再画                                   
             const missBarCoordinateArr = this.getMissBarCoordinateArr();
-            console.log(missBarCoordinateArr)
+            context.beginPath();            
+            context.fillStyle = this.missBarColor;
             missBarCoordinateArr.forEach(item => {
                 const {
                     x,
@@ -537,9 +547,50 @@ new Vue({
                     height
                 } = item;
                 context.rect(x, y, width, height);
-                context.fillStyle = "green";
                 context.fill();
             });
+        },
+        drawLine(flag) {
+            const canvas = this.createCanvas('js-draw-line').canvas;
+            const context = this.createCanvas('js-draw-line').context;
+            const selectedNumHeight = document.querySelector('.js-selected-num').offsetHeight;
+            if (!flag) {
+                context.clearRect(0, 0, canvas.width, canvas.height);            
+                return;
+            }
+            context.clearRect(0, 0, canvas.width, canvas.height); //清空了再画                       
+            const missCoordinateObj = this.getMissCoordinateObj();
+            context.strokeStyle = this.missLineColor;
+            for (let posIndex in missCoordinateObj) {
+                const arr = missCoordinateObj[posIndex];
+                context.beginPath();
+                for (let index = 0, length = arr.length; index < length - 1; index++) {
+                    const xFrom = arr[index].x;
+                    const yFrom = arr[index].y + selectedNumHeight;
+                    const xTo = arr[index + 1].x;
+                    const yTo = arr[index + 1].y;
+                    context.moveTo(xFrom, yFrom);
+                    context.lineTo(xTo, yTo);
+                }
+                context.stroke();
+            }
+        },
+        callbackDraw(config) {
+            for (let item of config) {
+                switch (item.text) {
+                    case '遗漏':
+                        this.toggleMiss(this.isMiss);
+                        break;
+                    case '遗漏条':
+                        this.drawMissBar(this.isMissBar);
+                        break;
+                    case '走势图折线':
+                        this.drawLine(this.isLine);
+                        break;
+                    case '冷热号':
+                        break;
+                }
+            }
         }
     },
     watch: {
@@ -547,46 +598,7 @@ new Vue({
             deep: true,
             // immediate: true,
             handler(newVal, oldVal) {
-                for (let item of newVal) {
-                    if (item.model === 'yes') {
-                        switch (item.text) {
-                            case '遗漏':
-                                this.isMiss = true;
-                                this.toggleMiss(true);
-                                break;
-                            case '遗漏条':
-                                this.isMissBar = true;
-                                this.$nextTick(() => {
-                                    this.toggleMissBar(true);
-                                })
-                                break;
-                            case '走势图折线':
-                                this.isLine = true;
-                                break;
-                            case '冷热号':
-                                this.isHot = true;
-                                break;
-                        }
-                    }
-                    if (item.model === 'no') {
-                        switch (item.text) {
-                            case '遗漏':
-                                this.isMiss = false;
-                                this.toggleMiss(false);
-                                break;
-                            case '遗漏条':
-                                this.isMissBar = false;
-                                this.toggleMissBar(false);
-                                break;
-                            case '走势图折线':
-                                this.isLine = false;
-                                break;
-                            case '冷热号':
-                                this.isHot = false;
-                                break;
-                        }
-                    }
-                }
+                this.callbackDraw(newVal);
             }
         },
         lotteryType(newVal, oldVal) {
@@ -599,5 +611,12 @@ new Vue({
         this.ajaxTrendData();
     },
     beforeMount() {},
-    mounted() {}
+    mounted() {
+        
+    },
+    updated() {
+        this.$nextTick(() => {
+            this.callbackDraw(this.checkedConfig);
+        });
+    }
 });
