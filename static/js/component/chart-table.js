@@ -296,7 +296,7 @@ Vue.component('chart-table', {
             }, {
                 en: '12',
                 cn: '十个'
-            }],
+            }]
         };
     },
     computed: {
@@ -524,7 +524,7 @@ Vue.component('chart-table', {
             this.selectedIndexObj[posIndex] = this.selectedIndexObj[posIndex] || [];
             if (arr[posIndex] === Number(selectNum)) {
                 this.selectedIndexObj[posIndex][selectNumIndex] = index + 1;
-                return `<i class="selected-num" pos="${posIndex}" row="${index}">${selectNum}</i>`;
+                return `<i class="js-selected-num selected-num" num-index="${selectNumIndex}" pos-index="${posIndex}" row="${index}">${selectNum}</i>`;
             } else {
                 return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.selectedIndexObj[posIndex][selectNumIndex] || 0)}</i>`;
             }

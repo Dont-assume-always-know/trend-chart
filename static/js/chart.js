@@ -259,7 +259,7 @@ new Vue({
             '3d': 'FC3D',
             'lhc': 'XGLHC',
             'kl12': 'SCKL12',
-            'ky481': 'HNKY481'            
+            'ky481': 'HNKY481'
         },
         //默认tab
         tabDefaultObj: {
@@ -269,7 +269,7 @@ new Vue({
             'k3': 'k3-3x',
             '3d': '3d-3x',
             'kl12': 'kl12-all',
-            'ky481': 'ky481-all'            
+            'ky481': 'ky481-all'
         },
         checkedConfig: [{
                 id: 'miss',
@@ -451,17 +451,101 @@ new Vue({
             document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'none');
         },
         toggleMissBar(flag) {
-            if (flag) {
-                this.drawMissBar();
+            this.drawMissBar(flag);
+        },
+        getMissCoordinateArr() {
+            const selectedNumArr = document.querySelectorAll('.js-selected-num');
+            const coordinateArr = [];
+            selectedNumArr.forEach((element, index) => {
+                const posIndex = element.getAttribute('pos-index');
+                coordinateArr[posIndex] = coordinateArr[posIndex] || [];
+                const elementWidth = element.offsetWidth;
+                const x = offsetDis(element).left + elementWidth / 2;
+                const y = offsetDis(element).top;
+                coordinateArr[posIndex].push({
+                    x,
+                    y
+                });
+            });
+            return coordinateArr;
+        },
+        getMissBarCoordinateArr() {
+            const missBarCoordinateArr = [];
+            const selectedNumArr = document.querySelectorAll('.js-selected-num');
+            const missBarCoordinateObj = {};
+            selectedNumArr.forEach((element, index) => {
+                const posIndex = element.getAttribute('pos-index');
+                const selectNumIndex = element.getAttribute('num-index');
+                missBarCoordinateObj[`${posIndex}-${selectNumIndex}`] = missBarCoordinateObj[`${posIndex}-${selectNumIndex}`] || [];
+                const x = offsetDis(element).left - element.offsetLeft;
+                const y = offsetDis(element).top + element.offsetTop + element.offsetHeight;
+                const td = element.parentElement;
+                const width = td.offsetWidth;
+                const tr = td.parentElement;
+                const tfoot = document.querySelector('tfoot');
+                const height = tfoot.offsetTop - tr.offsetTop - td.offsetHeight;
+                missBarCoordinateObj[`${posIndex}-${selectNumIndex}`].push({
+                    x,
+                    y,
+                    width,
+                    height
+                });
+            });
+            //取出y值最大的那个，即底部那个
+            for (let key in missBarCoordinateObj) {
+                const arr = missBarCoordinateObj[key];
+                arr.sort((a, b) => b.y - a.y);
+                missBarCoordinateArr.push(arr[0]);
+            }
+            return missBarCoordinateArr;
+        },
+        createCanvas(id) {
+            let canvas;
+            let context;
+            if (!document.getElementById(id)) {
+                canvas = document.createElement('canvas');
+                canvas.id = id;
+                canvas.width = document.body.scrollWidth;
+                canvas.height = document.body.scrollHeight;
+                document.body.appendChild(canvas);
+                context = canvas.getContext('2d');
+            } else {
+                canvas = document.getElementById(id);
+                context = document.getElementById(id).getContext('2d');
+            }
+            return (() => {
+                return {
+                    canvas,
+                    context
+                };
+            })();
+        },
+        drawMissBar(flag) {
+            const canvas = this.createCanvas('js-draw-bar').canvas;
+            const context = this.createCanvas('js-draw-bar').context;
+            if (!flag) {
+                context.clearRect(0, 0, canvas.width, canvas.height);
                 return;
             }
-            this.clearMissBar();
+            const missBarCoordinateArr = this.getMissBarCoordinateArr();
+            console.log(missBarCoordinateArr)
+            missBarCoordinateArr.forEach(item => {
+                const {
+                    x,
+                    y,
+                    width,
+                    height
+                } = item;
+                context.rect(x, y, width, height);
+                context.fillStyle = "green";
+                context.fill();
+            });
         }
     },
     watch: {
         checkedConfig: {
             deep: true,
-            immediate: true,
+            // immediate: true,
             handler(newVal, oldVal) {
                 for (let item of newVal) {
                     if (item.model === 'yes') {
@@ -472,34 +556,36 @@ new Vue({
                                 break;
                             case '遗漏条':
                                 this.isMissBar = true;
-                                this.toggleMissBar(true);
+                                this.$nextTick(() => {
+                                    this.toggleMissBar(true);
+                                })
                                 break;
                             case '走势图折线':
                                 this.isLine = true;
                                 break;
                             case '冷热号':
-                                this.isHot = true;                    
+                                this.isHot = true;
                                 break;
                         }
-                    } 
+                    }
                     if (item.model === 'no') {
                         switch (item.text) {
                             case '遗漏':
                                 this.isMiss = false;
-                                this.toggleMiss(false);                                
+                                this.toggleMiss(false);
                                 break;
                             case '遗漏条':
                                 this.isMissBar = false;
-                                this.toggleMissBar(true);
+                                this.toggleMissBar(false);
                                 break;
                             case '走势图折线':
                                 this.isLine = false;
                                 break;
                             case '冷热号':
-                                this.isHot = false;                    
+                                this.isHot = false;
                                 break;
                         }
-                    } 
+                    }
                 }
             }
         },
