@@ -553,11 +553,11 @@ new Vue({
         drawLine(flag) {
             const canvas = this.createCanvas('js-draw-line').canvas;
             const context = this.createCanvas('js-draw-line').context;
-            const selectedNumHeight = document.querySelector('.js-selected-num').offsetHeight;
             if (!flag) {
                 context.clearRect(0, 0, canvas.width, canvas.height);            
                 return;
             }
+            const selectedNumHeight = document.querySelector('.js-selected-num').offsetHeight;
             context.clearRect(0, 0, canvas.width, canvas.height); //清空了再画                       
             const missCoordinateObj = this.getMissCoordinateObj();
             context.beginPath();//通过清空子路径列表开始一个新路径
@@ -576,6 +576,11 @@ new Vue({
             }
         },
         callbackDraw(config) {
+            if (this.tabCode === 'ssc-qw&nn') {//趣味牛牛不画图
+                this.drawMissBar(false);
+                this.drawLine(false);
+                return;
+            }
             for (let item of config) {
                 switch (item.text) {
                     case '遗漏':
@@ -601,10 +606,11 @@ new Vue({
                 this.callbackDraw(newVal);
             }
         },
-        lotteryType(newVal, oldVal) {
+        lottery(newVal, oldVal) {
             this.ajaxTrendData();
+            this.drawMissBar(false);
+            this.drawLine(false);
         }
-
     },
     beforeCreate() {},
     created() {
@@ -616,7 +622,9 @@ new Vue({
     },
     updated() {
         this.$nextTick(() => {
-            this.callbackDraw(this.checkedConfig);
+            if (document.querySelector('.js-selected-num')) {
+                this.callbackDraw(this.checkedConfig);
+            }
         });
     }
 });

@@ -258,7 +258,7 @@ Vue.component('chart-table', {
             </tfoot>
         </table>
     `,
-    props: ['trend-data', 'lottery-config', 'lottery-type', 'pos-config', 'tab-code', 'select-num-obj', 'is-miss'],
+    props: ['trend-data', 'lottery-config', 'lottery-type', 'lottery', 'pos-config', 'tab-code', 'select-num-obj', 'is-miss'],
     data() {
         return {
             selectedIndexObj: {}, //遗漏值计数从上到下1开始，碰到开奖号就重新从1开始计数
@@ -448,11 +448,12 @@ Vue.component('chart-table', {
         tabCode(newVal, oldVal) {
             this.reset();
         },
-        /* trendData(newVal, oldVal) {
+        trendData(newVal, oldVal) {
             this.reset();
-        } */
-        lotteryType(newVal, oldVal) {
-            this.trendData = [];
+        },
+        lottery(newVal, oldVal) {
+            this.trendData = [];            
+            this.reset();
         }
     },
     methods: {
@@ -621,5 +622,6 @@ Vue.component('chart-table', {
             return calcLhh(codeArr[pos[0]], codeArr[pos[1]]);
         }
     },
+    beforeMount() {},
     mounted() {}
 });
