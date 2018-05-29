@@ -103,18 +103,6 @@ Vue.component('normal-table', {
             return this.selectNumObj[this.lotteryType];
         }
     },
-    watch: {
-        tabCode(newVal, oldVal) {
-            //重置
-            this.selectedIndexObj = {};
-            this.missAndContinuousObj = {};
-            this.distributionIndexArr = [];
-            this.z3ZutaiObj = {};
-            this.z3ZutaiTotalObj = {};
-            this.z2ZutaiObj = {};
-            this.z2ZutaiTotalObj = {};
-        }
-    },
     methods: {
         renderLhhXt(pos, arr) {
             const en = pos.en; //01 

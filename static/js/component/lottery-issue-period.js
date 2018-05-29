@@ -13,7 +13,7 @@ Vue.component('lottery-issue-period', {
     methods: {
         switchAndEmitPeriod(index, periodObj) {
             this.activeTabIndex = index;
-            this.$emit('receiveperiod', periodObj.en || periodObj.day);
+            this.$emit('receive-period', periodObj);
         }
     }
 });

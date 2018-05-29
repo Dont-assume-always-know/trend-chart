@@ -452,7 +452,9 @@ Vue.component('chart-table', {
             this.reset();
         },
         lottery(newVal, oldVal) {
-            this.trendData = [];            
+            this.reset();
+        },
+        issuePeriod(newVal, oldVal) {
             this.reset();
         }
     },

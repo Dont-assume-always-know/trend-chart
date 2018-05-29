@@ -449,10 +449,9 @@ new Vue({
         },
         receiveTab(msg) {
             this.tabCode = msg;
-
         },
         receivePeriod(msg) {
-            this.issuePeriod = msg;
+            this.issuePeriod = msg.cn || msg.day;
         },
         toggleMiss(flag) {
             if (flag) {
@@ -607,6 +606,12 @@ new Vue({
             }
         },
         lottery(newVal, oldVal) {
+            this.trendData = [];            
+            this.ajaxTrendData();
+            this.drawMissBar(false);
+            this.drawLine(false);
+        },
+        issuePeriod(newVal, oldVal) {
             this.ajaxTrendData();
             this.drawMissBar(false);
             this.drawLine(false);
