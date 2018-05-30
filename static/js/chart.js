@@ -575,11 +575,7 @@ new Vue({
             }
         },
         callbackDraw(config) {
-            if (this.tabCode === 'ssc-qw&nn') {//趣味牛牛不画图
-                this.drawMissBar(false);
-                this.drawLine(false);
-                return;
-            }
+            
             for (let item of config) {
                 switch (item.text) {
                     case '遗漏':
@@ -627,6 +623,11 @@ new Vue({
     },
     updated() {
         this.$nextTick(() => {
+            if (this.tabCode === 'ssc-qw&nn') {//趣味牛牛不画图
+                this.drawMissBar(false);
+                this.drawLine(false);
+                return;
+            }
             if (document.querySelector('.js-selected-num')) {
                 this.callbackDraw(this.checkedConfig);
             }
