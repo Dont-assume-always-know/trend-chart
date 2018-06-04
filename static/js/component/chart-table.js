@@ -337,7 +337,7 @@ Vue.component('chart-table', {
             return getMissAndContinuousObj(this.posObj, this.selectNumArr, this.openDataArr).continuousArr;
         },
         distributionTotalArr() {
-            return caclDistributionTotalArr(this.selectNumArr, this.openDataArr);
+            return caclDistributionTotalArr(this.posObj, this.selectNumArr, this.openDataArr);
         },
         distributionAverageMissArr() {
             return this.distributionTotalArr.map(total => {
@@ -348,10 +348,10 @@ Vue.component('chart-table', {
             });
         },
         distributionMaxMissArr() {
-            return getDistributionMissAndContinuousObj(this.selectNumArr, this.openDataArr).missArr;
+            return getDistributionMissAndContinuousObj(this.posObj, this.selectNumArr, this.openDataArr).missArr;
         },
         distributionMaxContinuousArr() {
-            return getDistributionMissAndContinuousObj(this.selectNumArr, this.openDataArr).continuousArr;
+            return getDistributionMissAndContinuousObj(this.posObj, this.selectNumArr, this.openDataArr).continuousArr;
         },
         z3ZutaiTotalArr() {
             const z3Total = this.z3ZutaiTotalObj['z3'] ? this.z3ZutaiTotalObj['z3'].length : 0;

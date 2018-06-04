@@ -26,11 +26,19 @@ function calcEachTotal(posObj, selectNumArr, openDataArr) {
 /**
  * 号码分布总次数
  */
-function caclDistributionTotalArr(selectNumArr, openDataArr) {
+function caclDistributionTotalArr(posObj, selectNumArr, openDataArr) {
     const resultArr = [];
+    const posIndexArr = Object.keys(posObj);
+    const _openDataArr = openDataArr.map(itemArr => {
+        const _arr = [];
+        posIndexArr.forEach(i => {
+            _arr.push(itemArr[i]);
+        });
+        return _arr;
+    });
     selectNumArr.forEach(selectNum => {
         let count = 0;
-        openDataArr.forEach(itemArr => {
+        _openDataArr.forEach(itemArr => {
             count += itemArr.filter(item => {
                 return Number(item) === Number(selectNum);
             }).length;
@@ -39,15 +47,23 @@ function caclDistributionTotalArr(selectNumArr, openDataArr) {
     });
     return resultArr;
 }
- 
+
 /**
  * 号码分布最大遗漏
  */
-function getDistributionMissAndContinuousObj(selectNumArr, openDataArr) {
+function getDistributionMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
     const resultArr = [];
+    const posIndexArr = Object.keys(posObj);
+    const _openDataArr = openDataArr.map(itemArr => {
+        const _arr = [];
+        posIndexArr.forEach(i => {
+            _arr.push(itemArr[i]);
+        });
+        return _arr;
+    });
     selectNumArr.forEach(selectNum => {
         const arr = [];
-        openDataArr.forEach((itemArr, index) => {
+        _openDataArr.forEach((itemArr, index) => {
             const numItemArr = itemArr.map(v => Number(v));
             if (numItemArr.indexOf(Number(selectNum)) !== -1) {
                 arr.push(index + 1);
@@ -55,12 +71,12 @@ function getDistributionMissAndContinuousObj(selectNumArr, openDataArr) {
         });
         resultArr.push(arr);
     });
-    const openDataArrLength = openDataArr.length;
+    const openDataArrLength = _openDataArr.length;
     const missArr = resultArr.map(arr => {
         return calcMaxMiss(arr, openDataArrLength);
     });
     const continuousArr = resultArr.map(arr => {
-        arr.sort();
+        arr.sort((a, b) => a - b);
         if (arr.length === 0) {
             return 0;
         }
@@ -104,7 +120,7 @@ function getMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
     //最大连出值
     const continuousArr = missAndContinuousArr.map(posItem => {
         return posItem.map(itemArr => {
-            itemArr.sort();
+            itemArr.sort((a, b) => a - b);
             if (itemArr.length === 0) {
                 return 0;
             }
@@ -129,8 +145,8 @@ function getMissAndContinuousObj(posObj, selectNumArr, openDataArr) {
  * @returns Number
  */
 function calcMaxMiss(arr, openDataArrLength) {
-    arr.sort();
     const _arr = arr.map(v => Number(v));
+    _arr.sort((a, b) => a - b);
     if (_arr.length === 0) {
         return openDataArrLength;
     }
@@ -145,7 +161,7 @@ function calcMaxMiss(arr, openDataArrLength) {
     const max = Math.max(..._arr);
     result.push(min - 1);
     result.push(openDataArrLength - max);
-    for (let i = 0; i < _arr.length - 2; i++) {
+    for (let i = 0, len = _arr.length; i < len - 1; i++) {
         result.push(_arr[i + 1] - _arr[i] - 1);
     }
     return Math.max(...result);
@@ -429,11 +445,15 @@ function calcBanshunzi(arr, min = 0, max = 9) {
 }
 //计算元素到body的距离
 function offsetDis(element) {
-    let l = 0, t = 0;
-    while(element) {
+    let l = 0,
+        t = 0;
+    while (element) {
         l = l + element.offsetLeft + element.clientLeft;
         t = t + element.offsetTop + element.clientTop;
         element = element.offsetParent;
     }
-    return {left: l, top: t};
+    return {
+        left: l,
+        top: t
+    };
 }
