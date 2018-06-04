@@ -89,7 +89,7 @@ function watch() {
     gulp.watch(paths.styles.src, styles);
 }
 
-watch();
+// watch();
 
 /*
  * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`

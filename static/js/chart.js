@@ -292,7 +292,7 @@ new Vue({
             {
                 id: 'cold-hot-number',
                 value: 'coldHotNumber',
-                model: 'no',
+                model: 'yes',
                 text: '冷热号'
             },
         ],
@@ -410,7 +410,7 @@ new Vue({
             }
         },
         missBarColor: 'green',
-        missLineColor: 'blue'
+        missLineColor: 'blue',
     },
     computed: {
         lotteryArrs() {
@@ -429,7 +429,7 @@ new Vue({
         isLine() {
             return this.checkedConfig.find(item => item.id === 'trend-line').model === 'yes';
         },
-        isHot() {
+        isHotCold() {
             return this.checkedConfig.find(item => item.id === 'cold-hot-number').model === 'yes';
         },
     },
@@ -459,6 +459,56 @@ new Vue({
                 return;
             }
             document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'none');
+        },
+        getHotAndColdObj() {
+            const obj = {}; //统计每个数字出现次数的对象
+            document.querySelectorAll('.js-selected-num').forEach(element => {
+                const num = element.innerText;
+                if (obj[num]) {
+                    obj[num]++;
+                } else {
+                    obj[num] = 1;
+                }
+            });
+            const valueArr = Object.values(obj);
+            const max = Math.max(...valueArr);
+            const min = Math.min(...valueArr);
+            let hotArr = [];
+            let coldArr = [];
+            if (max === min) {//冷热号一样就没必要着色了
+                return {
+                    hotArr: [],
+                    coldArr: []
+                };
+            }
+            for (let key in obj) {
+                if (obj[key] === max) {
+                    hotArr.push(key);
+                }
+                if (obj[key] === min) {
+                    coldArr.push(key);
+                }
+            }
+            return {
+                hotArr,
+                coldArr
+            };
+        },
+        toggleHotAndCold(flag) {
+            const hotAndColdObj = this.getHotAndColdObj();
+            document.querySelectorAll('.js-selected-num').forEach(element => {
+                if (flag) {
+                    if (hotAndColdObj.hotArr.indexOf(element.innerText) !== -1) {
+                        !element.classList.contains('hot') && element.classList.add('hot');
+                    }
+                    if (hotAndColdObj.coldArr.indexOf(element.innerText) !== -1) {
+                        !element.classList.contains('cold') && element.classList.add('cold');
+                    }
+                } else {
+                    element.classList.contains('hot') && element.classList.remove('hot');
+                    element.classList.contains('cold') && element.classList.remove('cold');
+                }
+            });
         },
         getMissCoordinateObj() {
             const selectedNumArr = document.querySelectorAll('.js-selected-num');
@@ -531,12 +581,12 @@ new Vue({
             const canvas = this.createCanvas('js-draw-bar').canvas;
             const context = this.createCanvas('js-draw-bar').context;
             if (!flag) {
-                context.clearRect(0, 0, canvas.width, canvas.height);            
+                context.clearRect(0, 0, canvas.width, canvas.height);
                 return;
             }
             context.clearRect(0, 0, canvas.width, canvas.height); //清空了再画                                   
             const missBarCoordinateArr = this.getMissBarCoordinateArr();
-            context.beginPath();//通过清空子路径列表开始一个新路径            
+            context.beginPath(); //通过清空子路径列表开始一个新路径            
             context.fillStyle = this.missBarColor;
             missBarCoordinateArr.forEach(item => {
                 const {
@@ -553,13 +603,13 @@ new Vue({
             const canvas = this.createCanvas('js-draw-line').canvas;
             const context = this.createCanvas('js-draw-line').context;
             if (!flag) {
-                context.clearRect(0, 0, canvas.width, canvas.height);            
+                context.clearRect(0, 0, canvas.width, canvas.height);
                 return;
             }
             const selectedNumHeight = document.querySelector('.js-selected-num').offsetHeight;
             context.clearRect(0, 0, canvas.width, canvas.height); //清空了再画                       
             const missCoordinateObj = this.getMissCoordinateObj();
-            context.beginPath();//通过清空子路径列表开始一个新路径
+            context.beginPath(); //通过清空子路径列表开始一个新路径
             context.strokeStyle = this.missLineColor;
             for (let posIndex in missCoordinateObj) {
                 const arr = missCoordinateObj[posIndex];
@@ -575,7 +625,6 @@ new Vue({
             }
         },
         callbackDraw(config) {
-            
             for (let item of config) {
                 switch (item.text) {
                     case '遗漏':
@@ -588,6 +637,7 @@ new Vue({
                         this.drawLine(this.isLine);
                         break;
                     case '冷热号':
+                        this.toggleHotAndCold(this.isHotCold);
                         break;
                 }
             }
@@ -602,7 +652,7 @@ new Vue({
             }
         },
         lottery(newVal, oldVal) {
-            this.trendData = [];            
+            this.trendData = [];
             this.ajaxTrendData();
             this.drawMissBar(false);
             this.drawLine(false);
@@ -619,11 +669,11 @@ new Vue({
     },
     beforeMount() {},
     mounted() {
-        
+
     },
     updated() {
         this.$nextTick(() => {
-            if (this.tabCode === 'ssc-qw&nn') {//趣味牛牛不画图
+            if (this.tabCode === 'ssc-qw&nn') { //趣味牛牛不画图
                 this.drawMissBar(false);
                 this.drawLine(false);
                 return;

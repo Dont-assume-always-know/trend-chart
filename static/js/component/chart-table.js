@@ -268,12 +268,12 @@ Vue.component('chart-table', {
             z3ZutaiTotalObj: {}, //计算3星组态底部总次数，最大遗漏值，连出值用到
             z2ZutaiObj: {},
             z2ZutaiTotalObj: {},
-            hz3xdaxiaoFlagObj: {//3星和值大小临界值config
+            hz3xdaxiaoFlagObj: { //3星和值大小临界值config
                 'k3': 10,
                 'ssc': 13,
                 '3d': 13
             },
-            minMaxConfig: {//选号的最大值和最小值
+            minMaxConfig: { //选号的最大值和最小值
                 'k3': {
                     min: 1,
                     max: 6
@@ -357,13 +357,13 @@ Vue.component('chart-table', {
             const z3Total = this.z3ZutaiTotalObj['z3'] ? this.z3ZutaiTotalObj['z3'].length : 0;
             const z6Total = this.z3ZutaiTotalObj['z6'] ? this.z3ZutaiTotalObj['z6'].length : 0;
             const baoziTotal = this.z3ZutaiTotalObj['baozi'] ? this.z3ZutaiTotalObj['baozi'].length : 0;
-            const shunziTotal = this.z3ZutaiTotalObj['shunzi'] ? this.z3ZutaiTotalObj['shunzi'].length : 0;            
+            const shunziTotal = this.z3ZutaiTotalObj['shunzi'] ? this.z3ZutaiTotalObj['shunzi'].length : 0;
             switch (this.lotteryType) {
                 case 'ssc':
                 case '3d':
-                    return [z3Total, z6Total, baoziTotal];                    
+                    return [z3Total, z6Total, baoziTotal];
                 case 'k3':
-                    return [baoziTotal, z6Total, shunziTotal, z3Total];                    
+                    return [baoziTotal, z6Total, shunziTotal, z3Total];
             }
         },
         z3ZutaiAverageMissArr() {
@@ -379,13 +379,13 @@ Vue.component('chart-table', {
             const z3Miss = calcMaxMiss(this.z3ZutaiTotalObj['z3'] || [], openDataArrLength);
             const z6Miss = calcMaxMiss(this.z3ZutaiTotalObj['z6'] || [], openDataArrLength);
             const baoziMiss = calcMaxMiss(this.z3ZutaiTotalObj['baozi'] || [], openDataArrLength);
-            const shunziMiss = calcMaxMiss(this.z3ZutaiTotalObj['shunzi'] || [], openDataArrLength);            
+            const shunziMiss = calcMaxMiss(this.z3ZutaiTotalObj['shunzi'] || [], openDataArrLength);
             switch (this.lotteryType) {
                 case 'ssc':
                 case '3d':
                     return [z3Miss, z6Miss, baoziMiss];
                 case 'k3':
-                    return [baoziMiss, z6Miss, shunziMiss, z3Miss];                
+                    return [baoziMiss, z6Miss, shunziMiss, z3Miss];
             }
         },
         z3ZutaiContinuousArr() {
@@ -459,7 +459,7 @@ Vue.component('chart-table', {
         }
     },
     methods: {
-        reset() {//重置
+        reset() { //重置
             this.selectedIndexObj = {};
             this.missAndContinuousObj = {};
             this.distributionIndexArr = [];

@@ -589,3 +589,35 @@ tfoot .title-k3-xt {
 .yes {
     color: #B84759;
 }
+
+.hide {
+    display: none;
+}
+
+.selected-num.hot {
+    background: hotpink;
+}
+
+.selected-num.cold {
+    background: cornflowerblue;
+}
+
+.chart-option-item .chart-option {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    line-height: 12px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: inset 0 1px 1px 0 rgba(0,0,0,0.10);
+    border-radius: 2px;
+    color: #FFFFFF;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.chart-option-item .chart-option.on {
+    background: #3B99FC;
+    border: 1px solid #2B91FC;
+}
