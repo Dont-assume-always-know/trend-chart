@@ -595,11 +595,11 @@ tfoot .title-k3-xt {
 }
 
 .selected-num.hot {
-    background: hotpink;
+    background: #b847b7;
 }
 
 .selected-num.cold {
-    background: cornflowerblue;
+    background: #365a8f;
 }
 
 .chart-option-item .chart-option {

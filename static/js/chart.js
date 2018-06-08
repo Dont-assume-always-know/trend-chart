@@ -409,8 +409,8 @@ new Vue({
                 3: '蝶泳'
             }
         },
-        missBarColor: 'green',
-        missLineColor: 'blue',
+        missBarColor: '#dadae5',
+        missLineColor: '#C84C59',
     },
     computed: {
         lotteryArrs() {
