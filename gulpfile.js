@@ -5,7 +5,7 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var cleanCSS = require('gulp-clean-css');
 var minHtml = require('gulp-htmlmin');
-var inlineVue = require('gulp-inline-vue-template');
+var inlineVue = require('vue-template-inline');
 var del = require('del');
 
 var paths = {
