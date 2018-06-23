@@ -299,7 +299,10 @@ function calcNiuniu(arr) {
     const YU = HZ % 10;
     const combinationArr = choose(arr, 3);
     // 是否有 任意组合三个号码成0或10的倍数，
-    const has10X = combinationArr.findIndex(a => a.reduce((m, n) => m + n) === 10) !== -1;
+    const has10X = combinationArr.findIndex(a => {
+        const _hz = a.reduce((m, n) => m + n);
+        return _hz === 10 || _hz === 0;
+    }) !== -1;
     let niuniuXt;
     let dxXt;
     let dsXt;

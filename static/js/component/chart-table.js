@@ -582,6 +582,9 @@ Vue.component('chart-table', {
                 return `<i class="js-miss-num" style="display:${this.isMiss?'inline-block':'none'}">${index + 1 - (this.z3ZutaiObj['shunzi'] || 0)}</i>`;
             }
         },
+        calcHezhi(arr) {
+            return calcHezhi(arr);
+        },
         renderHezhi(code) {
             let codeArr = code.split(',').map(v => Number(v));
             codeArr = this.getCodeArr(codeArr);

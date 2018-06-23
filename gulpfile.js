@@ -5,7 +5,7 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var cleanCSS = require('gulp-clean-css');
 var minHtml = require('gulp-htmlmin');
-// var watch = require('gulp-watch');
+var inlineVue = require('gulp-inline-vue-template');
 var del = require('del');
 
 var paths = {
@@ -18,7 +18,11 @@ var paths = {
         dest: 'static/dist/'
     },
     scripts: {
-        src: ['static/js/component/*.js', 'static/js/*.js'],
+        src: ['static/js/*.js'],
+        dest: 'static/dist/'
+    },
+    components: {
+        src: ['static/js/component/*.js'],
         dest: 'static/dist/'
     },
     vender: {
@@ -75,6 +79,17 @@ function scripts() {
         .pipe(gulp.dest(paths.scripts.dest));
 }
 
+function components() {
+    return gulp.src(paths.components.src, {
+            sourcemaps: true
+        })
+        .pipe(inlineVue())
+        .pipe(babel())
+        .pipe(uglify())
+        .pipe(concat('components.min.js'))
+        .pipe(gulp.dest(paths.components.dest));
+}
+
 function vender() {
     return gulp.src(paths.vender.src, {
             sourcemaps: true
@@ -85,7 +100,7 @@ function vender() {
 
 function watch() {
     gulp.watch(paths.scripts.src, scripts);
-    gulp.watch(paths.vender.src, vender);    
+    gulp.watch(paths.vender.src, vender);
     gulp.watch(paths.styles.src, styles);
 }
 
@@ -94,7 +109,7 @@ function watch() {
 /*
  * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
  */
-var build = gulp.series(clean, gulp.parallel( /* htmls,  */ styles, scripts, vender));
+var build = gulp.series(clean, gulp.parallel(/* htmls,  */ styles, scripts, components, vender));
 
 /*
  * You can still use `gulp.task` to expose tasks
