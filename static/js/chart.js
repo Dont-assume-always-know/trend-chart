@@ -455,14 +455,14 @@ new Vue({
         },
         toggleMiss(flag) {
             if (flag) {
-                document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'inline-block');
+                [...document.querySelectorAll('.js-miss-num')].forEach(element => element.style.display = 'inline-block');
                 return;
             }
-            document.querySelectorAll('.js-miss-num').forEach(element => element.style.display = 'none');
+            [...document.querySelectorAll('.js-miss-num')].forEach(element => element.style.display = 'none');
         },
         getHotAndColdObj() {
             const obj = {}; //统计每个数字出现次数的对象
-            document.querySelectorAll('.js-selected-num').forEach(element => {
+            [...document.querySelectorAll('.js-selected-num')].forEach(element => {
                 const num = element.innerText;
                 if (obj[num]) {
                     obj[num]++;
@@ -496,7 +496,7 @@ new Vue({
         },
         toggleHotAndCold(flag) {
             const hotAndColdObj = this.getHotAndColdObj();
-            document.querySelectorAll('.js-selected-num').forEach(element => {
+            [...document.querySelectorAll('.js-selected-num')].forEach(element => {
                 if (flag) {
                     if (hotAndColdObj.hotArr.indexOf(element.innerText) !== -1) {
                         !element.classList.contains('hot') && element.classList.add('hot');
@@ -511,7 +511,7 @@ new Vue({
             });
         },
         getMissCoordinateObj() {
-            const selectedNumArr = document.querySelectorAll('.js-selected-num');
+            const selectedNumArr = [...document.querySelectorAll('.js-selected-num')];
             const coordinateObj = {};
             selectedNumArr.forEach((element, index) => {
                 const posIndex = element.getAttribute('pos-index');
@@ -528,7 +528,7 @@ new Vue({
         },
         getMissBarCoordinateArr() {
             const missBarCoordinateArr = [];
-            const selectedNumArr = document.querySelectorAll('.js-selected-num');
+            const selectedNumArr = [...document.querySelectorAll('.js-selected-num')];
             const missBarCoordinateObj = {};
             selectedNumArr.forEach((element, index) => {
                 const posIndex = element.getAttribute('pos-index');
