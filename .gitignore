@@ -1,2 +1,6 @@
 node_modules
-trend-chart\static\dist\components.min.js
+**/*/components.min.js
+**/*/trend.min.css
+**/*/trend.min.js
+*.zip
+**/*/source
