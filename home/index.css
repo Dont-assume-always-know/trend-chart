@@ -6,6 +6,7 @@
     background-repeat: no-repeat;
     height: 60px;
 }
+
 .top-nav-logo {
     width: 140px;
     height: 42px;
@@ -16,29 +17,34 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+
 .top-nav-list {
     position: relative;
     right: 60px;
 }
+
 .top-nav-item {
     width: 120px;
     height: 60px;
     line-height: 60px;
     text-align: center;
-    font-family:MicrosoftYaHei-Bold;
-    color:#FFC600;
+    font-family: MicrosoftYaHei;
+    font-weight: bold;
+    color: #FFC600;
     font-size: 0;
     cursor: pointer;
 }
+
 .top-nav-item:hover {
     background-image: url(./img/mune_hover_bg.png);
     background-repeat: no-repeat;
     background-position: bottom center;
 }
+
 .top-nav-item-logo {
-    width:24px;
-    height:24px;
-    font-size:18px;
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
     display: inline-block;
     background-size: cover;
     background-repeat: no-repeat;
@@ -49,24 +55,31 @@
 .nav-logo-index {
     background-image: url(./img/menu_home_icon.svg)
 }
+
 .nav-logo-lottery {
     background-image: url(./img/menu_lott_icon.svg)
 }
+
 .nav-logo-live {
     background-image: url(./img/menu_live_icon.svg)
 }
+
 .nav-logo-fish {
     background-image: url(./img/menu_fish_icon.svg)
 }
+
 .nav-logo-sport {
     background-image: url(./img/menu_sport_icon.svg)
 }
+
 .nav-logo-service {
     background-image: url(./img/menu_customer_icon.svg)
 }
+
 .nav-logo-xglhc {
     background-image: url(./img/menu_xglhc_icon.svg)
 }
+
 .nav-logo-help {
     background-image: url(./img/menu_help_icon.svg)
 }
@@ -77,12 +90,14 @@
     vertical-align: middle;
     margin-left: 4px;
 }
+
 .banner-wrap {
     height: 480px;
     position: relative;
     top: -60px;
     z-index: -1;
 }
+
 .banner-mask-bg {
     background-image: url(./img/banner_mask_bg.png);
     background-repeat: repeat-x;
@@ -92,87 +107,598 @@
     top: 0;
     bottom: 0;
 }
+
 .banner-img {
     width: 100%;
     height: 100%;
 }
+
 .main-content-wrap {
     background-image: url(./img/content_bg.png);
-    background-repeat: no-repeat;    
+    background-repeat: no-repeat;
     margin-top: -80px;
 }
+
 .main-content {
     width: 1200px;
     margin: 0 auto;
     border-radius: 10px;
     overflow: hidden;
 }
+
 .main-content-left {
     width: 875px;
 }
+
 .main-content-right {
     width: 325px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
 }
+
 .left-top-left-logo {
     display: inline-block;
     background-image: url(./img/hot_lott.svg);
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     width: 28px;
     height: 28px;
     background-size: contain;
     vertical-align: middle;
 }
+
 .right-top-left-logo {
     display: inline-block;
     background-image: url(./img/icon-voice.svg);
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     width: 28px;
     height: 28px;
     background-size: contain;
     vertical-align: middle;
 }
+
 .left-top-left-text,
 .right-top-left-text {
-    font-size:18px;
+    font-size: 18px;
     margin-left: 12px;
-    font-family:MicrosoftYaHei;
+    font-family: MicrosoftYaHei;
     font-weight: bold;
-    color:rgba(255,255,255,.8);
+    color: rgba(255, 255, 255, .8);
     vertical-align: middle;
 }
+
 .main-content-left-top {
     background-image: url(./img/lott_title_bg.png);
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     width: 875px;
-    background-size: contain;   
+    background-size: contain;
     box-sizing: border-box;
     padding: 0 20px;
-    font-size: 0; 
+    font-size: 0;
     height: 50px;
     line-height: 50px;
 }
+
 .main-content-right-top {
     background-image: url(./img/notice_title_bg.png);
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     width: 325px;
-    background-size: contain;   
+    background-size: contain;
     box-sizing: border-box;
     padding: 0 20px;
-    font-size: 0; 
+    font-size: 0;
     height: 50px;
     line-height: 50px;
 }
+
+.right-top-left {
+    height: 50px;
+}
+
+.right-top-right {
+    height: 50px;
+}
+
 .left-top-right {
     width: 700px;
     font-size: 12px;
     font-family: MicrosoftYaHei;
-    color: rgba(255,255,255,1);
+    color: rgba(255, 255, 255, 1);
     overflow: hidden;
 }
+
 .right-top-right-text {
     font-size: 12px;
     font-family: MicrosoftYaHei;
-    color: rgba(255,255,255,1);
+    color: rgba(255, 255, 255, 1);
     cursor: pointer;
     opacity: .8;
+    transition: all .2s ease;
+}
+
+.right-top-right-text:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+.marquee-list .lottery,
+.marquee-list .money {
+    color: #fff000;
+}
+
+.left-middle-left,
+.left-middle-center,
+.left-middle-right,
+.left-bottom-left,
+.left-bottom-center,
+.left-bottom-right {
+    width: 33.33%;
+    box-sizing: border-box;
+    padding: 15px 18px 18px 18px;
+}
+
+.main-content-left-middle,
+.main-content-left-bottom,
+.main-content-right-middle,
+.main-content-right-bottom {
+    background: rgba(243, 243, 243, 1);
+}
+
+.main-content-left-middle,
+.main-content-right-middle {
+    border-bottom: 1px solid #dbdbdb;
+    height: 181px;
+    overflow: hidden;
+}
+
+.left-middle-left,
+.left-middle-center,
+.left-bottom-left,
+.left-bottom-center {
+    border-right: 1px solid #dbdbdb;
+}
+
+.left-middle-left-title,
+.left-middle-center-title,
+.left-bottom-right-title,
+.left-bottom-left-title,
+.left-bottom-center-title,
+.left-bottom-right-title {
+    font-size: 18px;
+    font-family: MicrosoftYaHei;
+    font-weight: bold;
+    color: rgba(51, 51, 51, 1);
+}
+
+.hot-lottery-item {
+    width: 122px;
+    height: 35px;
+    line-height: 33px;
+    text-align: left;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 3px;
+    cursor: pointer;
+    color: #333;
+    border: 1px solid #D7D7D7;
+    box-sizing: border-box;
+    margin-top: 9px;
+    font-size: 0;
+    transition: all .5s ease-in-out;
+}
+
+.hot-lottery-item:hover {
+    background: linear-gradient(to bottom, #FF0200, #D10001);
+    color: rgba(255, 255, 255, 1);
+}
+
+.lottery-logo {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.lottery-logo-xglhc {
+    background-image: url(./img/hot-lhc.png);
+}
+
+.lottery-logo-sckl12 {
+    background-image: url(./img/hot-12.png);
+}
+
+.lottery-logo-bjpk10 {
+    background-image: url(./img/hot-bjpk10.png);
+}
+
+.lottery-logo-mdpk10 {
+    background-image: url(./img/hot-mdpk10.png);
+}
+
+.lottery-logo-3dfc {
+    background-image: url(./img/hot-3dfc.png);
+}
+
+.lottery-logo-shssl {
+    background-image: url(./img/hot-ssl.png);
+}
+
+.lottery-logo-ahk3 {
+    background-image: url(./img/hot-k3.png);
+}
+
+.lottery-logo-hnk3 {
+    background-image: url(./img/hot-k3.png);
+}
+
+.lottery-logo-jlk3 {
+    background-image: url(./img/hot-k3.png);
+}
+
+.lottery-logo-mdk3 {
+    background-image: url(./img/hot-k3.png);
+}
+
+.lottery-logo-jsk3 {
+    background-image: url(./img/hot-k3.png);
+}
+
+.lottery-logo-hubk3 {
+    background-image: url(./img/hot-k3.png);
+}
+
+.lottery-logo-md11y {
+    background-image: url(./img/hot-11y.png);
+}
+
+.lottery-logo-gd11y {
+    background-image: url(./img/hot-11y.png);
+}
+
+.lottery-logo-sd11y {
+    background-image: url(./img/hot-11y.png);
+}
+
+.lottery-logo-jx11y {
+    background-image: url(./img/hot-11y.png);
+}
+
+.lottery-logo-sh11y {
+    background-image: url(./img/hot-11y.png);
+}
+
+.lottery-logo-ah11y {
+    background-image: url(./img/hot-11y.png);
+}
+
+.lottery-logo-rdffc {
+    background-image: url(./img/hot-rdffc.png);
+}
+
+.lottery-logo-rdlfc {
+    background-image: url(./img/hot-rdlfc.png);
+}
+
+.lottery-logo-wbgmmc {
+    background-image: url(./img/hot-wbg.png);
+}
+
+.lottery-logo-rbssm {
+    background-image: url(./img/hot-rbssm.png);
+}
+
+.lottery-logo-txffc {
+    background-image: url(./img/hot-txffc.png);
+}
+
+.lottery-logo-cqssc {
+    background-image: url(./img/hot-cqssc.png);
+}
+
+.lottery-text {
+    font-size: 12px;
+    margin-left: 10px;
+    vertical-align: middle;
+    color: #333;
+}
+
+.hot-lottery-item:hover .lottery-text {
+    color: #fff;
+}
+
+.main-content-right-middle {}
+
+.notice-list {
+    padding: 16px 20px;
+    box-sizing: border-box;
+}
+
+.notice-item {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.notice-content {
+    color: rgba(51, 51, 51, 1);
+}
+
+.notice-item:hover .notice-content {
+    color: #fd0200;
+    text-decoration: underline;
+}
+
+.main-content-right-bottom {
+    width: 325px;
+    position: relative;
+    height: 95px;
+}
+
+.right-bottom-left {
+    position: absolute;
+    background: url(./img/qr_code_app.png) no-repeat center center;
+    background-size: contain;
+    width: 70px;
+    height: 70px;
+    top: 50%;
+    left: 22px;
+    transform: translateY(-50%);
+}
+
+.right-bottom-center {
+    position: absolute;
+    width: 156px;
+    height: 60px;
+    line-height: 1.8;
+    top: 50%;
+    left: 34%;
+    transform: translateY(-50%);
+}
+
+.right-bottom-right {
+    position: absolute;
+    background: url(./img/qr_code_ad.png) no-repeat center center;
+    background-size: contain;
+    width: 70px;
+    height: 70px;
+    right: 0;
+    bottom: 0;
+    width: 58px;
+    height: 95px;
+}
+
+.ad-app-text {
+    font-size: 18px;
+    font-family: MicrosoftYaHei;
+    font-weight: bold;
+    color: #333;
+}
+
+.scan-app-text {
+    font-size: 14px;
+    font-family: MicrosoftYaHei;
+    color: rgba(0, 0, 0, .5);
+}
+
+.icon-scan {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url(./img/scan_code.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.notice-time {
+    color: #9b9b9b;
+}
+
+.live-games {
+    margin: 0 auto;
+    width: 1200px;
+}
+
+.ag-game,
+.fish-game,
+.sport-game,
+.other-game {
+    width: 300px;
+    height: 300px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.ag-game,
+.fish-game,
+.sport-game,
+.six-game {
+    cursor: pointer;
+}
+
+.slot-game {
+    cursor: not-allowed;
+}
+
+.ag-game {
+    background-image: url(./img/game_live_bg.png);
+}
+
+.ag-game-lady {
+    position: absolute;
+    width: 300px;
+    height: 259px;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+.ag-game-title {
+    position: absolute;
+    width: 275px;
+    height: 30px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.fish-game {
+    background-image: url(./img/game_fish_bg.png);
+}
+
+.fish-game-king {
+    position: absolute;
+    width: 196px;
+    height: 240px;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+.fish-game-title {
+    position: absolute;
+    width: 235px;
+    height: 30px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sport-game {
+    background-image: url(./img/game_sport_bg.png);
+}
+
+.sport-game-girl {
+    position: absolute;
+    width: 296px;
+    height: 258px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sport-game-title {
+    position: absolute;
+    width: 195px;
+    height: 30px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.six-game {
+    height: 150px;
+    background-image: url(./img/game_lhc.png);
+    background-size: cover;
+}
+
+.slot-game {
+    height: 150px;
+    background-image: url(./img/game_lhj.png);
+    background-repeat: no-repeat;
+}
+
+.six-game,
+.slot-game {
+    display: block;
+}
+
+.sport-game:hover .sport-game-girl,
+.fish-game:hover .fish-game-king,
+.ag-game:hover .ag-game-lady {
+    bottom: 5px;
+}
+
+.sport-game-girl,
+.fish-game-king,
+.ag-game-lady {
+    transition: all .3s ease-in-out;
+}
+footer {
+    background-color: #000000;
+}
+.footer-wrap {
+    width: 1200px;
+    height: 172px;
+    margin: 0 auto;
+}
+.about-companies-img {
+    width: 1200px;
+    height: 72px;
+    margin: 0 auto;
+    background-image: url(./img/lofos.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.about-companies {
+    background-image: url(./img/lofos_bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 72px;
+}
+
+.about-link-item {
+    margin-right: 50px;
+}
+
+.about-link-item>a {
+    color: #fff;
+    font-size: 18px;
+    font-family: MicrosoftYaHei;
+}
+
+.about-link-item>a:hover {
+    text-decoration: underline;
+}
+
+.footer-left-bottom-text {
+    font-size: 12px;
+    font-family: MicrosoftYaHei;
+    color: rgba(255, 255, 255, .4);
+}
+.about-link-list {
+    margin-top: 37px;
+}
+.footer-left-bottom-text {
+    margin-top: 30px;
+    line-height: 2;
+}
+.bottom-chrome-icon {
+    position: relative;
+    left: 10px;
+    top: 4px;
+    width: 80px;
+    height: 16px;
+}
+.download-item {
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 23px;
+}
+.download-item:hover {
+    background-color: rgba(176, 37, 36, .5)    
+}
+.qr-code-down {
+    background-image: url(./img/qr_code_down.png);
+    width: 80px;
+    height: 80px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.download-item-app-icon {
+    text-align: center;
+}
+.download-item-text {
+    font-size: 12px;
+    opacity: .7;
+    color: #fff;
+}
+.download-item-guaji,
+.download-item-fast,
+.download-item-client {
+    cursor: pointer;
 }
