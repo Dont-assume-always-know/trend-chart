@@ -4,6 +4,7 @@
     background-image: url(./img/nav_bg.png);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     height: 60px;
 }
 
@@ -36,7 +37,7 @@
 }
 
 .top-nav-item:hover {
-    background-image: url(./img/mune_hover_bg.png);
+    background-image: url(./img/menu_hover_bg.png);
     background-repeat: no-repeat;
     background-position: bottom center;
 }
@@ -613,19 +614,36 @@
     bottom: 5px;
 }
 
+.ag-game:hover,
+.fish-game:hover,
+.sport-game:hover,
+.six-game:hover,
+.slot-game:hover {
+    opacity: .8;
+}
+.ag-game,
+.fish-game,
+.sport-game,
+.six-game,
+.slot-game {
+    transition: all .3s ease-in-out;
+}
 .sport-game-girl,
 .fish-game-king,
 .ag-game-lady {
     transition: all .3s ease-in-out;
 }
+
 footer {
     background-color: #000000;
 }
+
 .footer-wrap {
     width: 1200px;
     height: 172px;
     margin: 0 auto;
 }
+
 .about-companies-img {
     width: 1200px;
     height: 72px;
@@ -663,13 +681,16 @@ footer {
     font-family: MicrosoftYaHei;
     color: rgba(255, 255, 255, .4);
 }
+
 .about-link-list {
     margin-top: 37px;
 }
+
 .footer-left-bottom-text {
     margin-top: 30px;
     line-height: 2;
 }
+
 .bottom-chrome-icon {
     position: relative;
     left: 10px;
@@ -677,15 +698,18 @@ footer {
     width: 80px;
     height: 16px;
 }
+
 .download-item {
     padding: 15px;
     border-radius: 10px;
     margin-top: 23px;
     font-size: 0;
 }
+
 .download-item:hover {
-    background-color: rgba(176, 37, 36, .5)    
+    background-color: rgba(176, 37, 36, .5)
 }
+
 .qr-code-down {
     background-image: url(./img/qr_code_down.png);
     width: 80px;
@@ -694,19 +718,23 @@ footer {
     background-size: cover;
     margin-right: 22px;
 }
+
 .download-item-icon {
     text-align: center;
 }
+
 .download-item-icon>img {
     margin-top: 4px;
     opacity: .7;
 }
+
 .download-item-text {
     font-size: 12px;
     opacity: .7;
     color: #fff;
     margin-top: 10px;
 }
+
 .download-item-guaji,
 .download-item-fast,
 .download-item-client {
