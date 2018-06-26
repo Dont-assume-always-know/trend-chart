@@ -116,7 +116,8 @@
 .main-content-wrap {
     background-image: url(./img/content_bg.png);
     background-repeat: no-repeat;
-    margin-top: -80px;
+    background-position: center;
+    margin-top: -60px;
 }
 
 .main-content {
@@ -124,6 +125,8 @@
     margin: 0 auto;
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
+    bottom: 20px;
 }
 
 .main-content-left {
@@ -495,7 +498,7 @@
 }
 
 .live-games {
-    margin: 0 auto;
+    margin: 20px auto;
     width: 1200px;
 }
 
