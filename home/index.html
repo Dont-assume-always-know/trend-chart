@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="z-index.css">
+    <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="footer.css">
     <title>摩登娱乐 - 首页</title>
 </head>
 
@@ -50,11 +53,9 @@
     </div>
     <div class="banner-wrap">
         <div class="banner-mask-bg"></div>
-        <div class="banner-item">
-            <a href="">
-                <img src="./img/banner.png" class="banner-img" alt="">
-            </a>
-        </div>
+        <a class="banner-item-link" href="">
+            <img src="./img/banner.png" class="banner-img" alt="">
+        </a>
     </div>
     <div class="main-content-wrap">
         <div class="clearfix main-content">
@@ -381,6 +382,37 @@
                         </div>
                     </li>                        
                 </ul>
+            </div>
+        </div>
+        <div class="footer-right-fixed">
+            <ul class="right-fixed-list">
+                <li class="right-fixed-item">
+                    <a href="">
+                        <img src="./img/message.svg" width="28" height="28">
+                        <p class="fixed-right-text">消息</p>
+                    </a>
+                </li>
+                <li class="right-fixed-item">
+                    <a href="" target="_blank">
+                        <img src="./img/menu_customer_icon.svg" width="28" height="28">
+                        <p class="fixed-right-text">客服</p>
+                    </a>
+                </li>
+                <li class="right-fixed-item">
+                    <a href="" target="_blank">
+                        <img src="./img/message.svg" width="28" height="28">
+                        <p class="fixed-right-text">线路</p>
+                    </a>
+                </li>
+                <li class="right-fixed-item">
+                    <a href="" target="_blank">
+                        <img src="./img/menu_help_icon.svg" width="28" height="28">
+                        <p class="fixed-right-text">帮助</p>
+                    </a>
+                </li>
+            </ul>
+            <div class="js-to-top to-top">
+                <img src="./img/top-hook.svg" width="24" height="24" title="点击返回顶部">
             </div>
         </div>
     </footer>

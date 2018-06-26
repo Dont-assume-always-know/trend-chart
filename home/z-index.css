@@ -1,0 +1,6 @@
+.top-nav {
+    z-index: 2;
+}
+.footer-right-fixed {
+    z-index: 100;
+}
