@@ -1,4 +1,5 @@
 node_modules
+**/*/components.min.js
 **/*/trend.min.css
 **/*/trend.min.js
 *.zip
