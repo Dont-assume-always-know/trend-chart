@@ -93,6 +93,9 @@
     display: inline-block;
     vertical-align: middle;
     margin-left: 4px;
+    background-image: linear-gradient(to bottom, #ffc600, #fff6b9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .to-top {
