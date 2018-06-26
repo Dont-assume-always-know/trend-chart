@@ -678,6 +678,7 @@ footer {
     padding: 15px;
     border-radius: 10px;
     margin-top: 23px;
+    font-size: 0;
 }
 .download-item:hover {
     background-color: rgba(176, 37, 36, .5)    
@@ -688,14 +689,20 @@ footer {
     height: 80px;
     background-repeat: no-repeat;
     background-size: cover;
+    margin-right: 22px;
 }
-.download-item-app-icon {
+.download-item-icon {
     text-align: center;
+}
+.download-item-icon>img {
+    margin-top: 4px;
+    opacity: .7;
 }
 .download-item-text {
     font-size: 12px;
     opacity: .7;
     color: #fff;
+    margin-top: 10px;
 }
 .download-item-guaji,
 .download-item-fast,
