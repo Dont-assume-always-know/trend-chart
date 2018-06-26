@@ -1,0 +1,178 @@
+.top-nav {
+    width: 1286px;
+    margin: 0 auto;
+    background-image: url(./img/nav_bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 60px;
+}
+.top-nav-logo {
+    width: 140px;
+    height: 42px;
+    position: relative;
+    left: 60px;
+    top: 9px;
+    background-image: url(./img/logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.top-nav-list {
+    position: relative;
+    right: 60px;
+}
+.top-nav-item {
+    width: 120px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-family:MicrosoftYaHei-Bold;
+    color:#FFC600;
+    font-size: 0;
+    cursor: pointer;
+}
+.top-nav-item:hover {
+    background-image: url(./img/mune_hover_bg.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+}
+.top-nav-item-logo {
+    width:24px;
+    height:24px;
+    font-size:18px;
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.nav-logo-index {
+    background-image: url(./img/menu_home_icon.svg)
+}
+.nav-logo-lottery {
+    background-image: url(./img/menu_lott_icon.svg)
+}
+.nav-logo-live {
+    background-image: url(./img/menu_live_icon.svg)
+}
+.nav-logo-fish {
+    background-image: url(./img/menu_fish_icon.svg)
+}
+.nav-logo-sport {
+    background-image: url(./img/menu_sport_icon.svg)
+}
+.nav-logo-service {
+    background-image: url(./img/menu_customer_icon.svg)
+}
+.nav-logo-xglhc {
+    background-image: url(./img/menu_xglhc_icon.svg)
+}
+.nav-logo-help {
+    background-image: url(./img/menu_help_icon.svg)
+}
+
+.top-nav-item-text {
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 4px;
+}
+.banner-wrap {
+    height: 480px;
+    position: relative;
+    top: -60px;
+    z-index: -1;
+}
+.banner-mask-bg {
+    background-image: url(./img/banner_mask_bg.png);
+    background-repeat: repeat-x;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.banner-img {
+    width: 100%;
+    height: 100%;
+}
+.main-content-wrap {
+    background-image: url(./img/content_bg.png);
+    background-repeat: no-repeat;    
+    margin-top: -80px;
+}
+.main-content {
+    width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.main-content-left {
+    width: 875px;
+}
+.main-content-right {
+    width: 325px;
+}
+.left-top-left-logo {
+    display: inline-block;
+    background-image: url(./img/hot_lott.svg);
+    background-repeat: no-repeat; 
+    width: 28px;
+    height: 28px;
+    background-size: contain;
+    vertical-align: middle;
+}
+.right-top-left-logo {
+    display: inline-block;
+    background-image: url(./img/icon-voice.svg);
+    background-repeat: no-repeat; 
+    width: 28px;
+    height: 28px;
+    background-size: contain;
+    vertical-align: middle;
+}
+.left-top-left-text,
+.right-top-left-text {
+    font-size:18px;
+    margin-left: 12px;
+    font-family:MicrosoftYaHei;
+    font-weight: bold;
+    color:rgba(255,255,255,.8);
+    vertical-align: middle;
+}
+.main-content-left-top {
+    background-image: url(./img/lott_title_bg.png);
+    background-repeat: no-repeat; 
+    width: 875px;
+    background-size: contain;   
+    box-sizing: border-box;
+    padding: 0 20px;
+    font-size: 0; 
+    height: 50px;
+    line-height: 50px;
+}
+.main-content-right-top {
+    background-image: url(./img/notice_title_bg.png);
+    background-repeat: no-repeat; 
+    width: 325px;
+    background-size: contain;   
+    box-sizing: border-box;
+    padding: 0 20px;
+    font-size: 0; 
+    height: 50px;
+    line-height: 50px;
+}
+.left-top-right {
+    width: 700px;
+    font-size: 12px;
+    font-family: MicrosoftYaHei;
+    color: rgba(255,255,255,1);
+    overflow: hidden;
+}
+.right-top-right-text {
+    font-size: 12px;
+    font-family: MicrosoftYaHei;
+    color: rgba(255,255,255,1);
+    cursor: pointer;
+    opacity: .8;
+}
