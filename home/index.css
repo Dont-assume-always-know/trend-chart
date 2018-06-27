@@ -31,7 +31,7 @@
     background-image: url(./img/content_bg.png);
     background-repeat: no-repeat;
     background-position: center;
-    margin-top: -60px;
+    margin-top: -20px;
 }
 
 .main-content {
@@ -54,7 +54,7 @@
 
 .left-top-left-logo {
     display: inline-block;
-    background-image: url(./img/hot_lott.svg);
+    background-image: url(./img/hot_lott.png);
     background-repeat: no-repeat;
     width: 28px;
     height: 28px;
@@ -64,7 +64,7 @@
 
 .right-top-left-logo {
     display: inline-block;
-    background-image: url(./img/icon-voice.svg);
+    background-image: url(./img/icon-voice.png);
     background-repeat: no-repeat;
     width: 28px;
     height: 28px;
@@ -402,7 +402,7 @@
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-image: url(./img/scan_code.svg);
+    background-image: url(./img/scan_code.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
